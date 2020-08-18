@@ -5,13 +5,14 @@
 [ext_resource path="res://src/player/Cursor.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 7.82233
+radius = 5.66875
 
 [node name="Player" type="KinematicBody2D"]
 collision/safe_margin = 0.01
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.8, 0.8 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 595, 238, 16, 16 )

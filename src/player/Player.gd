@@ -4,9 +4,8 @@ onready var cursor = $Cursor
 
 var acceleration :Vector2
 var velocity :Vector2
-var drag = 0.3
 var mass :float
-var friction_coeff = 0.5
+var friction_coeff = 0.9
 var bounce_decay = 0.5
 
 var direction :Vector2 = Vector2(1, 0)
@@ -15,6 +14,9 @@ const MIN_STRENGTH = 100
 const MAX_STRENGTH = 200
 var current_strength = (MIN_STRENGTH + MAX_STRENGTH) / 2
 const STR_CHANGE_SPEED = 200
+
+const MIN_MOVE_VELOCITY = 10
+var is_moving :bool = false
 
 func _ready() -> void:
 	mass = 1
@@ -45,7 +47,8 @@ func _change_strength(amount) -> void:
 	cursor.set_strength_percent((current_strength - MIN_STRENGTH) / (MAX_STRENGTH - MIN_STRENGTH))
 
 func _physics_process(delta: float) -> void:
-	handle_input()
+	if not is_moving:
+		handle_input()
 	# apply forces
 	var friction = Vector2(velocity.x, velocity.y)
 	friction *= -1
@@ -55,6 +58,15 @@ func _physics_process(delta: float) -> void:
 	
 	# move
 	velocity += acceleration;
+	
+	if velocity.length() < MIN_MOVE_VELOCITY and is_moving:
+		velocity = Vector2()
+		is_moving = false
+		cursor.show()
+	elif velocity.length() >= MIN_MOVE_VELOCITY and not is_moving:
+		is_moving = true
+		cursor.hide()
+	
 	move_and_slide(velocity)
 	acceleration = Vector2()
 	
