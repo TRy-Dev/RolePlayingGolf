@@ -4,6 +4,8 @@ onready var pivot = $Pivot
 onready var charge = $Pivot/Arrow/Charge
 onready var anim_player = $AnimationPlayer
 
+var _cursor_visible = false
+
 func _ready() -> void:
 	show()
 
@@ -18,7 +20,11 @@ func set_strength_percent(percent):
 	charge.material.set_shader_param("value", val)
 
 func show():
-	anim_player.play("show")
+	if not _cursor_visible:
+		anim_player.play("show")
+		_cursor_visible = true
 	
 func hide():
-	anim_player.play("hide")
+	if _cursor_visible:
+		anim_player.play("hide")
+		_cursor_visible = false

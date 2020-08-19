@@ -1,174 +1,104 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://assets/1bitpack_kenney_1.1/Tilesheet/monochrome_transparent.png" type="Texture" id=1]
+[ext_resource path="res://assets/world_tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://src/player/Player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://src/world/Checkpoint.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/world/events/Checkpoint.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/world/World.gd" type="Script" id=4]
+[ext_resource path="res://src/world/events/SceneEvent.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/battle/battles/Battle1.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/world/CameraController.tscn" type="PackedScene" id=7]
+[ext_resource path="res://src/world/CameraRoom.tscn" type="PackedScene" id=8]
+[ext_resource path="res://src/battle/battles/Battle2.tscn" type="PackedScene" id=9]
+[ext_resource path="res://src/battle/battles/Battle3.tscn" type="PackedScene" id=10]
+[ext_resource path="res://src/battle/battles/Battle4.tscn" type="PackedScene" id=11]
 
-[sub_resource type="ConvexPolygonShape2D" id=1]
-points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 56, 96 )
 
-[sub_resource type="ConvexPolygonShape2D" id=2]
-points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 112, 80 )
 
-[sub_resource type="ConvexPolygonShape2D" id=3]
-points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
-
-[sub_resource type="ConvexPolygonShape2D" id=4]
-points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
-
-[sub_resource type="ConvexPolygonShape2D" id=5]
-points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
-
-[sub_resource type="ConvexPolygonShape2D" id=6]
-points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
-
-[sub_resource type="ConvexPolygonShape2D" id=7]
-points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
-
-[sub_resource type="ConvexPolygonShape2D" id=8]
-points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
-
-[sub_resource type="TileSet" id=9]
-0/name = "monochrome_transparent.png 0"
-0/texture = ExtResource( 1 )
-0/tex_offset = Vector2( 0, 0 )
-0/modulate = Color( 1, 1, 1, 1 )
-0/region = Rect2( 306, 0, 50, 50 )
-0/tile_mode = 2
-0/autotile/icon_coordinate = Vector2( 0, 0 )
-0/autotile/tile_size = Vector2( 16, 16 )
-0/autotile/spacing = 1
-0/autotile/occluder_map = [  ]
-0/autotile/navpoly_map = [  ]
-0/autotile/priority_map = [  ]
-0/autotile/z_index_map = [  ]
-0/occluder_offset = Vector2( 0, 0 )
-0/navigation_offset = Vector2( 0, 0 )
-0/shape_offset = Vector2( 0, 0 )
-0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-0/shape = SubResource( 1 )
-0/shape_one_way = false
-0/shape_one_way_margin = 1.0
-0/shapes = [ {
-"autotile_coord": Vector2( 0, 0 ),
-"one_way": false,
-"one_way_margin": 1.0,
-"shape": SubResource( 1 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
-}, {
-"autotile_coord": Vector2( 0, 1 ),
-"one_way": false,
-"one_way_margin": 1.0,
-"shape": SubResource( 2 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
-}, {
-"autotile_coord": Vector2( 1, 0 ),
-"one_way": false,
-"one_way_margin": 1.0,
-"shape": SubResource( 3 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
-}, {
-"autotile_coord": Vector2( 2, 0 ),
-"one_way": false,
-"one_way_margin": 1.0,
-"shape": SubResource( 4 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
-}, {
-"autotile_coord": Vector2( 2, 1 ),
-"one_way": false,
-"one_way_margin": 1.0,
-"shape": SubResource( 5 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
-}, {
-"autotile_coord": Vector2( 2, 2 ),
-"one_way": false,
-"one_way_margin": 1.0,
-"shape": SubResource( 6 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
-}, {
-"autotile_coord": Vector2( 1, 2 ),
-"one_way": false,
-"one_way_margin": 1.0,
-"shape": SubResource( 7 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
-}, {
-"autotile_coord": Vector2( 0, 2 ),
-"one_way": false,
-"one_way_margin": 1.0,
-"shape": SubResource( 8 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
-} ]
-0/z_index = 0
-
-[sub_resource type="TileSet" id=10]
-0/name = "monochrome_transparent.png 0"
-0/texture = ExtResource( 1 )
-0/tex_offset = Vector2( 0, 0 )
-0/modulate = Color( 1, 1, 1, 1 )
-0/region = Rect2( 0, 323, 152, 50 )
-0/tile_mode = 2
-0/autotile/icon_coordinate = Vector2( 0, 0 )
-0/autotile/tile_size = Vector2( 16, 16 )
-0/autotile/spacing = 1
-0/autotile/occluder_map = [  ]
-0/autotile/navpoly_map = [  ]
-0/autotile/priority_map = [  ]
-0/autotile/z_index_map = [  ]
-0/occluder_offset = Vector2( 0, 0 )
-0/navigation_offset = Vector2( 0, 0 )
-0/shape_offset = Vector2( 0, 0 )
-0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-0/shape_one_way = false
-0/shape_one_way_margin = 0.0
-0/shapes = [  ]
-0/z_index = 0
-1/name = "monochrome_transparent.png 1"
-1/texture = ExtResource( 1 )
-1/tex_offset = Vector2( 0, 0 )
-1/modulate = Color( 1, 1, 1, 1 )
-1/region = Rect2( 272, 323, 50, 50 )
-1/tile_mode = 2
-1/autotile/icon_coordinate = Vector2( 0, 0 )
-1/autotile/tile_size = Vector2( 16, 16 )
-1/autotile/spacing = 1
-1/autotile/occluder_map = [  ]
-1/autotile/navpoly_map = [  ]
-1/autotile/priority_map = [  ]
-1/autotile/z_index_map = [  ]
-1/occluder_offset = Vector2( 0, 0 )
-1/navigation_offset = Vector2( 0, 0 )
-1/shape_offset = Vector2( 0, 0 )
-1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-1/shape_one_way = false
-1/shape_one_way_margin = 0.0
-1/shapes = [  ]
-1/z_index = 0
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 80, 88 )
 
 [node name="World" type="Node2D"]
+script = ExtResource( 4 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 72, 72 )
-collision_mask = 14
 
-[node name="TileMap" type="TileMap" parent="."]
-tile_set = SubResource( 9 )
+[node name="Environment" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 collision_layer = 2
 format = 1
-tile_data = PoolIntArray( -262148, 0, 131073, -262147, 0, 131073, -262146, 0, 131073, -262145, 0, 131073, -327680, 0, 131073, -327679, 0, 131073, -327678, 0, 131073, -327677, 0, 131073, -327676, 0, 131073, -327675, 0, 131073, -327674, 0, 131073, -327673, 0, 131073, -196613, 0, 65538, -262136, 0, 65536, -131077, 0, 65538, -196605, 0, 0, -196604, 0, 0, -196600, 0, 65536, -65541, 0, 65538, -131069, 0, 0, -131068, 0, 0, -131064, 0, 65536, -5, 0, 65538, -65528, 0, 65536, 65532, 0, 1, 65533, 0, 1, 65534, 0, 1, 65535, 0, 1, 0, 0, 1, 1, 0, 2, 8, 0, 65536, 65537, 0, 65538, 65544, 0, 65536, 131073, 0, 65538, 131080, 0, 65536, 196609, 0, 65538, 196616, 0, 65536, 262145, 0, 65538, 262152, 0, 65536, 327682, 0, 1, 327683, 0, 1, 327684, 0, 1, 327685, 0, 1, 327686, 0, 1, 327687, 0, 1 )
+tile_data = PoolIntArray( -1048585, 11, 0, -1048584, 11, 0, -1048583, 11, 0, -1048582, 11, 0, -1048581, 13, 0, -1048580, 13, 0, -1048579, 13, 0, -1048578, 13, 0, -1048577, 13, 0, -1114112, 13, 0, -983049, 11, 0, -983048, 11, 0, -983047, 12, 0, -983046, 11, 0, -983045, 13, 0, -983044, 11, 0, -983043, 13, 0, -983042, 9, 0, -983041, 13, 0, -1048576, 13, 0, -917513, 12, 0, -917512, 9, 0, -917511, 11, 0, -917510, 11, 0, -917509, 9, 0, -917508, 9, 0, -917507, 12, 0, -917506, 12, 0, -917505, 12, 0, -983040, 13, 0, -851977, 12, 0, -851976, 12, 0, -851975, 12, 0, -851974, 12, 0, -851973, 9, 0, -851972, 11, 0, -851971, 11, 0, -851970, 12, 0, -851969, 9, 0, -917504, 13, 0, -786441, 11, 0, -786440, 11, 0, -786439, 11, 0, -786438, 9, 0, -786437, 11, 0, -786436, 11, 0, -786435, 13, 0, -786434, 13, 0, -786433, 13, 0, -851968, 9, 0, -720904, 12, 0, -720903, 12, 0, -720898, 13, 0, -720897, 13, 0, -786432, 12, 0, -655370, 10, 0, -655369, 10, 0, -655368, 10, 0, -655367, 10, 0, -655362, 12, 0, -655361, 12, 0, -720896, 12, 0, -589833, 10, 0, -589832, 11, 0, -589831, 10, 0, -589830, 10, 0, -589826, 12, 0, -589825, 12, 0, -655360, 12, 0, -524299, 8, 0, -524298, 8, 0, -524297, 8, 0, -524296, 10, 0, -524295, 11, 0, -524294, 11, 0, -524292, 12, 0, -524291, 12, 0, -524290, 12, 0, -524289, 12, 0, -589824, 12, 0, -458763, 11, 0, -458762, 8, 0, -458761, 8, 0, -458760, 13, 0, -458759, 10, 0, -458758, 10, 0, -458755, 12, 0, -458754, 12, 0, -458753, 12, 0, -524288, 12, 0, -393228, 8, 0, -393227, 8, 0, -393226, 11, 0, -393225, 8, 0, -393224, 8, 0, -393223, 13, 0, -393222, 13, 0, -393219, 11, 0, -393218, 11, 0, -393217, 12, 0, -458752, 12, 0, -327691, 8, 0, -327690, 8, 0, -327689, 11, 0, -327688, 13, 0, -327687, 11, 0, -327686, 13, 0, -327683, 11, 0, -327682, 11, 0, -327681, 12, 0, -393216, 12, 0, -262152, 3, 0, -262151, 3, 0, -262150, 4, 0, -262147, 2, 0, -262146, 3, 0, -262145, 3, 0, -327680, 3, 0, -327679, 3, 0, -327678, 3, 0, -196617, 4, 0, -262141, 2, 0, -262140, 3, 0, -131082, 5, 0, -196603, 2, 0, -196602, 3, 0, -196601, 3, 0, -65546, 5, 0, -131064, 1, 0, -10, 5, 0, -65528, 1, 0, 65526, 5, 0, 65531, 0, 0, 65532, 6, 0, 65533, 6, 0, 65534, 6, 0, 65535, 6, 0, 0, 7, 0, 8, 1, 0, 131062, 5, 0, 131067, 1, 0, 65537, 7, 0, 65544, 1, 0, 196598, 5, 0, 196603, 1, 0, 131073, 5, 0, 131080, 1, 0, 262134, 5, 0, 262138, 0, 0, 196609, 5, 0, 196616, 1, 0, 327671, 6, 0, 327672, 6, 0, 327673, 6, 0, 262146, 7, 0, 262152, 1, 0, 327683, 6, 0, 327684, 6, 0, 327685, 6, 0, 327686, 6, 0, 327687, 6, 0 )
 
-[node name="Camera2D" type="Camera2D" parent="."]
-current = true
-zoom = Vector2( 0.333, 0.333 )
+[node name="CameraController" parent="." instance=ExtResource( 7 )]
 
-[node name="TileMap2" type="TileMap" parent="."]
-visible = false
-tile_set = SubResource( 10 )
-cell_size = Vector2( 16, 16 )
-format = 1
-tile_data = PoolIntArray( -131075, 1, 0, -131074, 0, 3, -196608, 0, 3, -196607, 1, 1, -196606, 1, 1, -196605, 1, 1, -196604, 1, 1, -196603, 1, 1, -196602, 1, 1, -196601, 1, 2, -65539, 1, 65536, -131065, 1, 65538, -3, 1, 65536, -65529, 1, 65538, 65533, 1, 65536, 7, 1, 65538, 131069, 1, 65536, 65543, 1, 65538, 196605, 1, 131072, 196606, 1, 131073, 196607, 1, 131073, 131072, 1, 131073, 131073, 1, 131073, 131079, 1, 65538, 196610, 1, 65536, 196615, 1, 65538, 262146, 1, 65536, 262150, 0, 0, 262151, 1, 65538, 327682, 1, 131072, 327683, 1, 131073, 327684, 1, 131073, 327685, 1, 131073, 327686, 1, 131073, 327687, 1, 131074 )
+[node name="CameraRoom" parent="CameraController/Rooms" index="0" instance=ExtResource( 8 )]
+position = Vector2( 80, 8 )
+
+[node name="CollisionShape2D" parent="CameraController/Rooms/CameraRoom/Area2D" index="0"]
+shape = SubResource( 1 )
+
+[node name="CameraRoom2" parent="CameraController/Rooms" index="1" instance=ExtResource( 8 )]
+position = Vector2( -96, 0 )
+
+[node name="CollisionShape2D" parent="CameraController/Rooms/CameraRoom2/Area2D" index="0"]
+shape = SubResource( 2 )
+
+[node name="CameraRoom3" parent="CameraController/Rooms" index="2" instance=ExtResource( 8 )]
+position = Vector2( -72, -176 )
+
+[node name="CollisionShape2D" parent="CameraController/Rooms/CameraRoom3/Area2D" index="0"]
+shape = SubResource( 3 )
 
 [node name="Events" type="Node2D" parent="."]
 
 [node name="Checkpoint" parent="Events" instance=ExtResource( 3 )]
-position = Vector2( 120, 72 )
+position = Vector2( -56, -88 )
+
+[node name="SceneEvent" parent="Events" instance=ExtResource( 5 )]
+position = Vector2( 104, -8 )
+scene_to_load = ExtResource( 6 )
+
+[node name="Sprite" parent="Events/SceneEvent" index="0"]
+region_rect = Rect2( 425, 17, 16, 16 )
+
+[node name="SceneEvent2" parent="Events" instance=ExtResource( 5 )]
+position = Vector2( -24, -32 )
+scene_to_load = ExtResource( 9 )
+
+[node name="Sprite" parent="Events/SceneEvent2" index="0"]
+region_rect = Rect2( 425, 17, 16, 16 )
+
+[node name="SceneEvent3" parent="Events" instance=ExtResource( 5 )]
+position = Vector2( -112, -8 )
+scene_to_load = ExtResource( 10 )
+
+[node name="Sprite" parent="Events/SceneEvent3" index="0"]
+region_rect = Rect2( 425, 17, 16, 16 )
+
+[node name="SceneEvent4" parent="Events" instance=ExtResource( 5 )]
+position = Vector2( -72, -168 )
+scene_to_load = ExtResource( 11 )
+
+[node name="Sprite" parent="Events/SceneEvent4" index="0"]
+region_rect = Rect2( 425, 17, 16, 16 )
+
+[editable path="CameraController"]
+
+[editable path="CameraController/Rooms/CameraRoom"]
+
+[editable path="CameraController/Rooms/CameraRoom2"]
+
+[editable path="CameraController/Rooms/CameraRoom3"]
+
+[editable path="Events/SceneEvent"]
+
+[editable path="Events/SceneEvent2"]
+
+[editable path="Events/SceneEvent3"]
+
+[editable path="Events/SceneEvent4"]

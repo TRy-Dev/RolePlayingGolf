@@ -1,14 +1,15 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://assets/1bitpack_kenney_1.1/Tilesheet/monochrome_transparent.png" type="Texture" id=1]
+[ext_resource path="res://assets/textures/monochrome_transparent.png" type="Texture" id=1]
 [ext_resource path="res://src/player/Player.gd" type="Script" id=2]
 [ext_resource path="res://src/player/Cursor.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 5.66875
+radius = 5.38556
 
 [node name="Player" type="KinematicBody2D"]
-collision/safe_margin = 0.01
+collision_mask = 14
+collision/safe_margin = 0.03
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]

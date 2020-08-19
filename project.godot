@@ -8,15 +8,33 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "Pawn",
+"language": "GDScript",
+"path": "res://src/battle/pawns/Pawn.gd"
+}, {
+"base": "Node2D",
+"class": "WorldEvent",
+"language": "GDScript",
+"path": "res://src/world/events/WorldEvent.gd"
+} ]
 _global_script_class_icons={
-
+"Pawn": "",
+"WorldEvent": ""
 }
 
 [application]
 
 config/name="Role Playing Golf"
 run/main_scene="res://src/world/World.tscn"
+
+[autoload]
+
+GameData="*res://src/autoload/GameData.gd"
+SoundEffects="*res://src/autoload/SoundEffects.tscn"
+Console="*res://src/autoload/Console.tscn"
+Courtain="*res://src/autoload/Courtain.tscn"
 
 [input]
 
