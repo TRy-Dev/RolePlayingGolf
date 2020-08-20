@@ -2,6 +2,8 @@ extends Node2D
 
 class_name WorldEvent
 
+export(String) var start_sound = ""
+
 onready var sprite = $Sprite
 onready var collider = $Area2D/CollisionShape2D
 
@@ -9,6 +11,8 @@ var enabled := true
 var event_type := ""
 
 func _on_Area2D_body_entered(body: Node) -> void:
+	if start_sound:
+		SoundEffects.play_audio(start_sound)
 	print("player entered event")
 
 func get_state() -> Dictionary:

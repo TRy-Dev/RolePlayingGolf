@@ -9,6 +9,7 @@ radius = 5.47806
 
 [node name="Heart" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+destroy_sound = "player-hurt"
 
 [node name="Sprite" parent="." index="0"]
 modulate = Color( 1, 1, 1, 1 )

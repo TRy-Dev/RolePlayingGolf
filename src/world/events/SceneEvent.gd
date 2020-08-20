@@ -6,6 +6,7 @@ func _init() -> void:
 	event_type = "scene"
 
 func _on_Area2D_body_entered(body: Node) -> void:
+	._on_Area2D_body_entered(body)
 	if not enabled:
 		return
 	_disable()

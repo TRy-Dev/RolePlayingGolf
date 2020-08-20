@@ -5,16 +5,19 @@ class_name Pawn
 signal pawn_destroyed
 
 export(NodePath) var target
+export(String) var destroy_sound
 
 onready var anim_player = $AnimationPlayer
 onready var sprite = $Sprite
 onready var tween = $Tween
+onready var collision = $Area2D/CollisionShape2D
 
 const MOVE_DIST = 16
 const MOVE_TIME = 1
 
 func _ready() -> void:
 	sprite.modulate = Color(1, 1, 1, 1)
+	collision.disabled = false
 	if target:
 		if target is NodePath:
 			target = get_node(target)
@@ -59,7 +62,9 @@ func _on_Area2D_body_entered(body: Node) -> void:
 	print("Body %s entered pawn" % body.owner.name)
 
 func _destroy() -> void:
+	collision.set_deferred("disabled", true)
 	anim_player.play("destroy")
+	SoundEffects.play_audio(destroy_sound)
 	yield(anim_player, "animation_finished")
 	if tween.is_active():
 		yield(tween, "tween_completed")

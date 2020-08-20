@@ -7,6 +7,25 @@ var _clips = {
 		preload("res://assets/sfx/footstep_concrete_001.wav"),
 		preload("res://assets/sfx/footstep_concrete_002.wav"),
 	],
+	"enemy-hurt": [
+		preload("res://assets/sfx/Hit_Hurt14.wav"),
+	],
+	"player-hurt": [
+		preload("res://assets/sfx/Hit_Hurt19.wav"),
+	],
+	"click": [
+		preload("res://assets/sfx/click4.wav"),
+	],
+	"battle": [
+		preload("res://assets/sfx/jingles_HIT11.wav"),
+		preload("res://assets/sfx/jingles_HIT15.wav"),
+	],
+	"success": [
+		preload("res://assets/sfx/jingles_PIZZI05.wav"),
+		preload("res://assets/sfx/jingles_PIZZI09.wav"),
+		preload("res://assets/sfx/jingles_PIZZI16.wav"),
+	]
+	
 }
 
 const MIN_PITCH = 0.8

@@ -45,6 +45,7 @@ func load_world_with_state(state_name) -> void:
 		print("State does not exist: %s" % state_name)
 		return
 	state_name_to_load = state_name
+	MusicPlayer.set_music_volume(-80, Courtain.anim_length)
 	yield(Courtain.show(), "completed")
 	get_tree().change_scene_to(world_scene)
 #	load_state(state_name)

@@ -35,6 +35,7 @@ GameData="*res://src/autoload/GameData.gd"
 SoundEffects="*res://src/autoload/SoundEffects.tscn"
 Console="*res://src/autoload/Console.tscn"
 Courtain="*res://src/autoload/Courtain.tscn"
+MusicPlayer="*res://src/autoload/MusicPlayer.tscn"
 
 [input]
 

@@ -22,6 +22,7 @@ var _rewards = {
 var player_moved_this_turn := false
 
 func _ready() -> void:
+	MusicPlayer.play_song("battle")
 	player.set_disable_collision(true)
 	player.global_position = start_positions.current_position
 	current_step = TURN_STEP.INIT

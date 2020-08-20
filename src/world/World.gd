@@ -6,6 +6,7 @@ onready var events_parent = $Events
 onready var player = $Player
 
 func _ready() -> void:
+	MusicPlayer.play_song("world")
 	Courtain.hide()
 	if GameData.state_name_to_load:
 		GameData.load_state(GameData.state_name_to_load)

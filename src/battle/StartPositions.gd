@@ -29,6 +29,7 @@ func update_current_position(dir):
 				else:
 					closer_position = p
 	if current_position != closer_position:
+		SoundEffects.play_audio("click")
 		pos_change_cd.start()
 		current_position = closer_position
 

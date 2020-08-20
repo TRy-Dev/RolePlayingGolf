@@ -58,9 +58,15 @@ shape = SubResource( 3 )
 
 [node name="Checkpoint" parent="Events" instance=ExtResource( 3 )]
 position = Vector2( -56, -88 )
+start_sound = "success"
+
+[node name="Checkpoint2" parent="Events" instance=ExtResource( 3 )]
+position = Vector2( 32, -24 )
+start_sound = "success"
 
 [node name="SceneEvent" parent="Events" instance=ExtResource( 5 )]
 position = Vector2( 104, -8 )
+start_sound = "battle"
 scene_to_load = ExtResource( 6 )
 
 [node name="Sprite" parent="Events/SceneEvent" index="0"]
@@ -68,6 +74,7 @@ region_rect = Rect2( 425, 17, 16, 16 )
 
 [node name="SceneEvent2" parent="Events" instance=ExtResource( 5 )]
 position = Vector2( -24, -32 )
+start_sound = "battle"
 scene_to_load = ExtResource( 9 )
 
 [node name="Sprite" parent="Events/SceneEvent2" index="0"]
@@ -75,6 +82,7 @@ region_rect = Rect2( 425, 17, 16, 16 )
 
 [node name="SceneEvent3" parent="Events" instance=ExtResource( 5 )]
 position = Vector2( -112, -8 )
+start_sound = "battle"
 scene_to_load = ExtResource( 10 )
 
 [node name="Sprite" parent="Events/SceneEvent3" index="0"]
@@ -82,6 +90,7 @@ region_rect = Rect2( 425, 17, 16, 16 )
 
 [node name="SceneEvent4" parent="Events" instance=ExtResource( 5 )]
 position = Vector2( -72, -168 )
+start_sound = "battle"
 scene_to_load = ExtResource( 11 )
 
 [node name="Sprite" parent="Events/SceneEvent4" index="0"]

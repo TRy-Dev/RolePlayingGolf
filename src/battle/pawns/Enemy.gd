@@ -11,7 +11,7 @@ func move() -> void:
 
 func _on_Area2D_body_entered(body: Node) -> void:
 	if body.name == "Player":
-		SoundEffects.play_audio("enemy-hurt")
+		print("destroyed by player")
 		_destroy()
 
 func _on_target_destroyed(t) -> void:
