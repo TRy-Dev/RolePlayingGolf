@@ -18,10 +18,10 @@ func _on_Area2D_body_entered(body: Node) -> void:
 func get_state() -> Dictionary:
 	var state = .get_state()
 	state["scene_to_load"] = scene_to_load
-	state["region_rect"] = sprite.region_rect
+#	state["region_rect"] = sprite.region_rect
 	return state
 
 func set_state(state) -> void:
 	.set_state(state)
 	scene_to_load = state["scene_to_load"]
-	call_deferred("set_sprite_region", state["region_rect"])
+#	call_deferred("set_sprite_region", state["region_rect"])

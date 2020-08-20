@@ -24,8 +24,10 @@ var _clips = {
 		preload("res://assets/sfx/jingles_PIZZI05.wav"),
 		preload("res://assets/sfx/jingles_PIZZI09.wav"),
 		preload("res://assets/sfx/jingles_PIZZI16.wav"),
-	]
-	
+	],
+	"defeat": [
+		preload("res://assets/sfx/jingles_PIZZI07.wav"),
+	],
 }
 
 const MIN_PITCH = 0.8

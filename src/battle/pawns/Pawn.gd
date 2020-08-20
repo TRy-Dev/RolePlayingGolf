@@ -4,21 +4,22 @@ class_name Pawn
 
 signal pawn_destroyed
 
-export(NodePath) var target
+var target
 export(String) var destroy_sound
+export(String) var color
 
 onready var anim_player = $AnimationPlayer
 onready var sprite = $Sprite
 onready var tween = $Tween
 onready var collision = $Area2D/CollisionShape2D
 
-const MOVE_DIST = 16
-const MOVE_TIME = 0.3
+export(int) var move_dist = 0
+const MOVE_TIME = 0.4
 
 var is_destroyed = false
 
 func _ready() -> void:
-	sprite.modulate = Color(1, 1, 1, 1)
+	sprite.modulate = Colors.get_color(color)
 	collision.disabled = false
 	if target:
 		if target is NodePath:
@@ -53,7 +54,7 @@ func move():
 	else:
 		move_pos.x = 0
 		move_pos.y = sign(move_pos.y)
-	move_pos *= MOVE_DIST
+	move_pos *= move_dist
 	
 	print("%s moves by %s" % [name, str(move_pos)])
 	

@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://src/battle/pawns/Pawn.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/battle/pawns/Enemy.gd" type="Script" id=2]
+[ext_resource path="res://assets/textures/peasant.png" type="Texture" id=3]
+
+[node name="Peasant" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+destroy_sound = "enemy-hurt"
+color = "red"
+move_dist = 16
+
+[node name="Sprite" parent="." index="0"]
+modulate = Color( 0.901961, 0.282353, 0.180392, 1 )
+texture = ExtResource( 3 )
+region_rect = Rect2( 425, 17, 16, 16 )

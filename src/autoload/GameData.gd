@@ -9,7 +9,7 @@ var _states = {
 	}
 }
 
-const START_MAX_PLAYER_MOVES = 1
+const START_MAX_PLAYER_MOVES = 3
 var max_player_moves = START_MAX_PLAYER_MOVES
 
 const START_PLAYER_STATE = {
@@ -22,6 +22,8 @@ var _player_state = START_PLAYER_STATE
 var world_scene = preload("res://src/world/World.tscn")
 
 var state_name_to_load = ""
+
+var tutorial_visible = true
 
 var _skills = {
 	"break": {

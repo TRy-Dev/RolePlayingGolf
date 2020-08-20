@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://src/gui/MainUI.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/kenney_mini.tres" type="DynamicFont" id=2]
+[ext_resource path="res://src/gui/TutorialUI.tscn" type="PackedScene" id=3]
 
 [node name="MainUI" type="Control"]
 anchor_right = 1.0
@@ -12,41 +13,50 @@ __meta__ = {
 }
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+scale = Vector2( 0.001, 1 )
+transform = Transform2D( 0.001, 0, 0, 1, 0, 0 )
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 anchor_right = 1.0
 margin_bottom = 32.0
-color = Color( 0.4, 0.252, 0.338333, 1 )
+color = Color( 0.478431, 0.266667, 0.290196, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="UI" type="HBoxContainer" parent="CanvasLayer"]
-anchor_right = 1.0
+modulate = Color( 0.811765, 0.776471, 0.721569, 1 )
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -512.0
+margin_right = 512.0
 margin_bottom = 32.0
 custom_constants/separation = 20
+alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Hearts" type="VBoxContainer" parent="CanvasLayer/UI"]
-margin_right = 120.0
+margin_left = 182.0
+margin_right = 332.0
 margin_bottom = 32.0
-rect_min_size = Vector2( 120, 0 )
+rect_min_size = Vector2( 150, 0 )
 alignment = 1
 
 [node name="HeartContainer" type="HBoxContainer" parent="CanvasLayer/UI/Hearts"]
 margin_top = 16.0
-margin_right = 120.0
+margin_right = 150.0
 margin_bottom = 16.0
+alignment = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Moves" type="Label" parent="CanvasLayer/UI"]
-margin_left = 140.0
+margin_left = 352.0
 margin_top = 6.0
-margin_right = 290.0
+margin_right = 502.0
 margin_bottom = 26.0
 rect_min_size = Vector2( 150, 0 )
 custom_fonts/font = ExtResource( 2 )
@@ -57,9 +67,9 @@ __meta__ = {
 }
 
 [node name="Gold" type="Label" parent="CanvasLayer/UI"]
-margin_left = 310.0
+margin_left = 522.0
 margin_top = 6.0
-margin_right = 460.0
+margin_right = 672.0
 margin_bottom = 26.0
 rect_min_size = Vector2( 150, 0 )
 custom_fonts/font = ExtResource( 2 )
@@ -70,9 +80,9 @@ __meta__ = {
 }
 
 [node name="Exp" type="Label" parent="CanvasLayer/UI"]
-margin_left = 480.0
+margin_left = 692.0
 margin_top = 6.0
-margin_right = 630.0
+margin_right = 842.0
 margin_bottom = 26.0
 rect_min_size = Vector2( 150, 0 )
 custom_fonts/font = ExtResource( 2 )
@@ -81,3 +91,6 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="TutorialUI" parent="CanvasLayer" instance=ExtResource( 3 )]
+margin_top = 40.0

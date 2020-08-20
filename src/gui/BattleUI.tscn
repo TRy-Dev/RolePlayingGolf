@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://src/gui/BattleUI.gd" type="Script" id=1]
-[ext_resource path="res://assets/textures/monochrome_transparent.png" type="Texture" id=2]
+[ext_resource path="res://assets/fonts/kenney_pixel.tres" type="DynamicFont" id=2]
 
 [node name="BattleUI" type="Control"]
 anchor_right = 1.0
@@ -11,7 +11,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Units" type="Control" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Units" type="Control" parent="CanvasLayer"]
 anchor_left = 0.7
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -19,8 +21,29 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sprite" type="Sprite" parent="Units"]
-position = Vector2( -684.8, 32 )
-texture = ExtResource( 2 )
-region_enabled = true
-region_rect = Rect2( 425, 17, 16, 16 )
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Units"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Units"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="MainText" type="Label" parent="CanvasLayer"]
+modulate = Color( 0.811765, 0.776471, 0.721569, 1 )
+anchor_right = 1.0
+margin_left = 200.0
+margin_top = 40.0
+margin_right = -200.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 60 )
+custom_fonts/font = ExtResource( 2 )
+text = "text"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

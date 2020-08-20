@@ -3,7 +3,7 @@ extends Control
 onready var anim_player :AnimationPlayer = $AnimationPlayer
 onready var courtain = $CanvasLayer/ColorRect
 
-const START_COLOR = Color(0,0,0,1)
+var START_COLOR = Colors.get_color("black")
 
 var anim_length = 1.0
 

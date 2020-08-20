@@ -9,6 +9,7 @@ onready var gold_label = $CanvasLayer/UI/Gold
 onready var exp_label = $CanvasLayer/UI/Exp
 
 func _ready() -> void:
+	$CanvasLayer.scale = Vector2(1, 1)
 	GameData.connect("player_state_updated", self, "_on_player_state_updated")
 #	for i in range(GameData.max_player_moves):
 #		var heart_ui = heart_ui_prefab.instance()

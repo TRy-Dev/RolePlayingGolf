@@ -2,7 +2,7 @@ extends Node2D
 
 signal scene_ready
 
-onready var env = $Environment
+onready var env = $EnvironmentStatic
 onready var events_parent = $Events
 #onready var events = events_parent.get_children()
 onready var player = $Player
@@ -14,6 +14,8 @@ func _ready() -> void:
 	player.connect("player_moved", self, "_on_player_moved")
 	
 	emit_signal("scene_ready")
+	for e in events_parent.get_children():
+		e.connect("world_event_reached", self, "_on_world_event_reached")
 
 func _process(delta: float) -> void:
 #	if not player.is_moving:
@@ -74,4 +76,12 @@ func _add_event(event_data):
 
 func _on_player_moved() -> void:
 	GameData.decrease_moves()
+	
+func _on_world_event_reached(event) -> void:
+	print(event.event_type)
+	match event.event_type:
+		"checkpoint":
+			event.set_color("yellow")
+		"scene":
+			event.set_color("red")
 	

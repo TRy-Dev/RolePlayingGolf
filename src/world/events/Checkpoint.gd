@@ -12,5 +12,6 @@ func _on_Area2D_body_entered(body: Node) -> void:
 #	_disable()
 	GameData.save_state("checkpoint", false)
 	GameData.reset_moves()
+	emit_signal("world_event_reached", self)
 	Console.log_msg("Checkpoint reached")
-	
+

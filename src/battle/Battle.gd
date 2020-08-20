@@ -1,11 +1,13 @@
 extends Node2D
 
 signal scene_ready
+signal turn_step_changed
 
 onready var anim_player = $AnimationPlayer
 onready var player = $Player
 onready var start_positions = $StartPositions
 onready var enemy_turn_timer = $MaxEnemyTurnTimer
+onready var battle_ui = $BattleUI
 
 var current_step
 
@@ -25,10 +27,12 @@ var _rewards = {
 var player_moved_this_turn := false
 
 func _ready() -> void:
+	connect("turn_step_changed", battle_ui, "_on_turn_step_changed")
+	
 	MusicPlayer.play_song("battle")
 	player.set_disable_collision(true)
 	player.global_position = start_positions.current_position
-	current_step = TURN_STEP.INIT
+	change_current_step(TURN_STEP.INIT)
 	anim_player.play("init")
 	Courtain.hide()
 	
@@ -50,18 +54,17 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	enemy_turn_timer.stop()
-	$Label.text = step_names[current_step]
 	match current_step:
 		TURN_STEP.INIT:
 			if not anim_player.is_playing():
-				current_step = TURN_STEP.SELECT_START_POS
+				change_current_step(TURN_STEP.SELECT_START_POS)
 				start_positions.show()
 				return
 		TURN_STEP.SELECT_START_POS:
 			if Input.is_action_just_pressed("action"):
 				start_positions.hide()
 				player_moved_this_turn = false
-				current_step = TURN_STEP.PLAYER_TURN
+				change_current_step(TURN_STEP.PLAYER_TURN)
 				player.set_disable_collision(false)
 				return
 			var x = Input.get_action_strength("right") - Input.get_action_strength("left")
@@ -76,7 +79,7 @@ func _process(delta: float) -> void:
 				player_moved_this_turn = true
 				player.cursor.hide()
 			if not player.is_moving and player_moved_this_turn:
-				current_step = TURN_STEP.ENEMY_TURN
+				change_current_step(TURN_STEP.ENEMY_TURN)
 				_check_win_loss()
 		TURN_STEP.ENEMY_TURN:
 			enemy_turn_timer.start()
@@ -101,7 +104,7 @@ func _process(delta: float) -> void:
 						set_process(true)
 			if(_check_win_loss()):
 				return
-			current_step = TURN_STEP.PLAYER_TURN
+			change_current_step(TURN_STEP.PLAYER_TURN)
 #			_check_win_loss()
 			player_moved_this_turn = false
 		TURN_STEP.END_WIN:
@@ -117,6 +120,17 @@ func _process(delta: float) -> void:
 			Console.log_msg("Battle lost. Loading last checkpoint")
 			GameData.load_world_with_state("checkpoint")
 
+func change_current_step(new_step) -> void:
+	var previous = step_names[current_step] if current_step else ""
+	current_step = new_step
+	match new_step:
+		TURN_STEP.END_LOSS:
+			SoundEffects.play_audio("defeat")
+		TURN_STEP.END_WIN:
+			SoundEffects.play_audio("success")
+	emit_signal("turn_step_changed", previous, step_names[new_step])
+	
+
 func _on_pawn_destroyed(pawn) -> void:
 	print("Pawn %s destroyed" % pawn.name)
 #	_check_win_loss()
@@ -126,13 +140,13 @@ func _check_win_loss() -> bool:
 		return true
 	var hearts = $Hearts.get_children()
 	if len(hearts) < 1 or all_pawns_destroyed(hearts):
-		current_step = TURN_STEP.END_LOSS
+		change_current_step(TURN_STEP.END_LOSS)
 		player.set_physics_process(false)
 		set_process(true)
 		return true
 	var enemies = $Enemies.get_children()
 	if len(enemies) < 1 or all_pawns_destroyed(enemies):
-		current_step = TURN_STEP.END_WIN
+		change_current_step(TURN_STEP.END_WIN)
 		player.set_physics_process(false)
 		set_process(true)
 		return true
@@ -166,5 +180,5 @@ func get_closest_heart(pos: Vector2, except :Pawn = null) -> Pawn:
 
 func _on_MaxEnemyTurnTimer_timeout() -> void:
 	print("Enemy turn exceeded max time of %s. " % enemy_turn_timer.wait_time)
-	current_step = TURN_STEP.PLAYER_TURN
+	change_current_step(TURN_STEP.PLAYER_TURN)
 	set_process(true)
