@@ -14,7 +14,7 @@ destroy_sound = "player-hurt"
 [node name="Sprite" parent="." index="0"]
 modulate = Color( 1, 1, 1, 1 )
 texture = ExtResource( 3 )
-region_rect = Rect2( 680, 170, 16, 16 )
+region_rect = Rect2( 714, 170, 16, 16 )
 
 [node name="CollisionShape2D" parent="Area2D" index="0"]
 position = Vector2( 0, -0.387957 )

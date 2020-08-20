@@ -2,7 +2,7 @@ extends Control
 
 onready var messages_container = $CanvasLayer/Messages
 
-const MAX_MESSAGE_COUNT = 10
+const MAX_MESSAGE_COUNT = 5
 
 var messages = []
 var labels = []

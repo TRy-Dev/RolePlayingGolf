@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://assets/world_tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://src/player/Player.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://src/battle/battles/Battle2.tscn" type="PackedScene" id=9]
 [ext_resource path="res://src/battle/battles/Battle3.tscn" type="PackedScene" id=10]
 [ext_resource path="res://src/battle/battles/Battle4.tscn" type="PackedScene" id=11]
+[ext_resource path="res://src/gui/MainUI.tscn" type="PackedScene" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 56, 96 )
@@ -95,6 +96,8 @@ scene_to_load = ExtResource( 11 )
 
 [node name="Sprite" parent="Events/SceneEvent4" index="0"]
 region_rect = Rect2( 425, 17, 16, 16 )
+
+[node name="MainUI" parent="." instance=ExtResource( 12 )]
 
 [editable path="CameraController"]
 

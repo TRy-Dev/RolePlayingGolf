@@ -1,5 +1,7 @@
 extends Node2D
 
+signal scene_ready
+
 onready var env = $Environment
 onready var events_parent = $Events
 #onready var events = events_parent.get_children()
@@ -8,8 +10,10 @@ onready var player = $Player
 func _ready() -> void:
 	MusicPlayer.play_song("world")
 	Courtain.hide()
-	if GameData.state_name_to_load:
-		GameData.load_state(GameData.state_name_to_load)
+	GameData.load_state()
+	player.connect("player_moved", self, "_on_player_moved")
+	
+	emit_signal("scene_ready")
 
 func _process(delta: float) -> void:
 #	if not player.is_moving:
@@ -29,8 +33,9 @@ func set_world_state(state) -> void:
 		_add_event(e)
 	# player
 	player.global_position = state["player"]["position"]
+	player.velocity = state["player"]["velocity"]
 
-func get_world_state() -> Dictionary:
+func get_world_state(save_player_velocity) -> Dictionary:
 	var state = {}
 	# tiles
 	state["tiles"] = {}
@@ -41,16 +46,14 @@ func get_world_state() -> Dictionary:
 	var events = events_parent.get_children()
 	for e in events:
 		var event_state = e.get_state()
-#		event_state["position"] = e.global_position
-#		event_state["type"] = e.event_type
-#		event_state["enabled"] = e.enabled
-#		match e.event_type:
-#			"scene":
-#				event_state["scene_to_load"] = e.scene_to_
 		state["events"].append(event_state)
 	# player
 	state["player"] = {}
 	state["player"]["position"] = player.global_position
+	if save_player_velocity:
+		state["player"]["velocity"] = player.velocity
+	else:
+		state["player"]["velocity"] = Vector2()
 	return state
 
 func _add_event(event_data):
@@ -68,3 +71,7 @@ func _add_event(event_data):
 	new_event.enabled = event_data["enabled"]
 	new_event.global_position = event_data["position"]
 #	events.append(new_event)
+
+func _on_player_moved() -> void:
+	GameData.decrease_moves()
+	

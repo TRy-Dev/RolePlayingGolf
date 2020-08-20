@@ -1,8 +1,11 @@
 extends Node2D
 
+signal scene_ready
+
 onready var anim_player = $AnimationPlayer
 onready var player = $Player
 onready var start_positions = $StartPositions
+onready var enemy_turn_timer = $MaxEnemyTurnTimer
 
 var current_step
 
@@ -30,13 +33,23 @@ func _ready() -> void:
 	Courtain.hide()
 	
 	var hearts = $Hearts.get_children()
+	var heart_count = GameData.get_hearts_count()
+#	print("h below par: %s" % GameData.get_hearts_below_par())
+	for i in range(len(hearts) - heart_count):
+		print("popped heart")
+		var h = hearts.pop_front()
+		h.queue_free()
+		
 	var enemies = $Enemies.get_children()
 	for h in hearts:
 		h.connect("pawn_destroyed", self, "_on_pawn_destroyed")
 	for e in enemies:
 		e.connect("pawn_destroyed", self, "_on_pawn_destroyed")
+	
+	emit_signal("scene_ready")
 
 func _process(delta: float) -> void:
+	enemy_turn_timer.stop()
 	$Label.text = step_names[current_step]
 	match current_step:
 		TURN_STEP.INIT:
@@ -56,30 +69,40 @@ func _process(delta: float) -> void:
 			start_positions.update_current_position(Vector2(x, y))
 			player.global_position = start_positions.current_position
 		TURN_STEP.PLAYER_TURN:
-			_check_win_loss()
+#			_check_win_loss()
 			player.handle_input()
 			if Input.is_action_just_pressed("action"):
+				player.is_moving = true
 				player_moved_this_turn = true
 				player.cursor.hide()
 			if not player.is_moving and player_moved_this_turn:
 				current_step = TURN_STEP.ENEMY_TURN
+				_check_win_loss()
 		TURN_STEP.ENEMY_TURN:
-			_check_win_loss()
+			enemy_turn_timer.start()
+#			_check_win_loss()
 			if player.is_moving:
 				return
 			var enemies = $Enemies.get_children()
 			for e in enemies:
+				if(_check_win_loss()):
+					return
 				if e != null and is_instance_valid(e):
+					if not e.find_target():
+#						_check_win_loss()
+						if current_step != TURN_STEP.END_LOSS:
+							print("--- ERROR: No targets for enemy and no win state")
+						return
 					if e.target:
-						print("Schedule %s to move" % e.name)
 						set_process(false)
-						_check_win_loss()
-						print("start move")
+#						_check_win_loss()
 						yield(e.move(), "completed")
-						print("end move")
-						_check_win_loss()
+#						_check_win_loss()
 						set_process(true)
+			if(_check_win_loss()):
+				return
 			current_step = TURN_STEP.PLAYER_TURN
+#			_check_win_loss()
 			player_moved_this_turn = false
 		TURN_STEP.END_WIN:
 			var rewards_str = ""
@@ -96,23 +119,30 @@ func _process(delta: float) -> void:
 
 func _on_pawn_destroyed(pawn) -> void:
 	print("Pawn %s destroyed" % pawn.name)
-	_check_win_loss()
+#	_check_win_loss()
 
-func _check_win_loss() -> void:
+func _check_win_loss() -> bool:
 	if current_step == TURN_STEP.END_LOSS or current_step == TURN_STEP.END_WIN:
-		return
+		return true
 	var hearts = $Hearts.get_children()
-	if len(hearts) < 1:
+	if len(hearts) < 1 or all_pawns_destroyed(hearts):
 		current_step = TURN_STEP.END_LOSS
 		player.set_physics_process(false)
 		set_process(true)
-		return
+		return true
 	var enemies = $Enemies.get_children()
-	if len(enemies) < 1:
+	if len(enemies) < 1 or all_pawns_destroyed(enemies):
 		current_step = TURN_STEP.END_WIN
 		player.set_physics_process(false)
 		set_process(true)
-		return
+		return true
+	return false
+
+func all_pawns_destroyed(pawns) -> bool:
+	for p in pawns:
+		if not p.is_destroyed:
+			return false
+	return true
 
 func get_closest_heart(pos: Vector2, except :Pawn = null) -> Pawn:
 	var hearts = $Hearts.get_children()
@@ -132,3 +162,9 @@ func get_closest_heart(pos: Vector2, except :Pawn = null) -> Pawn:
 		if h.global_position.distance_squared_to(pos) < closest.global_position.distance_squared_to(pos):
 			closest = h
 	return closest
+
+
+func _on_MaxEnemyTurnTimer_timeout() -> void:
+	print("Enemy turn exceeded max time of %s. " % enemy_turn_timer.wait_time)
+	current_step = TURN_STEP.PLAYER_TURN
+	set_process(true)

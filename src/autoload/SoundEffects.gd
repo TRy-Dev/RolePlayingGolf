@@ -38,7 +38,7 @@ func _init() -> void:
 	
 func play_audio(clip_name) -> void:
 	if not clip_name in _clips:
-		print("Audio clip does not exist: %s" % clip_name)
+		print("--- Audio clip does not exist: %s" % clip_name)
 		return
 	for p in audio_players:
 		if not p.playing:
@@ -46,4 +46,4 @@ func play_audio(clip_name) -> void:
 			p.pitch_scale = rng.randf_range(MIN_PITCH, MAX_PITCH)
 			p.play()
 			return
-	print("Not enough AudioStreamPlayers")
+	print("--- Not enough AudioStreamPlayers in SoundEffects")

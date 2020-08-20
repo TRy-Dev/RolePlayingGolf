@@ -14,11 +14,9 @@ position = Vector2( 8, -24 )
 
 [node name="Enemy" parent="Enemies" index="0" instance=ExtResource( 3 )]
 position = Vector2( -8, 8 )
-target = NodePath("../../Hearts/Heart")
 
 [node name="Enemy2" parent="Enemies" index="1" instance=ExtResource( 3 )]
 position = Vector2( 8, -8 )
-target = NodePath("../../Hearts/Heart2")
 
 [node name="Environment" parent="." index="3"]
-tile_data = PoolIntArray( -196609, 0, 131073, -262144, 0, 131073, -131074, 0, 131074, -196607, 0, 131072, -65539, 0, 65538, -131070, 0, 65536, -3, 0, 65538, -65534, 0, 65536, 65533, 0, 65538, 2, 0, 65536, 131069, 0, 65538, 65538, 0, 65536, 196605, 0, 65538, 131074, 0, 65536, 262142, 0, 1, 262143, 0, 1, 196608, 0, 1, 196609, 0, 1 )
+tile_data = PoolIntArray( -196609, 0, 131073, -262144, 0, 131073, -131074, 0, 65538, -196607, 0, 65536, -65538, 0, 131074, -131071, 0, 131072, -3, 0, 65538, -65534, 0, 65536, 65533, 0, 65538, 2, 0, 65536, 131070, 0, 2, 65537, 0, 0, 196606, 0, 65538, 131073, 0, 65536, 262143, 0, 1, 196608, 0, 1 )

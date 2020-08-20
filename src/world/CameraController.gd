@@ -4,6 +4,7 @@ onready var camera = $Camera2D
 onready var tween = $Tween
 
 const PADDING = Vector2(32, 32)
+const MIN_ZOOM = 0.4
 
 func _ready() -> void:
 	camera.smoothing_enabled = false
@@ -15,6 +16,8 @@ func look_at_room(pos, size) -> void:
 	
 	zoom.x = max(zoom.x, zoom.y)
 	zoom.y = max(zoom.x, zoom.y)
+	zoom.x = max(zoom.x, MIN_ZOOM)
+	zoom.y = zoom.x
 	
 	tween.interpolate_property(camera, "zoom",
 		camera.zoom, zoom, 1,

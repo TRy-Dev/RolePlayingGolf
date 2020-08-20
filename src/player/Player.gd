@@ -1,10 +1,12 @@
 extends KinematicBody2D
 
+signal player_moved
+
 onready var cursor = $Cursor
 onready var collider = $CollisionShape2D
 
 var acceleration :Vector2
-var velocity :Vector2
+var velocity :Vector2 setget set_velocity 
 var mass :float
 var friction_coeff = 0.02
 var bounce_decay = 0.3
@@ -21,11 +23,23 @@ var is_moving :bool = false
 
 var rot_amount = 0.0
 
+const START_MOVE_DELAY = 0.3
+const BRAKE_MULTIPLIER = 3
+
+func set_velocity(value):
+	velocity = value
+	if velocity.length_squared() > 0:
+		is_moving = true
+		cursor.hide()
+
 func _ready() -> void:
 	mass = 1
-	_rotate(0)
 	_change_strength(0)
-	cursor.hide()
+	_rotate(0)
+	
+	set_physics_process(false)
+	yield(get_tree().create_timer(START_MOVE_DELAY), "timeout")
+	set_physics_process(true)
 
 func apply_force(force) -> void:
 	acceleration += force / mass;
@@ -46,6 +60,7 @@ func handle_input() -> void:
 		_change_strength(y)
 	if Input.is_action_just_pressed("action"):
 		SoundEffects.play_audio("hit")
+		emit_signal("player_moved")
 		apply_force(direction * current_strength)
 
 func _rotate(dir) -> void:
@@ -63,11 +78,10 @@ func _physics_process(delta: float) -> void:
 	# apply forces
 	var friction = Vector2(velocity.x, velocity.y)
 	friction *= -1
-#	if Input.is_action_pressed("action"):
-#		friction *= 3 * friction_coeff
-#	else:
-#		friction *= friction_coeff
 	friction *= friction_coeff
+	if GameData.skill_unlocked("break"):
+		if Input.is_action_pressed("action"):
+			friction *= BRAKE_MULTIPLIER
 	apply_force(friction)
 	
 	# move

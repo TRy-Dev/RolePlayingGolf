@@ -6,6 +6,8 @@ onready var tween :Tween = $Tween
 var songs = {
 	"world": preload("res://assets/music/world.ogg"),
 	"battle": preload("res://assets/music/battle.ogg"),
+	"dialog": preload("res://assets/music/dialog_scene.ogg"),
+	"main-menu": preload("res://assets/music/main_menu.ogg"),
 }
 func _ready() -> void:
 	music.volume_db = -80

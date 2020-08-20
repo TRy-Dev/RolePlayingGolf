@@ -13,13 +13,13 @@ var event_type := ""
 func _on_Area2D_body_entered(body: Node) -> void:
 	if start_sound:
 		SoundEffects.play_audio(start_sound)
-	print("player entered event")
 
 func get_state() -> Dictionary:
 	return {
 		"position": global_position,
 		"type": event_type,
-		"enabled": enabled
+		"enabled": enabled,
+		"start-sound": start_sound
 	}
 	
 func set_state(state) -> void:
@@ -28,6 +28,7 @@ func set_state(state) -> void:
 		return
 	global_position = state["position"]
 	event_type = state["type"]
+	start_sound = state["start-sound"]
 	
 	
 func _disable() -> void:

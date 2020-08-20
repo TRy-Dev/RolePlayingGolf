@@ -14,10 +14,10 @@ __meta__ = {
 
 [node name="Messages" type="VBoxContainer" parent="CanvasLayer"]
 anchor_bottom = 1.0
-margin_left = 40.0
-margin_top = 40.0
+margin_left = 8.0
+margin_top = 8.0
 margin_right = 320.0
-margin_bottom = -40.0
+margin_bottom = -8.0
 alignment = 2
 __meta__ = {
 "_edit_use_anchors_": false

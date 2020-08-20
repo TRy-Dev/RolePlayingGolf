@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/textures/heart_on.png" type="Texture" id=1]
+[ext_resource path="res://src/gui/HeartUI.gd" type="Script" id=2]
+[ext_resource path="res://assets/textures/heart_off.png" type="Texture" id=3]
+
+[node name="HeartUI" type="TextureRect"]
+modulate = Color( 0.901961, 0.282353, 0.180392, 1 )
+margin_right = 16.0
+margin_bottom = 16.0
+texture = ExtResource( 1 )
+stretch_mode = 4
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+heart_on = ExtResource( 1 )
+heart_off = ExtResource( 3 )
+
+[node name="Tween" type="Tween" parent="."]
