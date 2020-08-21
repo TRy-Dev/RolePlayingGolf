@@ -35,6 +35,7 @@ func _ready() -> void:
 	change_current_step(TURN_STEP.INIT)
 	anim_player.play("init")
 	Courtain.hide()
+	Console.toggle_visible(true, true)
 	
 	var hearts = $Hearts.get_children()
 	var heart_count = GameData.get_hearts_count()

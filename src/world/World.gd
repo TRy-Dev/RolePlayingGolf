@@ -8,6 +8,7 @@ onready var events_parent = $Events
 onready var player = $Player
 
 func _ready() -> void:
+	Console.toggle_visible(true, true)
 	MusicPlayer.play_song("world")
 	Courtain.hide()
 	GameData.load_state()
@@ -78,10 +79,10 @@ func _on_player_moved() -> void:
 	GameData.decrease_moves()
 	
 func _on_world_event_reached(event) -> void:
-	print(event.event_type)
-	match event.event_type:
-		"checkpoint":
-			event.set_color("yellow")
-		"scene":
-			event.set_color("red")
+	print("Event %s reached" % event.event_type)
+#	match event.event_type:
+#		"checkpoint":
+#			event.set_color("yellow")
+#		"scene":
+#			event.set_color("red")
 	

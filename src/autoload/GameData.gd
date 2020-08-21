@@ -29,11 +29,11 @@ var _skills = {
 	"break": {
 		"ui-name": "-Control",
 		"description": "Press space to break while moving",
-		"unlocked": true
+		"unlocked": false
 	},
 	"seer": {
 		"ui-name": "Seer",
-		"description": "See Golfs' path when aiming",
+		"description": "See Golf's path when aiming",
 		"unlocked": false
 	},
 	"side-control": {
@@ -54,6 +54,7 @@ var _skills = {
 }
 
 func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	load_default_state(true)
 
 func save_state(state_name, save_velocity = true):

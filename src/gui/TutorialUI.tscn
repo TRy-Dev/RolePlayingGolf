@@ -13,6 +13,7 @@
 
 [sub_resource type="Animation" id=1]
 resource_name = "hide"
+length = 0.6
 tracks/0/type = "bezier"
 tracks/0/path = NodePath(".:modulate:a")
 tracks/0/interp = 1
@@ -21,11 +22,12 @@ tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 1 )
+"times": PoolRealArray( 0, 0.6 )
 }
 
 [sub_resource type="Animation" id=2]
 resource_name = "show"
+length = 0.6
 tracks/0/type = "bezier"
 tracks/0/path = NodePath(".:modulate:a")
 tracks/0/interp = 1
@@ -34,11 +36,10 @@ tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 1 )
+"times": PoolRealArray( 0, 0.6 )
 }
 
 [node name="TutorialUI" type="Control"]
-modulate = Color( 1, 1, 1, 0.632387 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 12.0
@@ -54,50 +55,51 @@ __meta__ = {
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -266.0
-margin_top = 380.0
-color = Color( 0.478431, 0.266667, 0.290196, 1 )
+margin_left = -338.0
+margin_top = 292.0
+color = Color( 0.478431, 0.266667, 0.290196, 0.784314 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Controls" type="Control" parent="Background"]
-anchor_right = 1.0
-margin_left = 12.0
-margin_top = 12.0
-margin_right = -12.0
-margin_bottom = 128.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Rules" type="VBoxContainer" parent="Background/Controls"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Background"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -8.0
+custom_constants/separation = 18
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Controls" type="VBoxContainer" parent="Background/VBoxContainer"]
+margin_right = 322.0
+margin_bottom = 144.0
 custom_constants/separation = 8
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TitleRow" type="HBoxContainer" parent="Background/Controls/Rules"]
-margin_top = 2.0
-margin_right = 252.0
+[node name="TitleRow" type="HBoxContainer" parent="Background/VBoxContainer/Controls"]
+margin_right = 322.0
 margin_bottom = 30.0
 custom_constants/separation = 32
 
-[node name="Title" type="Label" parent="Background/Controls/Rules/TitleRow"]
+[node name="Title" type="Label" parent="Background/VBoxContainer/Controls/TitleRow"]
+margin_top = 1.0
 margin_right = 96.0
-margin_bottom = 28.0
+margin_bottom = 29.0
 custom_fonts/font = ExtResource( 5 )
 custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
 text = "Controls"
 
-[node name="HideUI" type="Label" parent="Background/Controls/Rules/TitleRow"]
+[node name="HideUI" type="Label" parent="Background/VBoxContainer/Controls/TitleRow"]
 margin_left = 128.0
-margin_top = 4.0
-margin_right = 252.0
-margin_bottom = 24.0
+margin_right = 314.0
+margin_bottom = 30.0
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 0.392157 )
 text = "Press H to hide"
@@ -105,211 +107,206 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Row" type="HBoxContainer" parent="Background/Controls/Rules"]
+[node name="Row" type="HBoxContainer" parent="Background/VBoxContainer/Controls"]
 margin_top = 38.0
-margin_right = 252.0
-margin_bottom = 58.0
+margin_right = 322.0
+margin_bottom = 68.0
 rect_min_size = Vector2( 0, 20 )
 custom_constants/separation = 18
 
-[node name="PawnUI2" parent="Background/Controls/Rules/Row" instance=ExtResource( 6 )]
-margin_bottom = 20.0
+[node name="PawnUI2" parent="Background/VBoxContainer/Controls/Row" instance=ExtResource( 6 )]
+margin_bottom = 30.0
 texture = ExtResource( 7 )
 img_on = ExtResource( 7 )
 img_off = ExtResource( 7 )
 color_on = "blue"
 color_off = "blue"
 
-[node name="PawnUI" parent="Background/Controls/Rules/Row" instance=ExtResource( 3 )]
+[node name="PawnUI" parent="Background/VBoxContainer/Controls/Row" instance=ExtResource( 3 )]
 margin_left = 34.0
 margin_right = 50.0
-margin_bottom = 20.0
+margin_bottom = 30.0
 texture = ExtResource( 8 )
 img_on = ExtResource( 8 )
 img_off = ExtResource( 8 )
 color_on = "blue"
 color_off = "blue"
 
-[node name="Label" type="Label" parent="Background/Controls/Rules/Row"]
+[node name="Label" type="Label" parent="Background/VBoxContainer/Controls/Row"]
 margin_left = 68.0
-margin_right = 170.0
-margin_bottom = 20.0
+margin_right = 221.0
+margin_bottom = 30.0
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
 text = "Turn Around"
 align = 1
 
-[node name="Row2" type="HBoxContainer" parent="Background/Controls/Rules"]
-margin_top = 66.0
-margin_right = 252.0
-margin_bottom = 86.0
+[node name="Row2" type="HBoxContainer" parent="Background/VBoxContainer/Controls"]
+margin_top = 76.0
+margin_right = 322.0
+margin_bottom = 106.0
 rect_min_size = Vector2( 0, 20 )
 custom_constants/separation = 18
 
-[node name="PawnUI2" parent="Background/Controls/Rules/Row2" instance=ExtResource( 6 )]
-margin_bottom = 20.0
+[node name="PawnUI2" parent="Background/VBoxContainer/Controls/Row2" instance=ExtResource( 6 )]
+margin_bottom = 30.0
 texture = ExtResource( 9 )
 img_on = ExtResource( 9 )
 img_off = ExtResource( 9 )
 color_on = "blue"
 color_off = "blue"
 
-[node name="PawnUI" parent="Background/Controls/Rules/Row2" instance=ExtResource( 3 )]
+[node name="PawnUI" parent="Background/VBoxContainer/Controls/Row2" instance=ExtResource( 3 )]
 margin_left = 34.0
 margin_right = 50.0
-margin_bottom = 20.0
+margin_bottom = 30.0
 texture = ExtResource( 10 )
 img_on = ExtResource( 10 )
 img_off = ExtResource( 10 )
 color_on = "blue"
 color_off = "blue"
 
-[node name="Label" type="Label" parent="Background/Controls/Rules/Row2"]
+[node name="Label" type="Label" parent="Background/VBoxContainer/Controls/Row2"]
 margin_left = 68.0
-margin_right = 144.0
-margin_bottom = 20.0
+margin_right = 278.0
+margin_bottom = 30.0
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
-text = "Hit Force"
+text = "Change Hit Force"
 align = 1
 
-[node name="Row3" type="HBoxContainer" parent="Background/Controls/Rules"]
-margin_top = 94.0
-margin_right = 252.0
-margin_bottom = 114.0
+[node name="Row3" type="HBoxContainer" parent="Background/VBoxContainer/Controls"]
+margin_top = 114.0
+margin_right = 322.0
+margin_bottom = 144.0
 rect_min_size = Vector2( 0, 20 )
 custom_constants/separation = 18
 
-[node name="Space" type="Label" parent="Background/Controls/Rules/Row3"]
-margin_right = 50.0
-margin_bottom = 20.0
+[node name="Space" type="Label" parent="Background/VBoxContainer/Controls/Row3"]
+margin_right = 75.0
+margin_bottom = 30.0
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0.235294, 0.67451, 0.843137, 1 )
 text = "Space"
 align = 1
 
-[node name="Label2" type="Label" parent="Background/Controls/Rules/Row3"]
-margin_left = 68.0
-margin_right = 90.0
-margin_bottom = 20.0
+[node name="Label2" type="Label" parent="Background/VBoxContainer/Controls/Row3"]
+margin_left = 93.0
+margin_right = 240.0
+margin_bottom = 30.0
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
-text = "Hit"
+text = "Hit/Confirm"
 align = 1
 
-[node name="World" type="Control" parent="Background"]
-anchor_right = 1.0
-margin_left = 12.0
-margin_top = 152.0
-margin_bottom = 248.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Rules" type="VBoxContainer" parent="Background/World"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_bottom = -40.0
+[node name="World" type="VBoxContainer" parent="Background/VBoxContainer"]
+margin_top = 162.0
+margin_right = 322.0
+margin_bottom = 266.0
 custom_constants/separation = 8
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="Label" parent="Background/World/Rules"]
-margin_right = 254.0
+[node name="Title" type="Label" parent="Background/VBoxContainer/World"]
+margin_right = 322.0
 margin_bottom = 28.0
 custom_fonts/font = ExtResource( 5 )
 custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
 text = "World"
 
-[node name="Row" type="HBoxContainer" parent="Background/World/Rules"]
+[node name="Checkpoint" type="HBoxContainer" parent="Background/VBoxContainer/World"]
 margin_top = 36.0
-margin_right = 254.0
-margin_bottom = 56.0
+margin_right = 322.0
+margin_bottom = 66.0
 rect_min_size = Vector2( 0, 20 )
 custom_constants/separation = 18
 
-[node name="PawnUI2" parent="Background/World/Rules/Row" instance=ExtResource( 6 )]
+[node name="PawnUI2" parent="Background/VBoxContainer/World/Checkpoint" instance=ExtResource( 6 )]
 modulate = Color( 0.901961, 0.282353, 0.180392, 1 )
-margin_bottom = 20.0
+margin_bottom = 30.0
 
-[node name="PawnUI" parent="Background/World/Rules/Row" instance=ExtResource( 3 )]
-modulate = Color( 0.901961, 0.282353, 0.180392, 1 )
+[node name="Label" type="Label" parent="Background/VBoxContainer/World/Checkpoint"]
 margin_left = 34.0
-margin_right = 50.0
-margin_bottom = 20.0
-
-[node name="Label" type="Label" parent="Background/World/Rules/Row"]
-margin_left = 68.0
-margin_right = 218.0
-margin_bottom = 20.0
+margin_right = 172.0
+margin_bottom = 30.0
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
-text = "Hit those with Golf"
+text = "Checkpoint"
 align = 1
 
-[node name="Battle" type="Control" parent="Background"]
-anchor_right = 1.0
-margin_left = 12.0
-margin_top = 224.0
-margin_bottom = 320.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="Checkpoint2" type="HBoxContainer" parent="Background/VBoxContainer/World"]
+margin_top = 74.0
+margin_right = 322.0
+margin_bottom = 104.0
+rect_min_size = Vector2( 0, 20 )
+custom_constants/separation = 18
 
-[node name="Rules" type="VBoxContainer" parent="Background/Battle"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="PawnUI" parent="Background/VBoxContainer/World/Checkpoint2" instance=ExtResource( 3 )]
+margin_bottom = 30.0
+
+[node name="Label" type="Label" parent="Background/VBoxContainer/World/Checkpoint2"]
+margin_left = 34.0
+margin_right = 112.0
+margin_bottom = 30.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
+text = "Battle"
+align = 1
+
+[node name="Battle" type="VBoxContainer" parent="Background/VBoxContainer"]
+margin_top = 284.0
+margin_right = 322.0
+margin_bottom = 388.0
 custom_constants/separation = 8
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="Label" parent="Background/Battle/Rules"]
-margin_top = 6.0
-margin_right = 254.0
-margin_bottom = 34.0
+[node name="Title" type="Label" parent="Background/VBoxContainer/Battle"]
+margin_right = 322.0
+margin_bottom = 28.0
 custom_fonts/font = ExtResource( 5 )
 custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
 text = "Battle"
 
-[node name="Heart" type="HBoxContainer" parent="Background/Battle/Rules"]
-margin_top = 42.0
-margin_right = 254.0
-margin_bottom = 62.0
+[node name="Heart" type="HBoxContainer" parent="Background/VBoxContainer/Battle"]
+margin_top = 36.0
+margin_right = 322.0
+margin_bottom = 66.0
 rect_min_size = Vector2( 0, 20 )
 custom_constants/separation = 18
 
-[node name="PawnUI" parent="Background/Battle/Rules/Heart" instance=ExtResource( 2 )]
+[node name="PawnUI" parent="Background/VBoxContainer/Battle/Heart" instance=ExtResource( 2 )]
 modulate = Color( 0.901961, 0.282353, 0.180392, 1 )
-margin_bottom = 20.0
+margin_bottom = 30.0
 
-[node name="Label" type="Label" parent="Background/Battle/Rules/Heart"]
+[node name="Label" type="Label" parent="Background/VBoxContainer/Battle/Heart"]
 margin_left = 34.0
-margin_right = 100.0
-margin_bottom = 20.0
+margin_right = 133.0
+margin_bottom = 30.0
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
 text = "Protect"
 align = 1
 
-[node name="Peasant" type="HBoxContainer" parent="Background/Battle/Rules"]
-margin_top = 70.0
-margin_right = 254.0
-margin_bottom = 90.0
+[node name="Peasant" type="HBoxContainer" parent="Background/VBoxContainer/Battle"]
+margin_top = 74.0
+margin_right = 322.0
+margin_bottom = 104.0
 rect_min_size = Vector2( 0, 20 )
 custom_constants/separation = 18
 
-[node name="PawnUI" parent="Background/Battle/Rules/Peasant" instance=ExtResource( 3 )]
+[node name="PawnUI" parent="Background/VBoxContainer/Battle/Peasant" instance=ExtResource( 3 )]
 modulate = Color( 0.901961, 0.282353, 0.180392, 1 )
-margin_bottom = 20.0
+margin_bottom = 30.0
 
-[node name="Label" type="Label" parent="Background/Battle/Rules/Peasant"]
+[node name="Label" type="Label" parent="Background/VBoxContainer/Battle/Peasant"]
 margin_left = 34.0
-margin_right = 90.0
-margin_bottom = 20.0
+margin_right = 118.0
+margin_bottom = 30.0
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
 text = "Defeat"

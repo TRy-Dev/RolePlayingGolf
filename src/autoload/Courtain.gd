@@ -5,7 +5,7 @@ onready var courtain = $CanvasLayer/ColorRect
 
 var START_COLOR = Colors.get_color("black")
 
-var anim_length = 1.0
+var anim_length = 2.0
 
 func _ready() -> void:
 	courtain.color = START_COLOR

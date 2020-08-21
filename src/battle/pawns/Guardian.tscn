@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=2]
-
-[ext_resource path="res://src/battle/pawns/Pawn.tscn" type="PackedScene" id=1]
-
-[node name="Guardian" instance=ExtResource( 1 )]
-destroy_sound = "enemy-hurt"
-color = "red"
-move_dist = 32

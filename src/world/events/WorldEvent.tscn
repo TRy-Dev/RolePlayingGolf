@@ -26,6 +26,7 @@ color = "blue"
 sprite_texture = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
 region_rect = Rect2( 289, 153, 16, 16 )
 
 [node name="Area2D" type="Area2D" parent="."]

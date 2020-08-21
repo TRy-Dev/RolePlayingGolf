@@ -16,7 +16,7 @@ const DIR_CHANGE_SPEED = 3
 const MIN_STRENGTH = 50
 const MAX_STRENGTH = 300
 var current_strength = (MIN_STRENGTH + MAX_STRENGTH) / 2
-const STR_CHANGE_SPEED = 200
+const STR_CHANGE_SPEED = 250
 
 const MIN_MOVE_VELOCITY = 15
 var is_moving :bool = false

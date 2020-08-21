@@ -28,6 +28,19 @@ var _clips = {
 	"defeat": [
 		preload("res://assets/sfx/jingles_PIZZI07.wav"),
 	],
+	"ui-click": [
+		preload("res://assets/sfx/switch25.wav"),
+	],
+	"enter-building": [
+		preload("res://assets/sfx/doorClose_2.wav"),
+		preload("res://assets/sfx/doorClose_3.wav"),
+	],
+	"squash": [
+		preload("res://assets/sfx/squash3.wav"),
+	],
+	"coins": [
+		preload("res://assets/sfx/coins.wav"),
+	]
 }
 
 const MIN_PITCH = 0.8

@@ -11,7 +11,7 @@ shader_param/width = 0.8
 shader_param/outline_color = Color( 0.235294, 0.67451, 0.843137, 1 )
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 5.38556
+radius = 4.86503
 
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 14

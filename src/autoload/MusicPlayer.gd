@@ -3,6 +3,8 @@ extends Node
 onready var music :AudioStreamPlayer = $Music
 onready var tween :Tween = $Tween
 
+const VOLUME_CHANGE_TIME = 1.0
+
 var songs = {
 	"world": preload("res://assets/music/world.ogg"),
 	"battle": preload("res://assets/music/battle.ogg"),
@@ -18,7 +20,7 @@ func play_song(title) -> void:
 		return
 	music.stream = songs[title]
 	music.play()
-	set_music_volume(0, 1.0)
+	set_music_volume(0, VOLUME_CHANGE_TIME)
 
 func set_music_volume(value, time) -> void:
 	tween.stop_all()

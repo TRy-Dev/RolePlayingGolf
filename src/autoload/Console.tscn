@@ -1,24 +1,72 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/autoload/Console.gd" type="Script" id=1]
+[ext_resource path="res://src/shaders/vertical_gradient.shader" type="Shader" id=2]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 2 )
+shader_param/top_color = Color( 0.478431, 0.266667, 0.290196, 0 )
+shader_param/bottom_color = Color( 0.478431, 0.266667, 0.290196, 1 )
+shader_param/transparent_edge_amount = 0.0
+
+[sub_resource type="Animation" id=2]
+resource_name = "hide"
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("CanvasLayer/ColorRect:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 1 )
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "show"
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("CanvasLayer/ColorRect:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 1 )
+}
 
 [node name="Console" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 1
 script = ExtResource( 1 )
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": false,
+"_editor_description_": ""
 }
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Messages" type="VBoxContainer" parent="CanvasLayer"]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource( 1 )
 anchor_bottom = 1.0
 margin_left = 12.0
-margin_top = 12.0
-margin_right = 320.0
-margin_bottom = -8.0
+margin_top = 536.0
+margin_right = 480.0
+margin_bottom = -12.0
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="Messages" type="VBoxContainer" parent="CanvasLayer/ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
 alignment = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/hide = SubResource( 2 )
+anims/show = SubResource( 3 )
