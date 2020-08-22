@@ -1,23 +1,44 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://src/player/Cursor.gd" type="Script" id=1]
 [ext_resource path="res://assets/textures/monochrome_transparent.png" type="Texture" id=2]
-[ext_resource path="res://src/shaders/cutoff.shader" type="Shader" id=3]
 [ext_resource path="res://src/shaders/outline.shader" type="Shader" id=4]
 [ext_resource path="res://assets/textures/arrow.png" type="Texture" id=5]
 
-[sub_resource type="ShaderMaterial" id=4]
+[sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 4 )
 shader_param/width = 0.3
 shader_param/outline_color = Color( 0.235294, 0.67451, 0.843137, 1 )
 
-[sub_resource type="ShaderMaterial" id=1]
-shader = ExtResource( 3 )
-shader_param/value = 0.8
+[sub_resource type="Shader" id=5]
+code = "shader_type canvas_item;
+
+uniform float value :hint_range(0.255, 0.8) = 0.5;
+uniform vec2 texSize;
+
+void fragment() {
+	vec2 uv = vec2(mod((texSize + vec2(6.0, 3.0)) * UV, 17.0)) / 17.0;
+	float a = 1.0;
+	if (uv.x + (1.0 - uv.y) > value * 2.0) {
+		a = 0.0;
+	}
+	vec4 tex = texture(TEXTURE, UV);
+	COLOR = vec4(tex.rgb, min(a, tex.a));
+}"
+
+[sub_resource type="ShaderMaterial" id=7]
+resource_local_to_scene = true
+shader = SubResource( 5 )
+shader_param/value = 0.709
 shader_param/texSize = Vector2( 850, 373 )
 
-[sub_resource type="Animation" id=2]
-resource_name = "hide"
+[sub_resource type="ShaderMaterial" id=6]
+resource_local_to_scene = true
+shader = SubResource( 5 )
+shader_param/value = 0.255
+shader_param/texSize = Vector2( 850, 373 )
+
+[sub_resource type="Animation" id=3]
 length = 0.3
 tracks/0/type = "bezier"
 tracks/0/path = NodePath(".:modulate:a")
@@ -30,8 +51,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.3 )
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "show"
+[sub_resource type="Animation" id=4]
 length = 0.3
 tracks/0/type = "bezier"
 tracks/0/path = NodePath(".:modulate:a")
@@ -57,17 +77,24 @@ position = Vector2( 10, -10 )
 
 [node name="Sprite" type="Sprite" parent="Pivot/Arrow"]
 modulate = Color( 0.811765, 0.776471, 0.721569, 1 )
-material = SubResource( 4 )
+material = SubResource( 1 )
 texture = ExtResource( 5 )
 region_rect = Rect2( 680, 85, 16, 16 )
 
 [node name="Charge" type="Sprite" parent="Pivot/Arrow"]
 modulate = Color( 0.901961, 0.282353, 0.180392, 1 )
-material = SubResource( 1 )
+material = SubResource( 7 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 680, 85, 16, 16 )
+
+[node name="BruteCharge" type="Sprite" parent="Pivot/Arrow"]
+modulate = Color( 0.478431, 0.266667, 0.290196, 1 )
+material = SubResource( 6 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 680, 85, 16, 16 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/hide = SubResource( 2 )
-anims/show = SubResource( 3 )
+anims/hide = SubResource( 3 )
+anims/show = SubResource( 4 )

@@ -3,9 +3,11 @@ extends Node2D
 signal scene_ready
 signal turn_step_changed
 
+export(String) var unlocked_skill = ""
+
 onready var anim_player = $AnimationPlayer
 onready var player = $Player
-onready var start_positions = $StartPositions
+onready var start_positions = $Colliders/StartPositions
 onready var enemy_turn_timer = $MaxEnemyTurnTimer
 onready var battle_ui = $BattleUI
 
@@ -27,15 +29,18 @@ var _rewards = {
 var player_moved_this_turn := false
 
 func _ready() -> void:
+	if not start_positions:
+		Console.log_msg("NO START POSITIONS FOUND. PLEASE AVOID THIS EVENT")
+		_battle_lost()
+		return
 	connect("turn_step_changed", battle_ui, "_on_turn_step_changed")
-	
+	$Border.modulate.a = 0
 	MusicPlayer.play_song("battle")
 	player.set_disable_collision(true)
 	player.global_position = start_positions.current_position
 	change_current_step(TURN_STEP.INIT)
 	anim_player.play("init")
 	Courtain.hide()
-	Console.toggle_visible(true, true)
 	
 	var hearts = $Hearts.get_children()
 	var heart_count = GameData.get_hearts_count()
@@ -46,10 +51,10 @@ func _ready() -> void:
 		h.queue_free()
 		
 	var enemies = $Enemies.get_children()
-	for h in hearts:
-		h.connect("pawn_destroyed", self, "_on_pawn_destroyed")
-	for e in enemies:
-		e.connect("pawn_destroyed", self, "_on_pawn_destroyed")
+#	for h in hearts:
+#		h.connect("pawn_destroyed", self, "_on_pawn_destroyed")
+#	for e in enemies:
+#		e.connect("pawn_destroyed", self, "_on_pawn_destroyed")
 	
 	emit_signal("scene_ready")
 
@@ -62,16 +67,7 @@ func _process(delta: float) -> void:
 				start_positions.show()
 				return
 		TURN_STEP.SELECT_START_POS:
-			if Input.is_action_just_pressed("action"):
-				start_positions.hide()
-				player_moved_this_turn = false
-				change_current_step(TURN_STEP.PLAYER_TURN)
-				player.set_disable_collision(false)
-				return
-			var x = Input.get_action_strength("right") - Input.get_action_strength("left")
-			var y = Input.get_action_strength("up") - Input.get_action_strength("down")
-			start_positions.update_current_position(Vector2(x, y))
-			player.global_position = start_positions.current_position
+			_update_start_pos()
 		TURN_STEP.PLAYER_TURN:
 #			_check_win_loss()
 			player.handle_input()
@@ -83,43 +79,60 @@ func _process(delta: float) -> void:
 				change_current_step(TURN_STEP.ENEMY_TURN)
 				_check_win_loss()
 		TURN_STEP.ENEMY_TURN:
-			enemy_turn_timer.start()
+			if enemy_turn_timer.is_stopped():
+				enemy_turn_timer.start()
 #			_check_win_loss()
 			if player.is_moving:
 				return
 			var enemies = $Enemies.get_children()
 			for e in enemies:
+				if e == null or not is_instance_valid(e):
+					return
+#				print("Turn of %s" % e.name)
+#				if e.name == "@Peasant@8":
+#					pass
 				if(_check_win_loss()):
 					return
-				if e != null and is_instance_valid(e):
-					if not e.find_target():
+				if e != null and is_instance_valid(e) and not e.is_destroyed:
+					e.find_target()
+#					if not e.find_target():
 #						_check_win_loss()
-						if current_step != TURN_STEP.END_LOSS:
-							print("--- ERROR: No targets for enemy and no win state")
-						return
-					if e.target:
+#						if current_step != TURN_STEP.END_LOSS:
+#							print("--- ERROR: No targets for enemy and no win state")
+#						return
+					if e.find_target():
 						set_process(false)
+						print("Moving %s" %e.name)
 #						_check_win_loss()
 						yield(e.move(), "completed")
 #						_check_win_loss()
 						set_process(true)
 			if(_check_win_loss()):
 				return
+				
 			change_current_step(TURN_STEP.PLAYER_TURN)
 #			_check_win_loss()
 			player_moved_this_turn = false
 		TURN_STEP.END_WIN:
-			var rewards_str = ""
-			for r in _rewards:
-				GameData.update_player_state(r, _rewards[r])
-				rewards_str += "%s (%s) " % [r, _rewards[r]]
-			set_process(false)
-			Console.log_msg("Battle won. Rewards: %s" % rewards_str)
-			GameData.load_world_with_state("event")
+			_battle_won()
 		TURN_STEP.END_LOSS:
-			set_process(false)
-			Console.log_msg("Battle lost. Loading last checkpoint")
-			GameData.load_world_with_state("checkpoint")
+			_battle_lost()
+
+onready var debug_restart_timer = $DebugRestartTimer
+func _physics_process(delta: float) -> void:
+	if Input.is_action_just_pressed("debug_restart"):
+		if debug_restart_timer.is_stopped():
+			debug_restart_timer.start()
+	if Input.is_action_just_released("debug_restart"):
+		debug_restart_timer.stop()
+
+
+func _apply_rewards():
+	var rewards_str = ""
+	for r in _rewards:
+		GameData.update_player_state(r, _rewards[r])
+		rewards_str += "%s (%s) " % [r, _rewards[r]]
+	Console.log_msg("Victory. Rewards: %s" % rewards_str)
 
 func change_current_step(new_step) -> void:
 	var previous = step_names[current_step] if current_step else ""
@@ -132,9 +145,8 @@ func change_current_step(new_step) -> void:
 	emit_signal("turn_step_changed", previous, step_names[new_step])
 	
 
-func _on_pawn_destroyed(pawn) -> void:
-	print("Pawn %s destroyed" % pawn.name)
-#	_check_win_loss()
+#func _on_pawn_destroyed(pawn) -> void:
+#	print("Pawn %s destroyed" % pawn.name)
 
 func _check_win_loss() -> bool:
 	if current_step == TURN_STEP.END_LOSS or current_step == TURN_STEP.END_WIN:
@@ -183,3 +195,39 @@ func _on_MaxEnemyTurnTimer_timeout() -> void:
 	print("Enemy turn exceeded max time of %s. " % enemy_turn_timer.wait_time)
 	change_current_step(TURN_STEP.PLAYER_TURN)
 	set_process(true)
+
+func _update_start_pos():
+	if Input.is_action_just_pressed("action"):
+		start_positions.hide()
+		player_moved_this_turn = false
+		change_current_step(TURN_STEP.PLAYER_TURN)
+		player.set_disable_collision(false)
+		return
+	var x = Input.get_action_strength("right") - Input.get_action_strength("left")
+	var y = Input.get_action_strength("down") - Input.get_action_strength("up")
+	start_positions.update_current_position(Vector2(x, y))
+	player.global_position = start_positions.current_position
+
+func _battle_won():
+	GameData.set_battle_stats("--BATTLE", {})
+	_apply_rewards()
+	set_process(false)
+	GameData.load_world_with_state("event")
+#	if unlocked_skill != "":
+#		GameData.unlock_skill(unlocked_skill)
+
+func _battle_lost():
+	set_process(false)
+	Console.log_msg("Battle lost. Loading last checkpoint")
+	GameData.load_world_with_state("checkpoint")
+
+
+func _on_DebugRestartTimer_timeout() -> void:
+	print("--- DebugRestartTimer timeout. Stuck in battle?")
+	print("changing to player step")
+	change_current_step(TURN_STEP.PLAYER_TURN)
+	_check_win_loss()
+	set_process(true)
+	
+#	Console.log_msg("Left battle")
+#	_battle_lost()

@@ -3,6 +3,8 @@ extends Control
 
 onready var anim_player = $AnimationPlayer
 
+
+
 func _ready() -> void:
 	if GameData.tutorial_visible:
 		modulate.a = 1

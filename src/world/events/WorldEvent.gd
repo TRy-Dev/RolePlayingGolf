@@ -71,3 +71,9 @@ func set_color(col):
 func _apply_state():
 	sprite.modulate =  Colors.get_color(color)
 	sprite.texture = sprite_texture
+
+
+func _on_Area2D_area_entered(area: Area2D) -> void:
+	print("AT ME!! %s --- AREA ENTERED %s" % [name, area.owner.name])
+	SoundEffects.play_audio("enemy-hurt")
+	_disable()

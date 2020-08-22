@@ -1,6 +1,11 @@
 extends Node
 
 signal player_state_updated
+signal scene_changed
+signal skill_unlocked
+
+const TILE_SIZE = 16
+var tutorial_visible = true
 
 var _states = {
 	"checkpoint": {
@@ -19,38 +24,39 @@ const START_PLAYER_STATE = {
 }
 var _player_state = START_PLAYER_STATE
 
-var world_scene = preload("res://src/world/World.tscn")
+var world_scene_path = "res://src/world/World.tscn"
 
 var state_name_to_load = ""
 
-var tutorial_visible = true
-
 var _skills = {
-	"break": {
-		"ui-name": "-Control",
+	"control": {
+		"ui-name": "Control",
 		"description": "Press space to break while moving",
 		"unlocked": false
 	},
-	"seer": {
-		"ui-name": "Seer",
-		"description": "See Golf's path when aiming",
-		"unlocked": false
-	},
-	"side-control": {
-		"ui-name": "Acrobat",
-		"description": "Press left/right to steer while moving",
-		"unlocked": false
-	},
-	"force": {
+#	"seer": {
+#		"ui-name": "Seer",
+#		"description": "See Golf's path when aiming",
+#		"unlocked": false
+#	},
+#	"acrobat": {
+#		"ui-name": "Acrobat",
+#		"description": "Press left/right to steer while moving",
+#		"unlocked": false
+#	},
+	"brute": {
 		"ui-name": "Brute",
 		"description": "Increased maximum movement force",
 		"unlocked": false
 	},
-	"extra-move": {
-		"ui-name": "-Extra move",
+	"vigor": {
+		"ui-name": "Vigor",
 		"description": "Additional move and heart",
 		"unlocked": false
 	},
+}
+
+var _battles_stats = {
 }
 
 func _ready():
@@ -104,11 +110,11 @@ func load_default_state(reset_saved_states):
 		set_player_state(s, _player_state[s])
 	if reset_saved_states:
 		_states = {
-			"checkpoint": {
-		},
-			"event": {
+			"checkpoint": {},
+			"event": {}
 		}
-}
+	for s in _skills:
+		_skills[s]["unlocked"] = false
 	state_name_to_load = ""
 
 func load_world_with_state(state_name) -> void:
@@ -118,7 +124,8 @@ func load_world_with_state(state_name) -> void:
 	state_name_to_load = state_name
 	MusicPlayer.set_music_volume(-80, Courtain.anim_length)
 	yield(Courtain.show(), "completed")
-	get_tree().change_scene_to(world_scene)
+	
+	change_scene(world_scene_path)
 #	load_state(state_name)
 
 func set_player_state(state_name, value) -> void:
@@ -158,18 +165,35 @@ func reset_moves():
 
 func decrease_moves(amount :int = 1):
 	update_player_state("moves", -amount)
+	if _player_state["moves"] < 0: # and _player_state["moves"] > -1 * max_player_moves:
+		if _player_state["moves"] == -1 * max_player_moves + 1:
+			Courtain.play_effect("danger")
+#		else: 
+		Courtain.play_effect("dim")
+		SoundEffects.play_audio("player-hurt")
+	Courtain.stop_effects()
 
 func get_hearts_count() -> int:
 	if _player_state["moves"] >= 0:
 		return max_player_moves
 #	return -1 * _player_state["moves"]
-	return int(max(1, max_player_moves  + _player_state["moves"]))
+	return int(max(1, max_player_moves + _player_state["moves"]))
 
 func unlock_skill(skill_name) -> void:
 	if not skill_name in _skills:
 		print("--- Skill not found: %s" % skill_name)
 		return
+	Console.log_msg("Skill unlocked: %s" % _skills[skill_name]["ui-name"])
+	Console.log_msg("%s" % _skills[skill_name]["description"])
+	SoundEffects.play_audio("skill-unlocked")
 	_skills[skill_name]["unlocked"] = true
+	Console.toggle_visible(true, true)
+	emit_signal("skill_unlocked")
+	Courtain.play_skill_unlock(_skills[skill_name])
+	match skill_name:
+		"vigor":
+			max_player_moves += 1
+			set_player_state("moves", max_player_moves)
 
 func skill_unlocked(skill_name) -> bool:
 	if not skill_name in _skills:
@@ -182,3 +206,25 @@ func get_unlocked_skills() -> Dictionary:
 		if s["unlocked"]:
 			unlocked[s] = _skills[s]
 	return unlocked
+
+func change_scene(scene) -> void:
+	if scene is String:
+		print("string %s" % scene)
+		get_tree().change_scene(scene)
+		return
+	get_tree().change_scene_to(scene)
+	emit_signal("scene_changed", scene)
+
+func set_battle_stats(battle_name, value) -> void:
+#	if not _battle_stats.get(battle_name):
+#		_battles_Stats[battle_name] = {}
+	_battles_stats[battle_name] = value
+
+func get_battle_stats(battle_name) -> Dictionary:
+	if not _battles_stats.get(battle_name):
+		return {}
+	return _battles_stats[battle_name]
+
+func reset_all():
+	load_default_state(true)
+	

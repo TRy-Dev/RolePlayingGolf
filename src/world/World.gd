@@ -8,10 +8,10 @@ onready var events_parent = $Events
 onready var player = $Player
 
 func _ready() -> void:
-	Console.toggle_visible(true, true)
 	MusicPlayer.play_song("world")
 	Courtain.hide()
 	GameData.load_state()
+	$Fog.visible = true
 	player.connect("player_moved", self, "_on_player_moved")
 	
 	emit_signal("scene_ready")
@@ -66,6 +66,10 @@ func _add_event(event_data):
 			new_event = load("res://src/world/events/Checkpoint.tscn").instance()
 		"scene":
 			new_event = load("res://src/world/events/SceneEvent.tscn").instance()
+		"update-state":
+			new_event = load("res://src/world/events/UpdatePlayerStateEvent.tscn").instance()
+		"unlock-skill":
+			new_event = load("res://src/world/events/SkillUnlockEvent.tscn").instance()
 		_:
 			print("Unknown event type %s" % event_data["type"])
 			return

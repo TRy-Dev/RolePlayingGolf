@@ -15,6 +15,7 @@ var direction :Vector2 = Vector2(0, -1)
 const DIR_CHANGE_SPEED = 3
 const MIN_STRENGTH = 50
 const MAX_STRENGTH = 300
+const MAX_STRENGTH_BRUTE = 550
 var current_strength = (MIN_STRENGTH + MAX_STRENGTH) / 2
 const STR_CHANGE_SPEED = 250
 
@@ -23,7 +24,6 @@ var is_moving :bool = false
 
 var rot_amount = 0.0
 
-const START_MOVE_DELAY = 0.3
 const BRAKE_MULTIPLIER = 3
 
 func set_velocity(value):
@@ -36,10 +36,8 @@ func _ready() -> void:
 	mass = 1
 	_change_strength(0)
 	_rotate(0)
-	
 	set_physics_process(false)
-	yield(get_tree().create_timer(START_MOVE_DELAY), "timeout")
-	set_physics_process(true)
+
 
 func apply_force(force) -> void:
 	acceleration += force / mass;
@@ -51,7 +49,8 @@ func handle_input() -> void:
 	else:
 		cursor.show()
 	var x = Input.get_action_strength("right") - Input.get_action_strength("left")
-	var y = Input.get_action_strength("up") - Input.get_action_strength("down")
+	var y = Input.get_action_strength("down") - Input.get_action_strength("up")
+	y *= -1
 	if x:
 		_rotate(x)
 	else:
@@ -71,7 +70,8 @@ func _rotate(dir) -> void:
 func _change_strength(amount) -> void:
 	current_strength += amount * STR_CHANGE_SPEED * get_physics_process_delta_time()
 	current_strength = max(current_strength, MIN_STRENGTH)
-	current_strength = min(current_strength, MAX_STRENGTH)
+	var max_str = MAX_STRENGTH_BRUTE if GameData.skill_unlocked("brute") else MAX_STRENGTH
+	current_strength = min(current_strength, max_str)
 	cursor.set_strength_percent((current_strength - MIN_STRENGTH) / (MAX_STRENGTH - MIN_STRENGTH))
 
 func _physics_process(delta: float) -> void:
@@ -79,7 +79,7 @@ func _physics_process(delta: float) -> void:
 	var friction = Vector2(velocity.x, velocity.y)
 	friction *= -1
 	friction *= friction_coeff
-	if GameData.skill_unlocked("break"):
+	if GameData.skill_unlocked("control"):
 		if Input.is_action_pressed("action"):
 			friction *= BRAKE_MULTIPLIER
 	apply_force(friction)
@@ -108,3 +108,10 @@ func _physics_process(delta: float) -> void:
 
 func set_disable_collision(value) -> void:
 	collider.disabled = value
+
+func mult_velocity(value: float) -> void:
+	velocity *= value
+
+
+func _on_StartMoveDelay_timeout() -> void:
+	set_physics_process(true)

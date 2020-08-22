@@ -14,7 +14,7 @@ onready var tween = $Tween
 onready var collision = $Area2D/CollisionShape2D
 
 export(int) var move_dist = 0
-const MOVE_TIME = 0.4
+const MOVE_SPEED = 40
 
 var is_destroyed = false
 
@@ -25,44 +25,46 @@ func _ready() -> void:
 		if target is NodePath:
 			target = get_node(target)
 #		target = weakref(target)
-		var connections = target.get_signal_connection_list("pawn_destroyed")
-		for c in connections:
-			if self == c.target:
-				return
-		target.connect("pawn_destroyed", self, "_on_target_destroyed")
+#		var connections = target.get_signal_connection_list("pawn_destroyed")
+#		for c in connections:
+#			if self == c.target:
+#				return
+#		target.connect("pawn_destroyed", self, "_on_target_destroyed")
 
 func move():
-	# assumption: has valid target
 	assert(target != null, "Target is null")
-	
 	if tween.is_active():
 		print("--- tween active. possible bug")
-		yield()
+		yield(get_tree(), "idle_frame")
 		return
 	if not target:
 		print("--- no target to move to. possible bug")
-		yield()
+		yield(get_tree(), "idle_frame")
 		return
 	if not is_instance_valid(target):
 		print("--- target instance not valid. possible bug")
-		yield()
+		yield(get_tree(), "idle_frame")
 		return
-	var move_pos = (target.global_position - global_position).normalized()
-	if abs(move_pos.x) > abs(move_pos.y):
-		move_pos.x = sign(move_pos.x)
-		move_pos.y = 0
-	else:
-		move_pos.x = 0
-		move_pos.y = sign(move_pos.y)
-	move_pos *= move_dist
 	
-	print("%s moves by %s" % [name, str(move_pos)])
-	
-	tween.interpolate_property(self, "position",
-		position, position + move_pos, MOVE_TIME,
+	########### NEW ###########
+	var move_dist_left = move_dist
+	while move_dist_left > 0:
+		var move_dist = min(move_dist_left, 0.5 * GameData.TILE_SIZE)
+		move_dist_left -= 0.5 * GameData.TILE_SIZE
+#		print("checking dist: %s total, %s left" % [move_dist, move_dist_left])
+#		print("BUG TARGET IS SOMETIMES NULL")
+		_find_target_if_null()
+		if target == null:
+			yield(get_tree(), "idle_frame")
+		var target_dir = (target.global_position - global_position).normalized()
+		var move_pos = _get_valid_dir(target_dir)
+		_debug_raycast_collisions()
+		tween.interpolate_property(self, "position",
+		position, position + move_pos * move_dist, float(move_dist) / MOVE_SPEED,
 		Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	tween.start()
-	yield(tween, "tween_completed")
+		SoundEffects.play_audio("step")
+		tween.start()
+		yield(tween, "tween_completed")
 
 func _on_Area2D_body_entered(body: Node) -> void:
 	print("Body %s entered pawn" % body.owner.name)
@@ -85,7 +87,99 @@ func _on_target_destroyed(t) -> void:
 	print("My (%s) target (%s) was destroyed" % [name, t.name])
 
 func _on_Area2D_area_entered(area: Area2D) -> void:
-	print("Area %s entered pawn" % area.owner.name)
+	print("Area %s entered %s" % [area.owner.name, name])
 #	if target == area.owner:
 #		target = null
+
+onready var _raycasts = {
+	Vector2( 1, 0): [
+		$Area2D/RayRight,
+		$Area2D/RayRight2
+	],
+	Vector2(-1, 0): [
+		$Area2D/RayLeft,
+		$Area2D/RayLeft2,
+	],
+	Vector2( 0, 1): [
+		$Area2D/RayDown,
+		$Area2D/RayDown2,
+	],
+	Vector2( 0,-1): [
+		$Area2D/RayUp,
+		$Area2D/RayUp2,
+	]
+}
+#onready var _raycasts = {
+#	[ 1, 0]: $Raycasts/Right,
+#	[-1, 0]: $Raycasts/Left,
+#	[ 0, 1]: $Raycasts/Down,
+#	[ 0,-1]: $Raycasts/Up,
+#}
+func _are_rays_coliding(dir: Vector2) -> bool:
+	if not dir in _raycasts:
+		print("No such raycast direction: %s" % dir)
+		print("NO COLLISIONS")
+		return false
+	for ray in _raycasts[dir]:
+		if ray.is_colliding():
+			return true
+	return false
+
+func _get_valid_dir(dir: Vector2) -> Vector2:
+	if dir.x == 0 and dir.y == 0:
+		return dir
+	# if path blocked walk left
+	dir = get_dir(dir)
+	var start_dir = Vector2(dir.x, dir.y)
+	if _are_rays_coliding(dir):	
+		dir = start_dir.rotated(-PI / 2)
+		dir = Vector2(round(dir.x), round(dir.y))
+	else:
+		return dir
+	# if left blocked walk right
+	if _are_rays_coliding(dir):
+		dir = start_dir.rotated(PI / 2)
+		dir = Vector2(round(dir.x), round(dir.y))
+	else:
+		return dir
+	# if right blocked walk back
+	if _are_rays_coliding(dir):
+		dir = start_dir.rotated(PI)
+		dir = Vector2(round(dir.x), round(dir.y))
+	else:
+		return dir
+	# if back is blocked stay
+	if _are_rays_coliding(dir):
+		return Vector2()
+	else:
+		return dir
+	
+
+func get_dir(vec :Vector2) -> Vector2:
+	var dir = Vector2()
+	if abs(vec.x) > abs(vec.y):
+		dir.x = sign(vec.x)
+		dir.y = 0
+	else:
+		dir.x = 0
+		dir.y = sign(vec.y)
+	return dir
+
+func _find_target_if_null():
+	print("Finding target for %s" % name)
+	pass
+
+func _debug_raycast_collisions():
+	var dir = Vector2(1, 0)
+	# if path blocked walk left
+	dir = get_dir(dir)
+	var collisions = {
+		"right": _are_rays_coliding(Vector2(1, 0)),
+		"left": _are_rays_coliding(Vector2(-1, 0)),
+		"down": _are_rays_coliding(Vector2(0, 1)),
+		"up": _are_rays_coliding(Vector2(0, -1)),
+	}
+	print("--- COLLISIONS %s ---" % name)
+	print(collisions)
+	return collisions
 

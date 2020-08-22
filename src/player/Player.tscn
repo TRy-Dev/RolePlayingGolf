@@ -11,7 +11,7 @@ shader_param/width = 0.8
 shader_param/outline_color = Color( 0.235294, 0.67451, 0.843137, 1 )
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 4.86503
+radius = 4.32723
 
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 14
@@ -29,3 +29,9 @@ region_rect = Rect2( 595, 238, 16, 16 )
 shape = SubResource( 2 )
 
 [node name="Cursor" parent="." instance=ExtResource( 3 )]
+
+[node name="StartMoveDelay" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+autostart = true
+[connection signal="timeout" from="StartMoveDelay" to="." method="_on_StartMoveDelay_timeout"]

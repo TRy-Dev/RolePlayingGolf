@@ -1,9 +1,55 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/autoload/Courtain.gd" type="Script" id=1]
+[ext_resource path="res://assets/textures/heart_on.png" type="Texture" id=2]
+[ext_resource path="res://assets/fonts/kenney_mini.tres" type="DynamicFont" id=3]
+[ext_resource path="res://assets/fonts/kenney_title.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/fonts/kenney_pixel.tres" type="DynamicFont" id=5]
 
-[sub_resource type="Animation" id=1]
-resource_name = "hide"
+[sub_resource type="Animation" id=5]
+resource_name = "anim"
+length = 0.5
+step = 0.05
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.25, 0.5 )
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "anim"
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0.1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5, 1 )
+}
+
+[sub_resource type="Animation" id=7]
+length = 6.0
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 1, 3, 5 )
+}
+
+[sub_resource type="Animation" id=8]
+
+[sub_resource type="Animation" id=3]
 length = 0.5
 tracks/0/type = "bezier"
 tracks/0/path = NodePath("CanvasLayer/ColorRect:color:a")
@@ -16,8 +62,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5 )
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "show"
+[sub_resource type="Animation" id=4]
 length = 0.5
 tracks/0/type = "bezier"
 tracks/0/path = NodePath("CanvasLayer/ColorRect:color:a")
@@ -41,6 +86,35 @@ __meta__ = {
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 128
 
+[node name="Danger" type="TextureRect" parent="CanvasLayer"]
+modulate = Color( 0.901961, 0.282353, 0.180392, 0 )
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -240.0
+margin_top = 30.0
+margin_right = -236.0
+margin_bottom = 94.0
+rect_min_size = Vector2( 64, 64 )
+texture = ExtResource( 2 )
+stretch_mode = 7
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Danger"]
+anims/anim = SubResource( 5 )
+
+[node name="Dim" type="ColorRect" parent="CanvasLayer"]
+modulate = Color( 0.901961, 0.282353, 0.180392, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Dim"]
+anims/anim = SubResource( 6 )
+
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -49,6 +123,75 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="SkillUnlock" type="Control" parent="CanvasLayer"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bg" type="ColorRect" parent="CanvasLayer/SkillUnlock"]
+modulate = Color( 1, 1, 1, 0.0392157 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.956863, 0.705882, 0.105882, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Text" type="VBoxContainer" parent="CanvasLayer/SkillUnlock"]
+anchor_right = 1.0
+margin_top = 152.0
+margin_bottom = 464.0
+custom_constants/separation = 8
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="CanvasLayer/SkillUnlock/Text"]
+modulate = Color( 0.956863, 0.705882, 0.105882, 1 )
+margin_top = 63.0
+margin_right = 1366.0
+margin_bottom = 135.0
+custom_fonts/font = ExtResource( 4 )
+text = "Skill Name"
+align = 1
+valign = 1
+
+[node name="Skill unlocked" type="Label" parent="CanvasLayer/SkillUnlock/Text"]
+modulate = Color( 0.478431, 0.266667, 0.290196, 1 )
+margin_top = 143.0
+margin_right = 1366.0
+margin_bottom = 171.0
+custom_fonts/font = ExtResource( 5 )
+text = "Skill unlocked"
+align = 1
+valign = 1
+
+[node name="Padding" type="Control" parent="CanvasLayer/SkillUnlock/Text"]
+margin_top = 179.0
+margin_right = 1366.0
+margin_bottom = 211.0
+rect_min_size = Vector2( 0, 32 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Desc" type="Label" parent="CanvasLayer/SkillUnlock/Text"]
+margin_top = 219.0
+margin_right = 1366.0
+margin_bottom = 249.0
+custom_fonts/font = ExtResource( 3 )
+text = "Desciption"
+align = 1
+valign = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/SkillUnlock"]
+anims/unlock = SubResource( 7 )
+anims/unlock-yellow = SubResource( 8 )
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/hide = SubResource( 1 )
-anims/show = SubResource( 2 )
+anims/hide = SubResource( 3 )
+anims/show = SubResource( 4 )

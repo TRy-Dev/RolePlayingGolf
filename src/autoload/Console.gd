@@ -11,6 +11,8 @@ var labels = []
 
 var is_visible = true
 
+var first_message = true
+
 func _ready() -> void:
 	toggle_visible(false, false)
 	var msg_prefab = load("res://src/LogMessage.tscn")
@@ -22,12 +24,16 @@ func _ready() -> void:
 		msg.modulate.a = float(i) / MAX_MESSAGE_COUNT
 		labels.append(msg)
 		messages_container.add_child(msg)
+	
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("toggle_console"):
 		toggle_visible(not is_visible, true)
 
 func log_msg(msg):
+	if first_message:
+		first_message = false
+		toggle_visible(true, true)
 	for i in range(1, len(messages)):
 		messages[i - 1] = messages[i]
 	messages[len(messages) - 1] = msg

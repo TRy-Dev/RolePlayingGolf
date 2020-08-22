@@ -55,7 +55,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0, 10 )
 }
 
-[sub_resource type="Shader" id=5]
+[sub_resource type="Shader" id=3]
 code = "shader_type canvas_item;
 
 // Gonkee's fog shader for Godot 3 - full tutorial https://youtu.be/QEaTsz_0o44
@@ -107,7 +107,7 @@ void fragment() {
 }"
 
 [sub_resource type="ShaderMaterial" id=4]
-shader = SubResource( 5 )
+shader = SubResource( 3 )
 shader_param/color = Color( 0.478431, 0.266667, 0.290196, 1 )
 shader_param/OCTAVES = 4
 shader_param/fog_scale = 20.0
@@ -143,6 +143,7 @@ __meta__ = {
 margin_right = 1366.0
 
 [node name="Title" type="HBoxContainer" parent="CanvasLayer/VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
 margin_top = 140.0
 margin_right = 1366.0
 margin_bottom = 212.0
@@ -181,6 +182,7 @@ margin_bottom = 240.0
 rect_min_size = Vector2( 0, 80 )
 
 [node name="Story" type="Label" parent="CanvasLayer/VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
 margin_top = 352.0
 margin_right = 1366.0
 margin_bottom = 481.0
@@ -244,14 +246,14 @@ anims/show = SubResource( 1 )
 current = true
 
 [node name="ControlEnabledTimer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 0.001
 one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/show = SubResource( 2 )
 
 [node name="Fog" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0.5 )
+modulate = Color( 1, 1, 1, 0 )
 material = SubResource( 4 )
 position = Vector2( -16.1684, -0.837646 )
 scale = Vector2( 1.99187, 2.40421 )

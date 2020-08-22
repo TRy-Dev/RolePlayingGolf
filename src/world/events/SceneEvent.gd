@@ -6,6 +6,7 @@ func _init() -> void:
 	event_type = "scene"
 
 func _on_Area2D_body_entered(body: Node) -> void:
+	print("@me %s BODY ENTERED %s" % [name, body.name])
 	._on_Area2D_body_entered(body)
 	if not enabled:
 		return
@@ -13,7 +14,7 @@ func _on_Area2D_body_entered(body: Node) -> void:
 	body.set_physics_process(false)
 	GameData.save_state("event")
 	yield(Courtain.show(), "completed")
-	get_tree().change_scene_to(scene_to_load)
+	GameData.change_scene(scene_to_load)
 
 func get_state() -> Dictionary:
 	var state = .get_state()

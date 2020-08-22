@@ -4,7 +4,7 @@ func _init() -> void:
 	event_type = "checkpoint"
 
 func _on_Area2D_body_entered(body: Node) -> void:
-	if not body.is_moving:
+	if not body.get("is_moving") or not body.is_moving:
 		return
 	if not enabled:
 		return

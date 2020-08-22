@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://src/autoload/Console.gd" type="Script" id=1]
 [ext_resource path="res://src/shaders/vertical_gradient.shader" type="Shader" id=2]
+[ext_resource path="res://assets/fonts/kenney_mini.tres" type="DynamicFont" id=3]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 2 )
@@ -62,7 +63,28 @@ __meta__ = {
 [node name="Messages" type="VBoxContainer" parent="CanvasLayer/ColorRect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -8.0
 alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CanvasLayer/ColorRect"]
+modulate = Color( 0.811765, 0.776471, 0.721569, 1 )
+self_modulate = Color( 1, 1, 1, 0.392157 )
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -232.0
+margin_top = 12.0
+margin_right = -12.0
+margin_bottom = 42.0
+custom_fonts/font = ExtResource( 3 )
+text = "Press C to hide"
+align = 2
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }

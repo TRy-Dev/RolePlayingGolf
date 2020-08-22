@@ -5,6 +5,8 @@ onready var tween :Tween = $Tween
 
 const VOLUME_CHANGE_TIME = 1.0
 
+const BASE_VOLUME = -8
+
 var songs = {
 	"world": preload("res://assets/music/world.ogg"),
 	"battle": preload("res://assets/music/battle.ogg"),
@@ -12,6 +14,7 @@ var songs = {
 	"main-menu": preload("res://assets/music/main_menu.ogg"),
 }
 func _ready() -> void:
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), BASE_VOLUME)
 	music.volume_db = -80
 
 func play_song(title) -> void:

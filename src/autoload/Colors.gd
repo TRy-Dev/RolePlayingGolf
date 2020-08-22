@@ -1,12 +1,12 @@
 extends Node
 
 const _colors = {
-	"red": Color8(230, 72, 46),
+	"red": Color8(230, 72, 46), #e6482e
 	"yellow": Color8(244, 180, 27), #f4b41b
-	"green": Color8(56, 217, 115, 255),
+	"green": Color8(56, 217, 115), #38d973
 	"white": Color8(207, 198, 184), #cfc6b8
 	"blue": Color8(60, 172, 215), #3cacd7
-	"black": Color8(71, 45, 60),
+	"black": Color8(71, 45, 60), #472d3c
 	"brown": Color8(122, 68, 74), #7a444a
 }
 

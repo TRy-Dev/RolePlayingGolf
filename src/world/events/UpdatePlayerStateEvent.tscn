@@ -4,4 +4,8 @@
 [ext_resource path="res://src/world/events/UpdatePlayerStateEvent.gd" type="Script" id=2]
 
 [node name="UpdatePlayerStateEvent" instance=ExtResource( 1 )]
+self_modulate = Color( 1, 1, 1, 0 )
 script = ExtResource( 2 )
+
+[node name="Sprite" parent="." index="0"]
+self_modulate = Color( 1, 1, 1, 0.588235 )

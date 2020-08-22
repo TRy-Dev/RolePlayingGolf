@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://src/gui/MainUI.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/kenney_mini.tres" type="DynamicFont" id=2]
 [ext_resource path="res://src/gui/TutorialUI.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/animations/good.tres" type="Animation" id=4]
+[ext_resource path="res://src/animations/bad.tres" type="Animation" id=5]
+[ext_resource path="res://assets/textures/heart_on.png" type="Texture" id=6]
 
 [node name="MainUI" type="Control"]
 anchor_right = 1.0
@@ -25,12 +28,8 @@ __meta__ = {
 }
 
 [node name="UI" type="HBoxContainer" parent="CanvasLayer"]
-modulate = Color( 0.811765, 0.776471, 0.721569, 1 )
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -512.0
-margin_right = 512.0
-margin_bottom = 32.0
+anchor_right = 1.0
+margin_bottom = 30.0
 custom_constants/separation = 20
 alignment = 1
 __meta__ = {
@@ -38,26 +37,27 @@ __meta__ = {
 }
 
 [node name="Hearts" type="VBoxContainer" parent="CanvasLayer/UI"]
-margin_left = 182.0
-margin_right = 332.0
-margin_bottom = 32.0
+modulate = Color( 0.811765, 0.776471, 0.721569, 1 )
+margin_left = 353.0
+margin_right = 503.0
+margin_bottom = 30.0
 rect_min_size = Vector2( 150, 0 )
 alignment = 1
 
 [node name="HeartContainer" type="HBoxContainer" parent="CanvasLayer/UI/Hearts"]
-margin_top = 16.0
+margin_top = 15.0
 margin_right = 150.0
-margin_bottom = 16.0
+margin_bottom = 15.0
 alignment = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Moves" type="Label" parent="CanvasLayer/UI"]
-margin_left = 352.0
-margin_top = 6.0
-margin_right = 502.0
-margin_bottom = 26.0
+modulate = Color( 0.811765, 0.776471, 0.721569, 1 )
+margin_left = 523.0
+margin_right = 673.0
+margin_bottom = 30.0
 rect_min_size = Vector2( 150, 0 )
 custom_fonts/font = ExtResource( 2 )
 text = "Moves 3/3"
@@ -65,12 +65,16 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="anim_player" type="AnimationPlayer" parent="CanvasLayer/UI/Moves"]
+anims/bad = ExtResource( 5 )
+anims/good = ExtResource( 4 )
 
 [node name="Gold" type="Label" parent="CanvasLayer/UI"]
-margin_left = 522.0
-margin_top = 6.0
-margin_right = 672.0
-margin_bottom = 26.0
+modulate = Color( 0.811765, 0.776471, 0.721569, 1 )
+margin_left = 693.0
+margin_right = 843.0
+margin_bottom = 30.0
 rect_min_size = Vector2( 150, 0 )
 custom_fonts/font = ExtResource( 2 )
 text = "Moves 3/3"
@@ -79,11 +83,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="anim_player" type="AnimationPlayer" parent="CanvasLayer/UI/Gold"]
+anims/bad = ExtResource( 5 )
+anims/good = ExtResource( 4 )
+
 [node name="Exp" type="Label" parent="CanvasLayer/UI"]
-margin_left = 692.0
-margin_top = 6.0
-margin_right = 842.0
-margin_bottom = 26.0
+modulate = Color( 0.811765, 0.776471, 0.721569, 1 )
+margin_left = 863.0
+margin_right = 1013.0
+margin_bottom = 30.0
 rect_min_size = Vector2( 150, 0 )
 custom_fonts/font = ExtResource( 2 )
 text = "Moves 3/3"
@@ -91,6 +99,29 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="anim_player" type="AnimationPlayer" parent="CanvasLayer/UI/Exp"]
+anims/bad = ExtResource( 5 )
+anims/good = ExtResource( 4 )
+
+[node name="Effects" type="Control" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 582634.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Effects"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -28000.0
+margin_top = -20.0
+margin_right = 28000.0
+margin_bottom = 20.0
+texture = ExtResource( 6 )
 
 [node name="TutorialUI" parent="CanvasLayer" instance=ExtResource( 3 )]
 margin_top = 40.0

@@ -40,6 +40,19 @@ var _clips = {
 	],
 	"coins": [
 		preload("res://assets/sfx/coins.wav"),
+	],
+	"step": [
+		preload("res://assets/sfx/footstep_carpet_000.wav"),
+		preload("res://assets/sfx/footstep_carpet_003.wav"),
+		preload("res://assets/sfx/footstep_carpet_004.wav"),
+	],
+	"summon": [
+		preload("res://assets/sfx/396499__alonsotm__icespell03.wav"),
+		preload("res://assets/sfx/396500__alonsotm__firespell3.wav"),
+		preload("res://assets/sfx/396501__alonsotm__firespell1.wav"),
+	],
+	"skill-unlocked": [
+		preload("res://assets/sfx/skill_unlock.wav"),
 	]
 }
 

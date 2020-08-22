@@ -9,6 +9,7 @@ export(bool) var spawn_dirt = false
 export(float, 0.0, 1.0) var NO_TREE_CHANCE = 1.0
 export(float, 0.0, 1.0) var NO_GRASS_CHANCE = 1.0
 export(float, 0.0, 1.0) var NO_DIRT_CHANCE = 1.0
+export(bool) var change_seed = false
 
 var trees = [1,2,3,4,5,6,7,8]
 var grass = [9,10,11,12]
@@ -40,10 +41,12 @@ func _ready() -> void:
 		NO_GRASS_CHANCE = 1.0
 	if not spawn_dirt:
 		NO_DIRT_CHANCE = 1.0
-		
+	
 	randomize_trees()
 
 func randomize_trees():
+	if change_seed:
+		noise.seed = SEED + 1
 	for pos in get_used_cells_by_id(MASK_ID):
 		var cell = get_cellv(pos)
 		if rand_at(pos * POS_MULT + TREE_OFFSET) < NO_TREE_CHANCE:

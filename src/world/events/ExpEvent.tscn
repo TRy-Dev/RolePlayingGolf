@@ -9,3 +9,6 @@ color = "green"
 sprite_texture = ExtResource( 2 )
 state_name = "exp"
 delta = 1
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource( 2 )

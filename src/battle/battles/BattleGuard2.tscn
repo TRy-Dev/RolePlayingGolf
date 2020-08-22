@@ -1,28 +1,36 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/battle/Battle.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/battle/pawns/Heart.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/battle/pawns/Guard.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/battle/rooms/SquareSmall.tscn" type="PackedScene" id=4]
 
 [node name="Battle" instance=ExtResource( 1 )]
+unlocked_skill = "brute"
 
 [node name="Heart" parent="Hearts" index="0" instance=ExtResource( 2 )]
-position = Vector2( -24, -40 )
+position = Vector2( 24, -24 )
 
 [node name="Heart2" parent="Hearts" index="1" instance=ExtResource( 2 )]
-position = Vector2( 8, -40 )
+position = Vector2( -72, -24 )
 
 [node name="Heart3" parent="Hearts" index="2" instance=ExtResource( 2 )]
-position = Vector2( -56, -8 )
+position = Vector2( 40, -24 )
+
+[node name="Heart4" parent="Hearts" index="3" instance=ExtResource( 2 )]
+position = Vector2( -40, 24 )
 
 [node name="Guard" parent="Enemies" index="0" instance=ExtResource( 3 )]
-position = Vector2( -56, -40 )
+position = Vector2( -40, -24 )
 
 [node name="Guard2" parent="Enemies" index="1" instance=ExtResource( 3 )]
-position = Vector2( -24, -8 )
+position = Vector2( 56, 24 )
 
 [node name="Guard3" parent="Enemies" index="2" instance=ExtResource( 3 )]
-position = Vector2( -56, 24 )
+position = Vector2( 8, -24 )
 
 [node name="Guard4" parent="Enemies" index="3" instance=ExtResource( 3 )]
-position = Vector2( -8, -40 )
+position = Vector2( 72, 8 )
+
+[node name="Colliders" parent="." index="12" instance=ExtResource( 4 )]
+tile_data = PoolIntArray( -131077, 0, 131073, -131076, 0, 131073, -131075, 0, 131073, -131074, 0, 131073, -131073, 0, 131073, -196608, 0, 131073, -196607, 0, 131073, -196606, 0, 131073, -196605, 0, 131073, -196604, 0, 131073, -65542, 0, 65538, -65540, 0, 65537, -131067, 0, 65536, -6, 0, 65538, -65531, 0, 65536, 65530, 0, 65538, 1, 0, 65537, 3, 0, 65537, 5, 0, 65536, 131066, 0, 65538, 131068, 0, 65537, 65541, 0, 65536, 196603, 0, 1, 196604, 0, 1, 196605, 0, 1, 196606, 0, 1, 196607, 0, 1, 131072, 0, 1, 131073, 0, 1, 131074, 0, 1, 131075, 0, 1, 131076, 0, 1 )
