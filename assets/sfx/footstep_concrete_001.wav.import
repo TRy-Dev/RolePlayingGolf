@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/footstep_concrete_001.wav-7908f7b5921a4c9ec8443dd4b3403620.sample"
+
+[deps]
+
+source_file="res://assets/sfx/footstep_concrete_001.wav"
+dest_files=[ "res://.import/footstep_concrete_001.wav-7908f7b5921a4c9ec8443dd4b3403620.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
