@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/battle/Battle.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/battle/pawns/Heart.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://src/battle/rooms/SquareMedium.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/world/events/CoinsEvent.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/battle/pawns/Slime.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/world/events/ExpEvent.tscn" type="PackedScene" id=7]
 
 [node name="Battle" instance=ExtResource( 1 )]
 unlocked_skill = "vigor"
@@ -20,7 +21,7 @@ position = Vector2( -72, 40 )
 position = Vector2( 48, -24 )
 
 [node name="Heart4" parent="Hearts" index="3" instance=ExtResource( 2 )]
-position = Vector2( -8, 8 )
+position = Vector2( 8, 8 )
 
 [node name="Goblin" parent="Enemies" index="0" instance=ExtResource( 3 )]
 position = Vector2( -40, -24 )
@@ -29,7 +30,7 @@ position = Vector2( -40, -24 )
 position = Vector2( -104, 8 )
 
 [node name="Goblin3" parent="Enemies" index="2" instance=ExtResource( 3 )]
-position = Vector2( -56, 8 )
+position = Vector2( -40, 8 )
 
 [node name="Goblin4" parent="Enemies" index="3" instance=ExtResource( 3 )]
 position = Vector2( 80, -16 )
@@ -52,5 +53,8 @@ position = Vector2( 72, 8 )
 [node name="Slime2" parent="Events" index="3" instance=ExtResource( 6 )]
 position = Vector2( -24, -24 )
 
+[node name="ExpEvent" parent="Events" index="4" instance=ExtResource( 7 )]
+position = Vector2( -88, -8 )
+
 [node name="Colliders" parent="." index="10" instance=ExtResource( 4 )]
-tile_data = PoolIntArray( -131079, 0, 131073, -131078, 0, 131073, -131077, 0, 131073, -131076, 0, 131073, -131075, 0, 131073, -131074, 0, 131073, -131073, 0, 131073, -196608, 0, 131073, -196607, 0, 131073, -196606, 0, 131073, -196605, 0, 131073, -196604, 0, 131073, -196603, 0, 131073, -196602, 0, 131073, -65544, 0, 65538, -131065, 0, 65536, -8, 0, 65538, -65529, 0, 65536, 65528, 0, 65538, 65531, 0, 65537, 2, 0, 65537, 3, 0, 65537, 7, 0, 65536, 131064, 0, 65538, 65543, 0, 65536, 196600, 0, 65538, 196601, 0, 65537, 131078, 0, 65537, 131079, 0, 65536, 262137, 0, 1, 262138, 0, 1, 262139, 0, 1, 262140, 0, 1, 262141, 0, 1, 262142, 0, 1, 262143, 0, 1, 196608, 0, 1, 196609, 0, 1, 196610, 0, 1, 196611, 0, 1, 196612, 0, 1, 196613, 0, 1, 196614, 0, 1 )
+tile_data = PoolIntArray( -131079, 0, 131073, -131078, 0, 131073, -131077, 0, 131073, -131076, 0, 131073, -131075, 0, 131073, -131074, 0, 131073, -131073, 0, 131073, -196608, 0, 131073, -196607, 0, 131073, -196606, 0, 131073, -196605, 0, 131073, -196604, 0, 131073, -196603, 0, 131073, -196602, 0, 131073, -65544, 0, 65538, -131065, 0, 65536, -8, 0, 65538, -65529, 0, 65536, 65528, 0, 65538, 65532, 0, 65537, 2, 0, 65537, 3, 0, 65537, 7, 0, 65536, 131064, 0, 65538, 65543, 0, 65536, 196600, 0, 65538, 196601, 0, 65537, 131078, 0, 65537, 131079, 0, 65536, 262137, 0, 1, 262138, 0, 1, 262139, 0, 1, 262140, 0, 1, 262141, 0, 1, 262142, 0, 1, 262143, 0, 1, 196608, 0, 1, 196609, 0, 1, 196610, 0, 1, 196611, 0, 1, 196612, 0, 1, 196613, 0, 1, 196614, 0, 1 )

@@ -11,6 +11,7 @@ color = "red"
 move_dist = 16
 
 [node name="Sprite" parent="." index="0"]
+modulate = Color( 0.893415, 0.329173, 0.231671, 1 )
 texture = ExtResource( 3 )
 region_rect = Rect2( 425, 17, 16, 16 )
 

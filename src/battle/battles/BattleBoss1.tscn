@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/battle/Battle.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/battle/rooms/SquareBig.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://src/battle/pawns/Guard.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/battle/pawns/Summoner.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/battle/pawns/Heart.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/battle/pawns/Peasant.tscn" type="PackedScene" id=7]
 
 [node name="Battle" instance=ExtResource( 1 )]
 
@@ -25,19 +26,31 @@ position = Vector2( -24, -8 )
 position = Vector2( 0, 56 )
 
 [node name="Summoner" parent="Enemies" index="1" instance=ExtResource( 5 )]
-position = Vector2( -136, -40 )
+position = Vector2( -120, -24 )
 
 [node name="Summoner2" parent="Enemies" index="2" instance=ExtResource( 5 )]
-position = Vector2( 136, -40 )
+position = Vector2( 88, -40 )
 
-[node name="Guard" parent="Enemies" index="3" instance=ExtResource( 4 )]
-position = Vector2( -120, 40 )
+[node name="Summoner3" parent="Enemies" index="3" instance=ExtResource( 5 )]
+position = Vector2( -72, 24 )
 
-[node name="Guard2" parent="Enemies" index="4" instance=ExtResource( 4 )]
-position = Vector2( 120, 40 )
+[node name="Summoner4" parent="Enemies" index="4" instance=ExtResource( 5 )]
+position = Vector2( 72, 24 )
+
+[node name="Guard3" parent="Enemies" index="5" instance=ExtResource( 4 )]
+position = Vector2( -56, 56 )
+
+[node name="Guard4" parent="Enemies" index="6" instance=ExtResource( 4 )]
+position = Vector2( 56, 56 )
+
+[node name="Peasant2" parent="Enemies" index="7" instance=ExtResource( 7 )]
+position = Vector2( -24, 24 )
+
+[node name="Peasant3" parent="Enemies" index="8" instance=ExtResource( 7 )]
+position = Vector2( 24, 24 )
 
 [node name="Colliders" parent="." index="12" instance=ExtResource( 2 )]
-tile_data = PoolIntArray( -196617, 1, 131073, -196616, 1, 131073, -196615, 1, 131073, -196614, 1, 131073, -196613, 1, 131073, -196612, 1, 131073, -196611, 1, 131073, -196610, 1, 131073, -196609, 1, 131073, -262144, 1, 131073, -262143, 1, 131073, -262142, 1, 131073, -262141, 1, 131073, -262140, 1, 131073, -262139, 1, 131073, -262138, 1, 131073, -262137, 1, 131073, -262136, 1, 131073, -131082, 1, 65538, -131076, 0, 65537, -131073, 0, 65537, -196608, 0, 65537, -196604, 0, 65537, -196599, 1, 65536, -65546, 1, 65538, -65544, 0, 65537, -131065, 0, 65537, -131063, 1, 65536, -10, 1, 65538, -3, 0, 65537, -65534, 0, 65537, -65527, 1, 65536, 65526, 1, 65538, 9, 1, 65536, 131062, 1, 65538, 131063, 0, 65537, 131068, 0, 65537, 131069, 0, 65537, 131071, 0, 65537, 65536, 0, 65537, 65538, 0, 65537, 65539, 0, 65537, 65544, 0, 65537, 65545, 1, 65536, 196598, 1, 65538, 196599, 0, 65537, 196604, 0, 65537, 131075, 0, 65537, 131080, 0, 65537, 131081, 1, 65536, 262134, 1, 65538, 262135, 0, 65537, 262136, 0, 65537, 262137, 0, 65537, 196614, 0, 65537, 196615, 0, 65537, 196616, 0, 65537, 196617, 1, 65536, 327671, 1, 1, 327672, 1, 1, 327673, 1, 1, 327674, 1, 1, 327675, 1, 1, 327676, 1, 1, 327677, 1, 1, 327678, 1, 1, 327679, 1, 1, 262144, 1, 1, 262145, 1, 1, 262146, 1, 1, 262147, 1, 1, 262148, 1, 1, 262149, 1, 1, 262150, 1, 1, 262151, 1, 1, 262152, 1, 1 )
+tile_data = PoolIntArray( -196617, 1, 131073, -196616, 1, 131073, -196615, 1, 131073, -196614, 1, 131073, -196613, 1, 131073, -196612, 1, 131073, -196611, 1, 131073, -196610, 1, 131073, -196609, 1, 131073, -262144, 1, 131073, -262143, 1, 131073, -262142, 1, 131073, -262141, 1, 131073, -262140, 1, 131073, -262139, 1, 131073, -262138, 1, 131073, -262137, 1, 131073, -262136, 1, 131073, -131082, 1, 65538, -131076, 0, 65537, -131073, 0, 65537, -196608, 0, 65537, -196604, 0, 65537, -196599, 1, 65536, -65546, 1, 65538, -65543, 0, 65537, -65540, 0, 65537, -131068, 0, 65537, -131065, 0, 65537, -131063, 1, 65536, -10, 1, 65538, -65527, 1, 65536, 65526, 1, 65538, 9, 1, 65536, 131062, 1, 65538, 131063, 0, 65537, 131068, 0, 65537, 131071, 0, 65537, 65536, 0, 65537, 65539, 0, 65537, 65544, 0, 65537, 65545, 1, 65536, 196598, 1, 65538, 196599, 0, 65537, 196604, 0, 65537, 131075, 0, 65537, 131080, 0, 65537, 131081, 1, 65536, 262134, 1, 65538, 262135, 0, 65537, 262136, 0, 65537, 262137, 0, 65537, 196614, 0, 65537, 196615, 0, 65537, 196616, 0, 65537, 196617, 1, 65536, 327671, 1, 1, 327672, 1, 1, 327673, 1, 1, 327674, 1, 1, 327675, 1, 1, 327676, 1, 1, 327677, 1, 1, 327678, 1, 1, 327679, 1, 1, 262144, 1, 1, 262145, 1, 1, 262146, 1, 1, 262147, 1, 1, 262148, 1, 1, 262149, 1, 1, 262150, 1, 1, 262151, 1, 1, 262152, 1, 1 )
 
 [node name="StartPositions" parent="Colliders" index="0"]
 collision_layer = 1

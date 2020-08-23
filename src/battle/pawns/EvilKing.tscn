@@ -5,7 +5,7 @@
 [ext_resource path="res://src/battle/pawns/Guard.tscn" type="PackedScene" id=3]
 
 [node name="EvilKing" instance=ExtResource( 1 )]
-spawn_group = "Enemies"
+move_dist = 0
 pawn_to_spawn = ExtResource( 3 )
 
 [node name="Sprite" parent="." index="0"]

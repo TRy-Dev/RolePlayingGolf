@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/battle/pawns/Pawn.gd" type="Script" id=2]
 
@@ -49,11 +49,45 @@ tracks/3/keys = {
 "times": PoolRealArray( 0, 0.3, 0.4 )
 }
 
+[sub_resource type="Animation" id=3]
+resource_name = "highlight"
+length = 0.4
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("Sprite:self_modulate:r")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 0.5, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.2, 0.4 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("Sprite:scale:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 1.1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.2, 0.4 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("Sprite:scale:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 1.1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.2, 0.4 )
+}
+
 [node name="Pawn" type="Node2D"]
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
-modulate = Color( 0.811765, 0.776471, 0.721569, 1 )
+modulate = Color( 0.901961, 0.282353, 0.180392, 1 )
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 0
@@ -66,61 +100,62 @@ disabled = true
 [node name="RayRight" type="RayCast2D" parent="Area2D"]
 position = Vector2( 8, 7 )
 enabled = true
-cast_to = Vector2( 6, 0 )
+cast_to = Vector2( 15, 0 )
 collision_mask = 6
 collide_with_areas = true
 
 [node name="RayRight2" type="RayCast2D" parent="Area2D"]
 position = Vector2( 8, -7 )
 enabled = true
-cast_to = Vector2( 6, 0 )
+cast_to = Vector2( 15, 0 )
 collision_mask = 6
 collide_with_areas = true
 
 [node name="RayDown" type="RayCast2D" parent="Area2D"]
 position = Vector2( -7, 8 )
 enabled = true
-cast_to = Vector2( 0, 6 )
+cast_to = Vector2( 0, 15 )
 collision_mask = 6
 collide_with_areas = true
 
 [node name="RayDown2" type="RayCast2D" parent="Area2D"]
 position = Vector2( 7, 8 )
 enabled = true
-cast_to = Vector2( 0, 6 )
+cast_to = Vector2( 0, 15 )
 collision_mask = 6
 collide_with_areas = true
 
 [node name="RayLeft" type="RayCast2D" parent="Area2D"]
 position = Vector2( -8, 7 )
 enabled = true
-cast_to = Vector2( -6, 0 )
+cast_to = Vector2( -15, 0 )
 collision_mask = 6
 collide_with_areas = true
 
 [node name="RayLeft2" type="RayCast2D" parent="Area2D"]
 position = Vector2( -8, -7 )
 enabled = true
-cast_to = Vector2( -6, 0 )
+cast_to = Vector2( -15, 0 )
 collision_mask = 6
 collide_with_areas = true
 
 [node name="RayUp" type="RayCast2D" parent="Area2D"]
 position = Vector2( -7, -8 )
 enabled = true
-cast_to = Vector2( 0, -6 )
+cast_to = Vector2( 0, -15 )
 collision_mask = 6
 collide_with_areas = true
 
 [node name="RayUp2" type="RayCast2D" parent="Area2D"]
 position = Vector2( 7, -8 )
 enabled = true
-cast_to = Vector2( 0, -6 )
+cast_to = Vector2( 0, -15 )
 collision_mask = 6
 collide_with_areas = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/destroy = SubResource( 2 )
+anims/highlight = SubResource( 3 )
 
 [node name="Tween" type="Tween" parent="."]
 

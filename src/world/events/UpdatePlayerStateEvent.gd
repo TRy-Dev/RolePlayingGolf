@@ -11,9 +11,9 @@ func _on_Area2D_body_entered(body: Node) -> void:
 		return
 	match state_name:
 		"exp":
-			Console.log_msg("Nasty bug")
+			Console.log_msg("Nasty bug (+1 exp)")
 		"gold":
-			Console.log_msg("Gold!")
+			Console.log_msg("Gold! (+5 gold)")
 	
 #	Console.log_msg("Recieved %s %s" % [delta, state_name])
 	GameData.update_player_state(state_name, delta)

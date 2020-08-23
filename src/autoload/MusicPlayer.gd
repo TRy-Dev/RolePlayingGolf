@@ -5,7 +5,7 @@ onready var tween :Tween = $Tween
 
 const VOLUME_CHANGE_TIME = 1.0
 
-const BASE_VOLUME = -8
+const BASE_VOLUME = -2
 
 var songs = {
 	"world": preload("res://assets/music/world.ogg"),

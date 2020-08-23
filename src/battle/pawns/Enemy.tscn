@@ -8,22 +8,9 @@ script = ExtResource( 2 )
 destroy_sound = "enemy-hurt"
 color = "red"
 
+[node name="Sprite" parent="." index="0"]
+modulate = Color( 0.893415, 0.329173, 0.231671, 1 )
+
 [node name="Area2D" parent="." index="1"]
 collision_layer = 4
 collision_mask = 17
-
-[node name="RayRight" parent="Area2D" index="1"]
-position = Vector2( 8, 0 )
-cast_to = Vector2( 15, 0 )
-
-[node name="RayDown" parent="Area2D" index="2"]
-position = Vector2( 0, 8 )
-cast_to = Vector2( 0, 15 )
-
-[node name="RayLeft" parent="Area2D" index="3"]
-position = Vector2( -8, 0 )
-cast_to = Vector2( -15, 0 )
-
-[node name="RayUp" parent="Area2D" index="4"]
-position = Vector2( 0, -8 )
-cast_to = Vector2( 0, -15 )

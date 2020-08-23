@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/battle_tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://src/battle/StartPositions.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/battle/NavMap.gd" type="Script" id=3]
+[ext_resource path="res://assets/nav_tileset_8.tres" type="TileSet" id=4]
 
 [node name="Colliders" type="TileMap"]
 modulate = Color( 0.811765, 0.776471, 0.721569, 1 )
@@ -16,3 +18,10 @@ collision_layer = 0
 collision_mask = 0
 
 [node name="Navigation2D" type="Navigation2D" parent="."]
+
+[node name="NavMap" type="TileMap" parent="Navigation2D"]
+modulate = Color( 1, 1, 1, 0 )
+tile_set = ExtResource( 4 )
+cell_size = Vector2( 8, 8 )
+format = 1
+script = ExtResource( 3 )

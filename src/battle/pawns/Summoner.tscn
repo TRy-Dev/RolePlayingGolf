@@ -7,7 +7,6 @@
 
 [node name="Summoner" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
-move_dist = 16
 spawn_group = "Enemies"
 pawn_to_spawn = ExtResource( 4 )
 

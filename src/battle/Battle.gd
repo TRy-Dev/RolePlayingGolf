@@ -28,6 +28,8 @@ var _rewards = {
 
 var player_moved_this_turn := false
 
+var start_heart_count
+
 func _ready() -> void:
 	if not start_positions:
 		Console.log_msg("NO START POSITIONS FOUND. PLEASE AVOID THIS EVENT")
@@ -51,8 +53,10 @@ func _ready() -> void:
 		h.queue_free()
 		
 	var enemies = $Enemies.get_children()
+	
+	start_heart_count = len(hearts)
 #	for h in hearts:
-#		h.connect("pawn_destroyed", self, "_on_pawn_destroyed")
+#		h.connect("pawn_destroyed", self, "_on_heart_destroyed")
 #	for e in enemies:
 #		e.connect("pawn_destroyed", self, "_on_pawn_destroyed")
 	
@@ -101,6 +105,7 @@ func _process(delta: float) -> void:
 #							print("--- ERROR: No targets for enemy and no win state")
 #						return
 					if e.find_target():
+						e.highlight()
 						set_process(false)
 						print("Moving %s" %e.name)
 #						_check_win_loss()
@@ -145,7 +150,8 @@ func change_current_step(new_step) -> void:
 	emit_signal("turn_step_changed", previous, step_names[new_step])
 	
 
-#func _on_pawn_destroyed(pawn) -> void:
+#func _on_heart_destroyed(pawn) -> void:
+#	perfect_battle = false
 #	print("Pawn %s destroyed" % pawn.name)
 
 func _check_win_loss() -> bool:
@@ -193,7 +199,9 @@ func get_closest_heart(pos: Vector2, except :Pawn = null) -> Pawn:
 
 func _on_MaxEnemyTurnTimer_timeout() -> void:
 	print("Enemy turn exceeded max time of %s. " % enemy_turn_timer.wait_time)
+	print("changing to player step")
 	change_current_step(TURN_STEP.PLAYER_TURN)
+	_check_win_loss()
 	set_process(true)
 
 func _update_start_pos():
@@ -209,6 +217,17 @@ func _update_start_pos():
 	player.global_position = start_positions.current_position
 
 func _battle_won():
+	## Pefrect battle
+	var hearts = $Hearts.get_children()
+	if len(hearts) >= start_heart_count:
+		var play_effect = true
+		for h in hearts:
+			if h.is_destroyed:
+				play_effect = false
+				break
+		if play_effect:
+			Courtain.play_effect("perfect-battle")
+	###
 	GameData.set_battle_stats("--BATTLE", {})
 	_apply_rewards()
 	set_process(false)
@@ -228,6 +247,57 @@ func _on_DebugRestartTimer_timeout() -> void:
 	change_current_step(TURN_STEP.PLAYER_TURN)
 	_check_win_loss()
 	set_process(true)
-	
 #	Console.log_msg("Left battle")
 #	_battle_lost()
+
+onready var nav2D :Navigation2D = $Colliders/Navigation2D
+onready var debug_line :Line2D = $DebugPathLine
+onready var debug_dir :Line2D = $DebugPathDir
+
+# return shortest path from pos to target
+#func get_nav_path(start:Vector2, end:Vector2) -> Array:
+#	var points = nav2D.get_simple_path(start, end, true)
+#	debug_line.points = points
+#	return []
+
+# return dir leading to target (up, down, left, right, v2.ZERO)
+func get_nav_dir(start:Vector2, end:Vector2) -> Vector2:
+#	start += Vector2(0, 0) * 0.5 * GameData.TILE_SIZE
+	var points = nav2D.get_simple_path(start, end, true)
+	debug_line.points = points
+	if len(points) < 2:
+		return Vector2.ZERO
+	debug_dir.points = [points[0], points[1]]
+#	debug_dir.points = [start, end]
+	var dir = points[1] - points[0]
+	dir = get_dir(dir)
+		
+	return dir
+
+
+func get_dir(vec :Vector2) -> Vector2:
+	var dir = Vector2()
+	print("VEC: %s" % vec)
+	if abs(vec.x) == abs(vec.y):
+		print("Moving in X")
+		return Vector2(vec.x, vec.y).normalized()
+	if abs(vec.x) >= abs(vec.y):
+		dir.x = sign(vec.x)
+		dir.y = 0
+	else:
+		dir.x = 0
+		dir.y = sign(vec.y)
+	return dir
+
+
+
+
+
+
+
+
+
+
+
+
+

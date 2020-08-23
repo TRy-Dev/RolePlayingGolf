@@ -15,13 +15,13 @@
 [ext_resource path="res://assets/fonts/kenney_mini_small.tres" type="DynamicFont" id=13]
 [ext_resource path="res://assets/textures/error.png" type="Texture" id=14]
 
-[sub_resource type="ShaderMaterial" id=4]
+[sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 11 )
 shader_param/top_color = Color( 0.478431, 0.266667, 0.290196, 0 )
 shader_param/bottom_color = Color( 0.478431, 0.266667, 0.290196, 1 )
 shader_param/transparent_edge_amount = 0.0
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=2]
 length = 0.6
 tracks/0/type = "bezier"
 tracks/0/path = NodePath(".:modulate:a")
@@ -60,12 +60,12 @@ __meta__ = {
 }
 
 [node name="Background" type="ColorRect" parent="."]
-material = SubResource( 4 )
+material = SubResource( 1 )
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -338.0
-margin_top = 276.0
+margin_top = 252.0
 color = Color( 0.478431, 0.266667, 0.290196, 0.784314 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -212,7 +212,7 @@ align = 1
 [node name="World" type="VBoxContainer" parent="Background/VBoxContainer"]
 margin_top = 142.0
 margin_right = 322.0
-margin_bottom = 254.0
+margin_bottom = 277.0
 custom_constants/separation = 8
 alignment = 1
 __meta__ = {
@@ -229,13 +229,13 @@ text = "World"
 [node name="Checkpoint3" type="HBoxContainer" parent="Background/VBoxContainer/World"]
 margin_top = 36.0
 margin_right = 322.0
-margin_bottom = 56.0
+margin_bottom = 79.0
 rect_min_size = Vector2( 0, 20 )
 custom_constants/separation = 18
 
 [node name="PawnUI2" parent="Background/VBoxContainer/World/Checkpoint3" instance=ExtResource( 6 )]
 modulate = Color( 0.901961, 0.282353, 0.180392, 1 )
-margin_bottom = 20.0
+margin_bottom = 43.0
 texture = ExtResource( 12 )
 img_on = ExtResource( 12 )
 img_off = ExtResource( 12 )
@@ -244,17 +244,17 @@ color_off = "red"
 
 [node name="Label" type="Label" parent="Background/VBoxContainer/World/Checkpoint3"]
 margin_left = 34.0
-margin_right = 280.0
-margin_bottom = 20.0
+margin_right = 282.0
+margin_bottom = 43.0
 custom_fonts/font = ExtResource( 13 )
 custom_colors/font_color = Color( 0.811765, 0.776471, 0.721569, 1 )
-text = "Negative moves = less hearts"
-align = 1
+text = "Negative moves = 
+                   less hearts in battle"
 
 [node name="Checkpoint" type="HBoxContainer" parent="Background/VBoxContainer/World"]
-margin_top = 64.0
+margin_top = 87.0
 margin_right = 322.0
-margin_bottom = 84.0
+margin_bottom = 107.0
 rect_min_size = Vector2( 0, 20 )
 custom_constants/separation = 18
 
@@ -272,9 +272,9 @@ text = "Checkpoint resets moves"
 align = 1
 
 [node name="Checkpoint2" type="HBoxContainer" parent="Background/VBoxContainer/World"]
-margin_top = 92.0
+margin_top = 115.0
 margin_right = 322.0
-margin_bottom = 112.0
+margin_bottom = 135.0
 rect_min_size = Vector2( 0, 20 )
 custom_constants/separation = 18
 
@@ -291,9 +291,9 @@ text = "Battle"
 align = 1
 
 [node name="Battle" type="VBoxContainer" parent="Background/VBoxContainer"]
-margin_top = 272.0
+margin_top = 295.0
 margin_right = 322.0
-margin_bottom = 407.0
+margin_bottom = 430.0
 custom_constants/separation = 8
 alignment = 1
 __meta__ = {
@@ -372,5 +372,5 @@ text = "BUG: If stuck on enemy turn
 press and hold R"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/hide = SubResource( 5 )
+anims/hide = SubResource( 2 )
 anims/show = SubResource( 3 )

@@ -10,6 +10,7 @@ destroy_sound = "squash"
 color = "green"
 
 [node name="Sprite" parent="." index="0"]
+self_modulate = Color( 1, 1, 1, 0.588235 )
 texture = ExtResource( 3 )
 
 [node name="Area2D" parent="." index="1"]

@@ -9,7 +9,8 @@ var anim_length = 2.0
 
 onready var _effects = {
 	"danger": $CanvasLayer/Danger/AnimationPlayer,
-	"dim": $CanvasLayer/Dim/AnimationPlayer
+	"dim": $CanvasLayer/Dim/AnimationPlayer,
+	"perfect-battle": $CanvasLayer/PerfBattle/AnimationPlayer,
 }
 
 

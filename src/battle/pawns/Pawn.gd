@@ -12,6 +12,7 @@ onready var anim_player = $AnimationPlayer
 onready var sprite = $Sprite
 onready var tween = $Tween
 onready var collision = $Area2D/CollisionShape2D
+onready var battle = owner
 
 export(int) var move_dist = 0
 const MOVE_SPEED = 40
@@ -46,21 +47,28 @@ func move():
 		yield(get_tree(), "idle_frame")
 		return
 	
-	########### NEW ###########
 	var move_dist_left = move_dist
 	while move_dist_left > 0:
 		var move_dist = min(move_dist_left, 0.5 * GameData.TILE_SIZE)
 		move_dist_left -= 0.5 * GameData.TILE_SIZE
-#		print("checking dist: %s total, %s left" % [move_dist, move_dist_left])
-#		print("BUG TARGET IS SOMETIMES NULL")
 		_find_target_if_null()
 		if target == null:
 			yield(get_tree(), "idle_frame")
-		var target_dir = (target.global_position - global_position).normalized()
-		var move_pos = _get_valid_dir(target_dir)
-		_debug_raycast_collisions()
+			return
+#		var target_dir = (target.global_position - global_position).normalized()
+#		var move_pos = _get_valid_dir(target_dir)
+		
+		if not battle:
+			battle = owner
+			if not battle:
+				print("Could not find 'battle' as owner for navigation for pawn %s" % name)
+				yield(get_tree(), "idle_frame")
+				return
+		var dir = battle.get_nav_dir(global_position, target.global_position)
+		
+#		_debug_raycast_collisions()
 		tween.interpolate_property(self, "position",
-		position, position + move_pos * move_dist, float(move_dist) / MOVE_SPEED,
+		global_position, global_position + dir * move_dist, float(move_dist) / MOVE_SPEED,
 		Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		SoundEffects.play_audio("step")
 		tween.start()
@@ -183,3 +191,5 @@ func _debug_raycast_collisions():
 	print(collisions)
 	return collisions
 
+func highlight():
+	anim_player.play("highlight")
