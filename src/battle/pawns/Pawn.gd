@@ -126,7 +126,7 @@ onready var _raycasts = {
 func _are_rays_coliding(dir: Vector2) -> bool:
 	if not dir in _raycasts:
 		print("No such raycast direction: %s" % dir)
-		print("NO COLLISIONS")
+		print("!!! NO COLLISIONS !!!")
 		return false
 	for ray in _raycasts[dir]:
 		if ray.is_colliding():
@@ -174,7 +174,7 @@ func get_dir(vec :Vector2) -> Vector2:
 	return dir
 
 func _find_target_if_null():
-	print("Finding target for %s" % name)
+	print("Find target for %s" % name)
 	pass
 
 func _debug_raycast_collisions():
@@ -187,8 +187,6 @@ func _debug_raycast_collisions():
 		"down": _are_rays_coliding(Vector2(0, 1)),
 		"up": _are_rays_coliding(Vector2(0, -1)),
 	}
-	print("--- COLLISIONS %s ---" % name)
-	print(collisions)
 	return collisions
 
 func highlight():

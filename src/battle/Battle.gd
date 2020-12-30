@@ -10,6 +10,7 @@ onready var player = $Player
 onready var start_positions = $Colliders/StartPositions
 onready var enemy_turn_timer = $MaxEnemyTurnTimer
 onready var battle_ui = $BattleUI
+onready var main_ui = $MainUI
 
 var current_step
 
@@ -38,6 +39,7 @@ func _ready() -> void:
 	connect("turn_step_changed", battle_ui, "_on_turn_step_changed")
 	$Border.modulate.a = 0
 	MusicPlayer.play_song("battle")
+	main_ui.toggle_moves(false)
 	player.set_disable_collision(true)
 	player.global_position = start_positions.current_position
 	change_current_step(TURN_STEP.INIT)
@@ -46,7 +48,6 @@ func _ready() -> void:
 	
 	var hearts = $Hearts.get_children()
 	var heart_count = GameData.get_hearts_count()
-#	print("h below par: %s" % GameData.get_hearts_below_par())
 	for i in range(len(hearts) - heart_count):
 		print("popped heart")
 		var h = hearts.pop_front()
@@ -125,6 +126,8 @@ func _process(delta: float) -> void:
 
 onready var debug_restart_timer = $DebugRestartTimer
 func _physics_process(delta: float) -> void:
+	if current_step != TURN_STEP.ENEMY_TURN:
+		return
 	if Input.is_action_just_pressed("debug_restart"):
 		if debug_restart_timer.is_stopped():
 			debug_restart_timer.start()
@@ -254,12 +257,6 @@ onready var nav2D :Navigation2D = $Colliders/Navigation2D
 onready var debug_line :Line2D = $DebugPathLine
 onready var debug_dir :Line2D = $DebugPathDir
 
-# return shortest path from pos to target
-#func get_nav_path(start:Vector2, end:Vector2) -> Array:
-#	var points = nav2D.get_simple_path(start, end, true)
-#	debug_line.points = points
-#	return []
-
 # return dir leading to target (up, down, left, right, v2.ZERO)
 func get_nav_dir(start:Vector2, end:Vector2) -> Vector2:
 #	start += Vector2(0, 0) * 0.5 * GameData.TILE_SIZE
@@ -288,16 +285,3 @@ func get_dir(vec :Vector2) -> Vector2:
 		dir.x = 0
 		dir.y = sign(vec.y)
 	return dir
-
-
-
-
-
-
-
-
-
-
-
-
-

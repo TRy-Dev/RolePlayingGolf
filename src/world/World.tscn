@@ -147,7 +147,7 @@ extents = Vector2( 128, 96 )
 script = ExtResource( 4 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( -120.359, -327.286 )
+position = Vector2( 64, 40 )
 
 [node name="EnvironmentStatic" type="TileMap" parent="."]
 modulate = Color( 0.811765, 0.776471, 0.721569, 1 )

@@ -9,9 +9,6 @@ func _ready() -> void:
 	for pos in collider_cells:
 		if not pos in border_cells:
 			_remove_nav_at(colliders.map_to_world(pos))
-#	for my_cell_pos in get_used_cells():
-#		if my_cell_pos in collider_cells:
-#			set_cellv(my_cell_pos, -1)
 
 func get_border_cells(cells) -> Array:
 	var min_x = INF

@@ -62,10 +62,11 @@ __meta__ = {
 [node name="Background" type="ColorRect" parent="."]
 material = SubResource( 1 )
 anchor_left = 1.0
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -338.0
-margin_top = 252.0
+margin_top = -444.0
 color = Color( 0.478431, 0.266667, 0.290196, 0.784314 )
 __meta__ = {
 "_edit_use_anchors_": false

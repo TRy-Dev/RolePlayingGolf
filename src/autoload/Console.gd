@@ -15,7 +15,7 @@ var first_message = true
 
 func _ready() -> void:
 	toggle_visible(false, false)
-	var msg_prefab = load("res://src/LogMessage.tscn")
+	var msg_prefab = load("res://src/gui/LogMessage.tscn")
 	for i in range(MAX_MESSAGE_COUNT):
 		var msg = msg_prefab.instance()
 		messages.append("")
@@ -51,12 +51,3 @@ func toggle_visible(value: bool, animate: bool) -> void:
 	else:
 		container.modulate.a = 1.0 if value else 0.0
 	is_visible = value
-
-
-#func get_log_state():
-#	return messages
-#
-#func set_log_state(value):
-#	messages = value
-#	for i in range(len(messages)):
-#		labels[i].text = messages[i]

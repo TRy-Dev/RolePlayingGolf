@@ -15,6 +15,7 @@ onready var exp_anim = $CanvasLayer/UI/Exp/anim_player
 func _ready() -> void:
 	$CanvasLayer.scale = Vector2(1, 1)
 	GameData.connect("player_state_updated", self, "_on_player_state_updated")
+	toggle_moves(true) # Intially, show moves
 	_update_hearts()
 	moves_label.text = "Moves: %s/%s" % [GameData.get_player_state("moves"), GameData.max_player_moves]
 	if owner:
@@ -73,3 +74,10 @@ func _update_exp(value):
 
 func _danger():
 	pass
+
+var moves_visible = false
+func toggle_moves(value):
+	if value:
+		moves_anim.play("show")
+	else:
+		moves_anim.play("hide")

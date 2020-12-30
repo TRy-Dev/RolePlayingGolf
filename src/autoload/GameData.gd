@@ -76,7 +76,6 @@ func save_state(state_name, save_velocity = true):
 		for s in _player_state:
 			_states[state_name]["player-state"][s] = _player_state[s]
 		_states[state_name]["skills"] = _skills.duplicate(true)
-#	_states[state_name]["log"] = Console.get_log_state()
 
 func load_state():
 	var state_name = state_name_to_load
@@ -99,7 +98,6 @@ func load_state():
 			set_player_state(s, player_pers_state[s])
 		set_player_state("moves", max_player_moves)
 		_skills = _states[state_name]["skills"]
-#	Console.set_log_state(_states[state_name]["log"])
 	state_name_to_load = ""
 
 func load_default_state(reset_saved_states):
@@ -124,9 +122,7 @@ func load_world_with_state(state_name) -> void:
 	state_name_to_load = state_name
 	MusicPlayer.set_music_volume(-80, Courtain.anim_length)
 	yield(Courtain.show(), "completed")
-	
 	change_scene(world_scene_path)
-#	load_state(state_name)
 
 func set_player_state(state_name, value) -> void:
 	if not state_name in _player_state:
@@ -165,18 +161,10 @@ func reset_moves():
 
 func decrease_moves(amount :int = 1):
 	update_player_state("moves", -amount)
-	if _player_state["moves"] < 0: # and _player_state["moves"] > -1 * max_player_moves:
-		if _player_state["moves"] == -1 * max_player_moves + 1:
-			Courtain.play_effect("danger")
-#		else: 
-		Courtain.play_effect("dim")
-		SoundEffects.play_audio("player-hurt")
-	Courtain.stop_effects()
 
 func get_hearts_count() -> int:
 	if _player_state["moves"] >= 0:
 		return max_player_moves
-#	return -1 * _player_state["moves"]
 	return int(max(1, max_player_moves + _player_state["moves"]))
 
 func unlock_skill(skill_name) -> void:
@@ -187,7 +175,7 @@ func unlock_skill(skill_name) -> void:
 	Console.log_msg("%s" % _skills[skill_name]["description"])
 	SoundEffects.play_audio("skill-unlocked")
 	_skills[skill_name]["unlocked"] = true
-	Console.toggle_visible(true, true)
+
 	emit_signal("skill_unlocked")
 	Courtain.play_skill_unlock(_skills[skill_name])
 	match skill_name:
@@ -209,15 +197,12 @@ func get_unlocked_skills() -> Dictionary:
 
 func change_scene(scene) -> void:
 	if scene is String:
-		print("string %s" % scene)
 		get_tree().change_scene(scene)
 		return
 	get_tree().change_scene_to(scene)
 	emit_signal("scene_changed", scene)
 
 func set_battle_stats(battle_name, value) -> void:
-#	if not _battle_stats.get(battle_name):
-#		_battles_Stats[battle_name] = {}
 	_battles_stats[battle_name] = value
 
 func get_battle_stats(battle_name) -> Dictionary:

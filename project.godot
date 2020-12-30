@@ -32,12 +32,13 @@ config/icon="res://icon.png"
 
 [autoload]
 
+MusicPlayer="*res://src/autoload/MusicPlayer.tscn"
 Colors="*res://src/autoload/Colors.gd"
 GameData="*res://src/autoload/GameData.gd"
 SoundEffects="*res://src/autoload/SoundEffects.tscn"
 Console="*res://src/autoload/Console.tscn"
 Courtain="*res://src/autoload/Courtain.tscn"
-MusicPlayer="*res://src/autoload/MusicPlayer.tscn"
+GameController="*res://src/GameController.gd"
 
 [display]
 
@@ -113,6 +114,11 @@ toggle_console={
 debug_restart={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":82,"unicode":0,"echo":false,"script":null)
+ ]
+}
+quit={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777217,"unicode":0,"echo":false,"script":null)
  ]
 }
 

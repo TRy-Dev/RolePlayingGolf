@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/gui/MainUI.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/kenney_mini.tres" type="DynamicFont" id=2]
@@ -6,6 +6,32 @@
 [ext_resource path="res://src/animations/good.tres" type="Animation" id=4]
 [ext_resource path="res://src/animations/bad.tres" type="Animation" id=5]
 [ext_resource path="res://assets/textures/heart_on.png" type="Texture" id=6]
+
+[sub_resource type="Animation" id=1]
+resource_name = "hide"
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:self_modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 0.117647, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 1 )
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "show"
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:self_modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0.117647, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 1 )
+}
 
 [node name="MainUI" type="Control"]
 anchor_right = 1.0
@@ -69,6 +95,8 @@ __meta__ = {
 [node name="anim_player" type="AnimationPlayer" parent="CanvasLayer/UI/Moves"]
 anims/bad = ExtResource( 5 )
 anims/good = ExtResource( 4 )
+anims/hide = SubResource( 1 )
+anims/show = SubResource( 2 )
 
 [node name="Gold" type="Label" parent="CanvasLayer/UI"]
 modulate = Color( 0.811765, 0.776471, 0.721569, 1 )

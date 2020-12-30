@@ -112,6 +112,5 @@ func set_disable_collision(value) -> void:
 func mult_velocity(value: float) -> void:
 	velocity *= value
 
-
 func _on_StartMoveDelay_timeout() -> void:
 	set_physics_process(true)

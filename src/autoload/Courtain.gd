@@ -34,7 +34,6 @@ func play_effect(eff_name):
 
 
 func stop_effects(): 
-	print("Stop all courtain effects")
 	pass
 
 
@@ -51,10 +50,3 @@ func play_skill_unlock(skill):
 	else:
 		bg.color = Colors.get_color("blue")
 	skill_unlock_anim.play("unlock")
-	
-
-
-
-
-
-
