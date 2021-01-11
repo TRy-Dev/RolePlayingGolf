@@ -1,12 +1,12 @@
 shader_type canvas_item;
 
-uniform float value :hint_range(0.255, 0.8) = 0.5;
-uniform vec2 texSize;
+uniform float value :hint_range(0.0, 1.0) = 0.5;
+uniform vec2 start_pos = vec2(0.0, 0.0);
+uniform vec2 end_pos = vec2(1.0, 1.0);
 
 void fragment() {
-	vec2 uv = vec2(mod((texSize + vec2(6.0, 3.0)) * UV, 17.0)) / 17.0;
 	float a = 1.0;
-	if (uv.x + (1.0 - uv.y) > value * 2.0) {
+	if (UV.x + 1.0 - UV.y > value * 2.0) {
 		a = 0.0;
 	}
 	vec4 tex = texture(TEXTURE, UV);

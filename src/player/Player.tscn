@@ -1,37 +1,33 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/textures/player.png" type="Texture" id=1]
 [ext_resource path="res://src/player/Player.gd" type="Script" id=2]
 [ext_resource path="res://src/player/Cursor.tscn" type="PackedScene" id=3]
-[ext_resource path="res://src/shaders/outline.shader" type="Shader" id=4]
+[ext_resource path="res://src/TestingIdeas/TrajectoryLine.tscn" type="PackedScene" id=4]
 
-[sub_resource type="ShaderMaterial" id=1]
-shader = ExtResource( 4 )
-shader_param/width = 0.8
-shader_param/outline_color = Color( 0.235294, 0.67451, 0.843137, 1 )
-
-[sub_resource type="CircleShape2D" id=2]
-radius = 4.32723
+[sub_resource type="CircleShape2D" id=1]
+radius = 4.62514
 
 [node name="Player" type="KinematicBody2D"]
+collision_layer = 2147483649
 collision_mask = 14
 collision/safe_margin = 0.03
 script = ExtResource( 2 )
+friction_coeff = 0.04
+bounciness = 0.93
+hit_min_force = 30.0
 
 [node name="Sprite" type="Sprite" parent="."]
-modulate = Color( 0.811765, 0.776471, 0.721569, 1 )
-material = SubResource( 1 )
+modulate = Color( 0.956863, 0.705882, 0.105882, 1 )
 scale = Vector2( 0.8, 0.8 )
 texture = ExtResource( 1 )
 region_rect = Rect2( 595, 238, 16, 16 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="Cursor" parent="." instance=ExtResource( 3 )]
+modulate = Color( 1, 1, 1, 0.196078 )
 
-[node name="StartMoveDelay" type="Timer" parent="."]
-wait_time = 0.3
-one_shot = true
-autostart = true
-[connection signal="timeout" from="StartMoveDelay" to="." method="_on_StartMoveDelay_timeout"]
+[node name="TrajectoryLine" parent="." instance=ExtResource( 4 )]
+start_dist = 0

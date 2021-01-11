@@ -9,10 +9,35 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "PhysicalObject2D",
+"class": "Boid",
+"language": "GDScript",
+"path": "res://src/Modules/Physics/Boid.gd"
+}, {
+"base": "PlatformerState",
+"class": "OnGround",
+"language": "GDScript",
+"path": "res://src/Modules/Characters/Platformer/States/OnGround.gd"
+}, {
 "base": "Node2D",
 "class": "Pawn",
 "language": "GDScript",
 "path": "res://src/battle/pawns/Pawn.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "PhysicalObject2D",
+"language": "GDScript",
+"path": "res://src/Modules/Physics/PhysicalObject2D.gd"
+}, {
+"base": "State",
+"class": "PlatformerState",
+"language": "GDScript",
+"path": "res://src/Modules/StateMachine/States/PlatformerState.gd"
+}, {
+"base": "Node",
+"class": "State",
+"language": "GDScript",
+"path": "res://src/Modules/StateMachine/States/State.gd"
 }, {
 "base": "Node2D",
 "class": "WorldEvent",
@@ -20,7 +45,12 @@ _global_script_classes=[ {
 "path": "res://src/world/events/WorldEvent.gd"
 } ]
 _global_script_class_icons={
+"Boid": "",
+"OnGround": "",
 "Pawn": "",
+"PhysicalObject2D": "",
+"PlatformerState": "",
+"State": "",
 "WorldEvent": ""
 }
 

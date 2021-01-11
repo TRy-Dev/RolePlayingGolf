@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/TestingIdeas/CameraTarget.gd" type="Script" id=1]
+[ext_resource path="res://assets/art/single_tiles/crosshair1.png" type="Texture" id=2]
+
+[node name="CameraTarget" type="KinematicBody2D"]
+script = ExtResource( 1 )
+friction_coeff = 0.15
+bounciness = 0.0
+max_force = 2500.0
+slow_radius = 200.0
+
+[node name="Sprite" type="Sprite" parent="."]
+visible = false
+modulate = Color( 1, 1, 0.329412, 0.172549 )
+texture = ExtResource( 2 )

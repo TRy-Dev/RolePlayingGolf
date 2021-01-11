@@ -4,7 +4,7 @@ signal scene_ready
 
 onready var env = $EnvironmentStatic
 onready var events_parent = $Events
-#onready var events = events_parent.get_children()
+#onready var events = events_parent.get_children()ssssa
 onready var player = $Player
 onready var main_ui = $MainUI
 
@@ -15,7 +15,6 @@ func _ready() -> void:
 	main_ui.toggle_moves(true)
 	$Fog.visible = true
 	player.connect("player_moved", self, "_on_player_moved")
-	
 	emit_signal("scene_ready")
 	for e in events_parent.get_children():
 		e.connect("world_event_reached", self, "_on_world_event_reached")
