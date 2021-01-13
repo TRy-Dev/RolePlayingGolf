@@ -38,3 +38,4 @@ func update_player_is_shooting() -> void:
 func handle_debug_input() -> void:
 	if Input.is_action_just_pressed("debug_restart"):
 		SceneController.reload_current()
+		DebugOverlay.clear_stats()

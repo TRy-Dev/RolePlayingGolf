@@ -88,6 +88,7 @@ AudioController="*res://src/Modules/Audio/AudioController.tscn"
 Courtain="*res://src/Modules/Rendering/Courtain.tscn"
 SceneController="*res://src/Modules/Core/SceneController.gd"
 DebugOverlay="*res://src/Modules/Core/DebugOverlay.tscn"
+PhysicsPrediction="*res://src/TestingIdeas/PhysicsPrediction.gd"
 
 [display]
 

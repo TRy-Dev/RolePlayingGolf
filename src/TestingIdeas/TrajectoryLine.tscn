@@ -21,17 +21,3 @@ gradient = SubResource( 2 )
 collision_mask = 2
 
 [node name="ShadowParent" type="Node2D" parent="."]
-
-[node name="PointCount" type="Label" parent="."]
-margin_left = -3.5
-margin_top = -20.0
-margin_right = 3.5
-margin_bottom = -6.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "a"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}

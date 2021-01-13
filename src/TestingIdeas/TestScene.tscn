@@ -41,7 +41,7 @@ position = Vector2( 100, 100 )
 script = ExtResource( 2 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 14.5676, 137.211 )
+position = Vector2( -0.982273, -1.81525 )
 friction_coeff = 0.02
 bounciness = 0.92
 hit_min_force = 20.0
@@ -63,7 +63,7 @@ drag_margin_right = 0.1
 drag_margin_bottom = 0.1
 
 [node name="Wall" type="StaticBody2D" parent="."]
-position = Vector2( 30.231, 94.1925 )
+position = Vector2( 7.19453, 94.1925 )
 collision_layer = 2
 
 [node name="Sprite" type="Sprite" parent="Wall"]
@@ -101,7 +101,7 @@ scale = Vector2( 10, 1 )
 texture = ExtResource( 7 )
 
 [node name="Wall2" type="StaticBody2D" parent="."]
-position = Vector2( 30.231, 211.263 )
+position = Vector2( 4.4216, 211.263 )
 rotation = 3.14159
 collision_layer = 2
 

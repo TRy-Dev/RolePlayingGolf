@@ -5,8 +5,8 @@
 [ext_resource path="res://src/player/Cursor.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/TestingIdeas/TrajectoryLine.tscn" type="PackedScene" id=4]
 
-[sub_resource type="CircleShape2D" id=1]
-radius = 4.62514
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 4.5, 4.5 )
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2147483649
@@ -31,4 +31,3 @@ visible = false
 modulate = Color( 1, 1, 1, 0.196078 )
 
 [node name="TrajectoryLine" parent="." instance=ExtResource( 4 )]
-line_length = 100

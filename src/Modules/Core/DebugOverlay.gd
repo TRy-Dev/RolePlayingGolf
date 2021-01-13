@@ -5,6 +5,9 @@ onready var label = $bg/Label
 const DECIMAL_PRECISION = 0.001
 var stats = []
 
+func clear_stats():
+	stats = []
+
 func add_stat(stat_name, object, stat_ref, is_method):
 	stats.append([stat_name, object, stat_ref, is_method])
 
