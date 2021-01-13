@@ -1,36 +1,56 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/TestingIdeas/TestScene.gd" type="Script" id=2]
 [ext_resource path="res://src/battle/rooms/SquareSmall.tscn" type="PackedScene" id=3]
-[ext_resource path="res://src/TestingIdeas/Hole.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/TestingIdeas/CameraTarget.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/Modules/Core/CameraController.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/art/single_tiles/crosshair1.png" type="Texture" id=7]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 53.4667, 29.7275 )
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform vec4 top_color : hint_color = vec4(1.0);
+uniform vec4 bottom_color : hint_color = vec4(vec3(0.0), 1.0);
+
+uniform float transparent_edge_amount :hint_range(0.0, 0.5) = 0.0;
+
+void fragment() {
+	vec4 col = mix(top_color, bottom_color, UV.y);
+	
+	// TEA
+	float tea = transparent_edge_amount;
+	if (UV.x < tea || UV.x > tea || UV.y < tea || UV.y > tea) {
+		
+	}
+		
+	COLOR = col;
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/top_color = Color( 0.278431, 0.176471, 0.235294, 0 )
+shader_param/bottom_color = Color( 0.478431, 0.266667, 0.290196, 1 )
+shader_param/transparent_edge_amount = 0.0
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 79.7359, 8.04897 )
 
 [node name="TestScene" type="Node2D"]
-position = Vector2( -100, -100 )
+position = Vector2( 100, 100 )
 script = ExtResource( 2 )
 
-[node name="Hole" parent="." instance=ExtResource( 4 )]
-position = Vector2( 41.2383, 9.42317 )
-
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 0, -112.309 )
+position = Vector2( 14.5676, 137.211 )
 friction_coeff = 0.02
 bounciness = 0.92
 hit_min_force = 20.0
 
 [node name="CameraTarget" parent="Player" instance=ExtResource( 5 )]
+max_offset_length = 0
 
 [node name="Colliders" parent="." instance=ExtResource( 3 )]
 tile_data = PoolIntArray( -524289, 0, 65537, -589824, 0, 65537, -458754, 0, 65537, -524287, 0, 65537, -393218, 0, 65537, -458751, 0, 65537, -327681, 0, 65537, -393216, 0, 65537, -131077, 0, 131073, -131076, 0, 131073, -131075, 0, 131073, -131074, 0, 131073, -131073, 0, 131073, -196608, 0, 131073, -196607, 0, 131073, -196606, 0, 131073, -196605, 0, 131073, -196604, 0, 131073, -196603, 0, 131073, -196602, 0, 131073, -196601, 0, 131073, -196600, 0, 131073, -196599, 0, 131073, -196598, 0, 131073, -196597, 0, 131073, -196596, 0, 131073, -65542, 0, 65538, -65541, 0, 65537, -65538, 0, 65537, -131072, 0, 65537, -131071, 0, 65537, -131069, 0, 65537, -131063, 0, 65537, -131061, 0, 65537, -131059, 0, 65536, -6, 0, 65538, -2, 0, 65537, -65531, 0, 65537, -65525, 0, 65537, -65523, 0, 65536, 65530, 0, 65538, 65534, 0, 65537, 10, 0, 65537, 13, 0, 65536, 131066, 0, 65538, 131067, 0, 65537, 131070, 0, 65537, 65541, 0, 65537, 65546, 0, 65537, 65549, 0, 65536, 196603, 0, 1, 196604, 0, 1, 196605, 0, 1, 196606, 0, 1, 196607, 0, 1, 131072, 0, 1, 131073, 0, 1, 131074, 0, 1, 131075, 0, 1, 131076, 0, 1, 131077, 0, 1, 131078, 0, 1, 131079, 0, 1, 131080, 0, 1, 131081, 0, 1, 131082, 0, 1, 131083, 0, 1, 131084, 0, 1, 262138, 0, 65536, 262143, 0, 65536, 196612, 0, 65536, 196617, 0, 65536 )
-
-[node name="TargetArea" type="CollisionShape2D" parent="."]
-position = Vector2( -7.41624, 0.264862 )
-shape = SubResource( 1 )
 
 [node name="CameraController" parent="." instance=ExtResource( 6 )]
 zoom = Vector2( 0.25, 0.25 )
@@ -41,3 +61,54 @@ drag_margin_left = 0.1
 drag_margin_top = 0.1
 drag_margin_right = 0.1
 drag_margin_bottom = 0.1
+
+[node name="Wall" type="StaticBody2D" parent="."]
+position = Vector2( 30.231, 94.1925 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Wall"]
+material = SubResource( 2 )
+scale = Vector2( 10, 1 )
+texture = ExtResource( 7 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
+shape = SubResource( 3 )
+
+[node name="Wall3" type="StaticBody2D" parent="."]
+position = Vector2( 63.9712, 155.641 )
+rotation = 1.5708
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall3"]
+shape = SubResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="Wall3"]
+material = SubResource( 2 )
+scale = Vector2( 10, 1 )
+texture = ExtResource( 7 )
+
+[node name="Wall4" type="StaticBody2D" parent="."]
+position = Vector2( -55.5855, 155.641 )
+rotation = -1.5708
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall4"]
+shape = SubResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="Wall4"]
+material = SubResource( 2 )
+scale = Vector2( 10, 1 )
+texture = ExtResource( 7 )
+
+[node name="Wall2" type="StaticBody2D" parent="."]
+position = Vector2( 30.231, 211.263 )
+rotation = 3.14159
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2"]
+shape = SubResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="Wall2"]
+material = SubResource( 2 )
+scale = Vector2( 10, 1 )
+texture = ExtResource( 7 )

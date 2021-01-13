@@ -27,7 +27,8 @@ region_rect = Rect2( 595, 238, 16, 16 )
 shape = SubResource( 1 )
 
 [node name="Cursor" parent="." instance=ExtResource( 3 )]
+visible = false
 modulate = Color( 1, 1, 1, 0.196078 )
 
 [node name="TrajectoryLine" parent="." instance=ExtResource( 4 )]
-start_dist = 0
+line_length = 100

@@ -13,6 +13,9 @@ const STRENGTH_STEP = 1.0 / 12.0
 
 var direction = Vector2.RIGHT
 
+func _ready():
+	trajectory.set_shape($CollisionShape2D.shape)
+
 func shoot() -> void:
 	AudioController.sfx.play("hit")
 	var force = direction * lerp(hit_min_force, hit_max_force, current_hit_strength) * Engine.iterations_per_second
@@ -20,8 +23,10 @@ func shoot() -> void:
 
 func look_at(dir: Vector2) -> void:
 	direction = dir.normalized()
+	cursor.set_rotation(rad2deg(direction.angle()))
+
+func update_trajectory_direction(dir: Vector2) -> void:
 	trajectory.set_direction(direction)
-	cursor.set_rotation(rad2deg(dir.angle()))
 
 func update_hit_strength(dir: int):
 	if not dir in [-1, 1, 0]:
