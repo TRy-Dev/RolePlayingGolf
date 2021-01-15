@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/TestingIdeas/Marker.gd" type="Script" id=2]
+
+[sub_resource type="Gradient" id=1]
+colors = PoolColorArray( 0.901961, 0.282353, 0.180392, 1, 0.811765, 0.776471, 0.721569, 1 )
+
+[node name="Marker" type="Sprite"]
+script = ExtResource( 2 )
+
+[node name="Direction" type="Line2D" parent="."]
+modulate = Color( 1, 1, 1, 0.392157 )
+points = PoolVector2Array( 0, 0, 10, 0 )
+width = 1.0
+default_color = Color( 0.235294, 0.67451, 0.843137, 1 )
+gradient = SubResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_top = -19.8526
+margin_bottom = -5.85257
+grow_horizontal = 2
+grow_vertical = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}

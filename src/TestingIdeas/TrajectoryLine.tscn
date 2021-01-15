@@ -21,3 +21,5 @@ gradient = SubResource( 2 )
 collision_mask = 2
 
 [node name="ShadowParent" type="Node2D" parent="."]
+
+[node name="CollMarkerParent" type="Node2D" parent="."]
