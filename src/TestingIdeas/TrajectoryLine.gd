@@ -30,7 +30,7 @@ func set_direction(dir: Vector2) -> void:
 	var points = PoolVector2Array()
 	points.append(dir * start_dist)
 	for pi in points_info:
-		points.append(pi["global_position"] - global_position)
+		points.append(pi["position"] - global_position)
 	refresh_shadows(points)
 	refresh_coll_markers(points_info)
 	line.points = points
@@ -47,7 +47,7 @@ func refresh_coll_markers(points_info: Array) -> void:
 	for i in range(len(points_info)):
 		var p_i = points_info[i]
 		if p_i.collided:
-			_add_marker(p_i.collision_global_position, p_i.normal, str(i))
+			_add_marker(p_i.collision_position, p_i.normal, str(i))
 
 func _add_marker(global_pos: Vector2, normal: Vector2, text: String) -> void:
 	var marker = marker_prefab.instance()
