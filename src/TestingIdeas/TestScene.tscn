@@ -104,15 +104,13 @@ scale = Vector2( 10, 1 )
 texture = ExtResource( 7 )
 
 [node name="Cursor2" type="Sprite" parent="."]
-position = Vector2( -23.529, 106.779 )
+position = Vector2( -24.0533, -23.8872 )
 scale = Vector2( 0.8, 0.8 )
 texture = ExtResource( 7 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 0, 120.322 )
-friction_coeff = 0.02
-bounciness = 0.92
-hit_min_force = 20.0
+position = Vector2( 87.1945, 6.69606 )
+hit_max_force = 500.0
 
 [node name="CameraTarget" parent="Player" instance=ExtResource( 5 )]
 max_offset_length = 0

@@ -41,7 +41,8 @@ func set_target(target):
 
 func set_target_instant(target):
 	set_target(target)
-	global_position = _target.global_position
+	if _target:
+		global_position = _target.global_position
 	reset_smoothing()
 
 func set_zoom(val, smoothed := true):

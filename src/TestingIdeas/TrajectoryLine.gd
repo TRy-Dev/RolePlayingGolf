@@ -5,8 +5,8 @@ export(int, 0, 100) var start_dist := 0
 
 onready var line = $Line2D
 
-var shadow_prefab = preload("res://src/TestingIdeas/PlayerShadow.tscn")
-var marker_prefab = preload("res://src/TestingIdeas/Marker.tscn")
+var shadow_prefab = preload("res://src/Debug/DebugPlayerShadow.tscn")
+var marker_prefab = preload("res://src/Debug/DebugMarker.tscn")
 onready var shadow_parent = $ShadowParent
 onready var marker_parent = $CollMarkerParent
 
@@ -18,10 +18,11 @@ func _ready():
 func set_shape(s) -> void: 
 	shape_params.exclude = [owner.get_rid()]
 	shape_params.set_shape(s)
+	
 
 func set_direction(dir: Vector2) -> void:
 	dir = dir.normalized()
-	if dir.length() != 1:
+	if dir.length() - 1.0 > Math.EPSILON:
 		push_error("Wrong direction for trajectory line: %s" %dir)
 		return
 	shape_params.transform.origin = global_position
