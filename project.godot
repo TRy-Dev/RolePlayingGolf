@@ -9,10 +9,20 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Pawn",
+"class": "Actor",
+"language": "GDScript",
+"path": "res://src/Modules/Grid/Actor.gd"
+}, {
 "base": "PhysicalObject2D",
 "class": "Boid",
 "language": "GDScript",
 "path": "res://src/Modules/Physics/Boid.gd"
+}, {
+"base": "Reference",
+"class": "CastleDB",
+"language": "GDScript",
+"path": "res://addons/thejustinwalsh.castledb/castledb_types.gd"
 }, {
 "base": "Boid",
 "class": "Flocker",
@@ -32,7 +42,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Pawn",
 "language": "GDScript",
-"path": "res://src/battle/pawns/Pawn.gd"
+"path": "res://src/Modules/Grid/Pawn.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "PhysicalObject2D",
@@ -44,6 +54,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/Modules/StateMachine/States/PlatformerState.gd"
 }, {
+"base": "Resource",
+"class": "SaveGame",
+"language": "GDScript",
+"path": "res://src/Modules/DataPersistence/SaveGame.gd"
+}, {
 "base": "Node",
 "class": "State",
 "language": "GDScript",
@@ -53,23 +68,20 @@ _global_script_classes=[ {
 "class": "TopDownCharacter",
 "language": "GDScript",
 "path": "res://src/Modules/Characters/TopDown/TopDownCharacter.gd"
-}, {
-"base": "Node2D",
-"class": "WorldEvent",
-"language": "GDScript",
-"path": "res://src/world/events/WorldEvent.gd"
 } ]
 _global_script_class_icons={
+"Actor": "",
 "Boid": "",
+"CastleDB": "",
 "Flocker": "",
 "FlowField": "",
 "OnGround": "",
 "Pawn": "",
 "PhysicalObject2D": "",
 "PlatformerState": "",
+"SaveGame": "",
 "State": "",
-"TopDownCharacter": "",
-"WorldEvent": ""
+"TopDownCharacter": ""
 }
 
 [application]
@@ -89,6 +101,9 @@ Courtain="*res://src/Modules/Rendering/Courtain.tscn"
 SceneController="*res://src/Modules/Core/SceneController.gd"
 DebugOverlay="*res://src/Modules/Core/DebugOverlay.tscn"
 PhysicsPrediction="*res://src/Modules/Physics/PhysicsPrediction.gd"
+GlobalConstants="*res://src/TestingIdeas/GlobalConstants.gd"
+GameData="*res://src/TestingIdeas/GameData.gd"
+Commands="*res://src/Modules/Grid/Commands.gd"
 
 [display]
 
@@ -202,6 +217,8 @@ common/physics_fps=120
 [rendering]
 
 quality/driver/driver_name="GLES2"
+quality/2d/use_nvidia_rect_flicker_workaround=true
+quality/2d/use_pixel_snap=true
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
 environment/default_clear_color=Color( 0.278431, 0.176471, 0.235294, 1 )

@@ -1,9 +1,10 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/player/Cursor.gd" type="Script" id=1]
-[ext_resource path="res://src/Shaders/cutoff.shader" type="Shader" id=2]
+[ext_resource path="res://src/Modules/Rendering/Shaders/cutoff.shader" type="Shader" id=2]
 [ext_resource path="res://assets/art/ui/arrow.png" type="Texture" id=3]
 [ext_resource path="res://src/shaders/outline.shader" type="Shader" id=4]
+
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 4 )

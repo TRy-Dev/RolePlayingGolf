@@ -6,7 +6,6 @@ extends Node2D
 
 # This module is WIP
 # Expect to encounter bugs and inaccuracies in prediction (mostly on sharp corners)
-# Some errors are commented out, as they do not matter for this project (Role Playing Golf)
 # With that said, current funcionalities are sufficient for Role Playing Golf
 
 # Input shape_params
@@ -45,12 +44,16 @@ func get_shape_trajectory(shape_params: Physics2DShapeQueryParameters) -> Array:
 		var unsafe_position = shape_params.transform.origin + unsafe_distance * motion_direction
 		
 		shape_params.transform.origin = unsafe_position
-		# Without motion prediction is more accurate
-		shape_params.motion = Vector2.ZERO # motion_direction
+		# Add slight motion to ensure rest collision occures
+		shape_params.motion = motion_direction
 		var rest_info = space_state.get_rest_info(shape_params)
 		if not rest_info:
+			return [{
+				"position": shape_params.transform.origin + shape_params.motion,
+				"collided": false,
+			}]
 #			push_error("Shape did not collide, but should")
-			return []
+#			return []
 		if rest_info.linear_velocity != Vector2.ZERO:
 			print("HEY! Linear velocity is not zero, but should be for KinematicBody2D!")
 		var collision_position = rest_info.point
@@ -77,7 +80,7 @@ func _bounce_direction_off_wall(shape_params: Physics2DShapeQueryParameters) -> 
 	shape_params.motion = shape_params.motion.normalized() # Move only slightly forward
 	var rest_info = space_state.get_rest_info(shape_params)
 	if not rest_info:
-#		push_error("should have collided")
+		push_error("should have collided")
 		return shape_params
 	if rest_info.linear_velocity != Vector2.ZERO:
 		print("HEY! Linear velocity is not zero, but should be for KinematicBody2D!")

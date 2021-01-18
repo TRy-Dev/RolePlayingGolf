@@ -1,6 +1,5 @@
 extends TopDownCharacter
 
-onready var cursor = $Cursor
 onready var trajectory = $TrajectoryLine
 
 export(float, 10.0, 1000.0) var hit_min_force = 20.0
@@ -22,7 +21,6 @@ func shoot() -> void:
 
 func look_at(dir: Vector2) -> void:
 	direction = dir.normalized()
-	cursor.set_rotation(rad2deg(direction.angle()))
 
 func update_trajectory_direction(dir: Vector2) -> void:
 	trajectory.set_direction(direction)
@@ -33,7 +31,6 @@ func update_hit_strength(dir: int):
 		return
 	current_hit_strength += dir * STRENGTH_STEP
 	current_hit_strength = clamp(current_hit_strength, 0.0, 1.0)
-	cursor.set_value(current_hit_strength)
 
 func _handle_collision(collision):
 	var angle_deg = rad2deg(collision.normal.angle())
