@@ -1,5 +1,8 @@
 extends Boid
 
+# Spring-like offset for camera
+# Set as target for CameraController
+
 export (int, 0, 100) var max_offset_length = 20
 
 onready var base_transform = get_parent()

@@ -43,12 +43,8 @@ func get_pawn_texture_by_id(id: int):
 func get_pawn_instance_by_id(id: int, pos: Vector2, parent):
 	var pawn_data = _pawns[id].duplicate(true)
 	var pawn
-	if pawn_data["type"] == "actor":
-		pawn = load("res://src/Modules/Grid/Actor.tscn").instance()
-	else:
-		pawn = load("res://src/Modules/Grid/Pawn.tscn").instance()
+	pawn = load("res://src/Modules/Grid/Pawn.tscn").instance()
 	parent.add_child(pawn)
-#	pawn.call_deferred("init", pos, pawn_data)
 	pawn.init(pos, pawn_data)
 	return pawn
 
@@ -65,9 +61,3 @@ func get_recipe_result(id_1: int, id_2: int) -> int:
 		return _recipes[ingredients_sorted]
 	return -2
 
-#func debug_commands(commands: Array) -> void:
-#	var out = []
-#	for c in commands:
-#		out.append(c.get_class())
-#	print(out)
-	

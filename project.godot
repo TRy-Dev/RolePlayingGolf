@@ -9,11 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Pawn",
-"class": "Actor",
-"language": "GDScript",
-"path": "res://src/Modules/Grid/Actor.gd"
-}, {
 "base": "PhysicalObject2D",
 "class": "Boid",
 "language": "GDScript",
@@ -33,6 +28,11 @@ _global_script_classes=[ {
 "class": "FlowField",
 "language": "GDScript",
 "path": "res://src/Modules/Physics/FlowField.gd"
+}, {
+"base": "Node",
+"class": "GridNavigation",
+"language": "GDScript",
+"path": "res://src/Modules/Grid/GridNavigation.gd"
 }, {
 "base": "PlatformerState",
 "class": "OnGround",
@@ -70,11 +70,11 @@ _global_script_classes=[ {
 "path": "res://src/Modules/Characters/TopDown/TopDownCharacter.gd"
 } ]
 _global_script_class_icons={
-"Actor": "",
 "Boid": "",
 "CastleDB": "",
 "Flocker": "",
 "FlowField": "",
+"GridNavigation": "",
 "OnGround": "",
 "Pawn": "",
 "PhysicalObject2D": "",
@@ -87,7 +87,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Role Playing Golf"
-run/main_scene="res://src/TestingIdeas/TestScene.tscn"
+run/main_scene="res://src/TestingIdeas/TestGrid.tscn"
 config/icon="res://icon.png"
 
 [autoload]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://src/Modules/Core/CameraController.gd" type="Script" id=1]
+[ext_resource path="res://src/Modules/Camera/CameraController.gd" type="Script" id=1]
 
 [node name="CameraController" type="Camera2D"]
 rotating = true
@@ -9,6 +9,7 @@ limit_smoothed = true
 drag_margin_h_enabled = true
 drag_margin_v_enabled = true
 smoothing_enabled = true
+smoothing_speed = 1.0
 editor_draw_limits = true
 editor_draw_drag_margin = true
 script = ExtResource( 1 )
