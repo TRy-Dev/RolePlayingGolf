@@ -103,13 +103,14 @@ DebugOverlay="*res://src/Modules/Core/DebugOverlay.tscn"
 PhysicsPrediction="*res://src/Modules/Physics/PhysicsPrediction.gd"
 GlobalConstants="*res://src/TestingIdeas/GlobalConstants.gd"
 GameData="*res://src/TestingIdeas/GameData.gd"
-Commands="*res://src/Modules/Grid/Commands.gd"
+Colors="*res://src/autoload/Colors.gd"
 
 [display]
 
 window/size/width=1366
 window/size/height=768
 window/size/resizable=false
+window/vsync/use_vsync=false
 
 [importer_defaults]
 

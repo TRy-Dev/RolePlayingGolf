@@ -12,5 +12,6 @@ const _colors = {
 
 func get_color(col_name):
 	if not col_name in _colors:
+		print("HEY! Could not find color: %s" % col_name)
 		return _colors["white"]
 	return _colors[col_name]

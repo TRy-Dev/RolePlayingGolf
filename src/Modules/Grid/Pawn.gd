@@ -12,6 +12,12 @@ var grid_position: Vector2 #setget ,get_grid_pos
 #func get_class(): 
 #	return "Pawn"
 
+enum PawnDebugStates {
+	MOVING, IDLE, STUCK
+}
+var debug_state = PawnDebugStates.IDLE
+
+
 func init(grid_pos: Vector2, data: Dictionary) -> void:
 	grid_position = grid_pos
 	global_position = (grid_pos + 0.5 * Vector2.ONE) * GlobalConstants.TILE_SIZE
@@ -39,22 +45,29 @@ func destroy() -> void:
 func set_selected(value: bool) -> void:
 	$Outline.visible = value
 
-
-#func get_grid_pos() -> Vector2:
-#	return _grid_pos
-
-#func set_tile_index(value: int) -> void:
-#	tile_index = value
-#	sprite.texture = GameData.get_pawn_texture_by_id(tile_index)
+func get_desired_position() -> Vector2:
+	# for now returning random neighboring direction
+	return grid_position + Rng.rand_array_element(Math.CARDINAL_DIRECTIONS)
 
 
+func set_debug_state(state: int) -> void:
+	debug_state = state
+	update()
+#	sprite.modulate = color_map[state]
+
+func _draw():
+	var color_map = {
+		PawnDebugStates.MOVING: Color.green,
+		PawnDebugStates.IDLE: Color.yellow,
+		PawnDebugStates.STUCK: Color.red
+	}
+	draw_circle(Vector2(4, -4), 1, color_map[debug_state])
 
 #func get_attribute(key):
 #	if not _data.has(key):
 #		push_error("HEY! Pawn %s does not have attribute %s" %[name, key])
 #		return null
 #	return _data.get(key)
-
 
 
 ## Other is pushing into me

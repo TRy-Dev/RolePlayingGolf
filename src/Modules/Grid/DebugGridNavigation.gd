@@ -33,13 +33,16 @@ func _on_nav_grid_updated(a_star):
 		var pos_world = tile_size * (pos_grid + 0.5 * Vector2.ONE)
 		point["position"] = pos_world
 		point["grid_pos"] = pos_grid
+		point["disabled"] = a_star.is_point_disabled(p_id)
 		var neighbor_points = []
 		for conn_id in a_star.get_point_connections(p_id):
+			if a_star.is_point_disabled(conn_id):
+				continue
 			var neigh_pos_grid = a_star.get_point_position(conn_id)
 			var neigh_pos_world = tile_size * (neigh_pos_grid + 0.5 * Vector2.ONE)
 			neighbor_points.append(neigh_pos_world)
 		point["neighbors"] = neighbor_points
-		point["disabled"] = a_star.is_point_disabled(p_id)
+		
 		nav_points.append(point)
 	update()
 
