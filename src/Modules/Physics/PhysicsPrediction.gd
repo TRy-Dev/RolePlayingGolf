@@ -27,7 +27,7 @@ func get_shape_trajectory(shape_params: Physics2DShapeQueryParameters) -> Array:
 	
 	var motion_result = space_state.cast_motion(shape_params)
 	if not motion_result:
-		push_error("Shape can't move!")
+#		push_error("Shape can't move!")
 		return []
 	
 	if motion_result[0] < Math.EPSILON:
@@ -54,8 +54,8 @@ func get_shape_trajectory(shape_params: Physics2DShapeQueryParameters) -> Array:
 			}]
 #			push_error("Shape did not collide, but should")
 #			return []
-		if rest_info.linear_velocity != Vector2.ZERO:
-			print("HEY! Linear velocity is not zero, but should be for KinematicBody2D!")
+#		if rest_info.linear_velocity != Vector2.ZERO:
+#			print("HEY! Linear velocity is not zero, but should be for KinematicBody2D!")
 		var collision_position = rest_info.point
 		var normal = rest_info.normal
 		var new_motion_direction = motion_direction.bounce(normal).normalized()
@@ -80,10 +80,10 @@ func _bounce_direction_off_wall(shape_params: Physics2DShapeQueryParameters) -> 
 	shape_params.motion = shape_params.motion.normalized() # Move only slightly forward
 	var rest_info = space_state.get_rest_info(shape_params)
 	if not rest_info:
-		push_error("should have collided")
+#		push_error("should have collided")
 		return shape_params
-	if rest_info.linear_velocity != Vector2.ZERO:
-		print("HEY! Linear velocity is not zero, but should be for KinematicBody2D!")
+#	if rest_info.linear_velocity != Vector2.ZERO:
+#		print("HEY! Linear velocity is not zero, but should be for KinematicBody2D!")
 	var new_motion = start_motion.bounce(rest_info.normal)
 	shape_params.motion = new_motion
 	return shape_params

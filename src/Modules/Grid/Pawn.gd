@@ -5,27 +5,21 @@ class_name Pawn
 onready var sprite :Sprite = $Sprite
 #onready var anim_player :AnimationPlayer = $AnimationPlayer
 
-var tile_index: int # setget set_tile_index
-var grid_position: Vector2 #setget ,get_grid_pos 
-#var _data = {}
+var grid_position: Vector2
+var tile_index: int
+var speed := 0
 
-#func get_class(): 
-#	return "Pawn"
+## GOLF ?
 
-enum PawnDebugStates {
-	MOVING, IDLE, STUCK
-}
-var debug_state = PawnDebugStates.IDLE
+var next_turn_movement := []
 
 
-func init(grid_pos: Vector2, data: Dictionary) -> void:
+func initialize(grid_pos: Vector2, idx: int, data) -> void:
 	grid_position = grid_pos
+	tile_index = idx
+	speed = data.speed
 	global_position = (grid_pos + 0.5 * Vector2.ONE) * GlobalConstants.TILE_SIZE
-	tile_index = data["id"]
-	sprite.texture = GameData.get_pawn_texture_by_id(tile_index)
-	
-	$Outline.texture = sprite.texture
-	set_selected(false)
+	sprite.texture = load(FileSystem.concat_path([FileSystem.ASSETS, data.texture]))
 
 
 func set_position(grid_pos: Vector2) -> void:
@@ -34,7 +28,7 @@ func set_position(grid_pos: Vector2) -> void:
 	$Tween.stop_all()
 	$Tween.interpolate_property(self, "global_position", 
 			global_position, target_position, GlobalConstants.MOVE_TIME, 
-			Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+			Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$Tween.start()
 
 func destroy() -> void:
@@ -42,26 +36,27 @@ func destroy() -> void:
 
 ## GOLF
 
-func set_selected(value: bool) -> void:
-	$Outline.visible = value
 
 func get_desired_position() -> Vector2:
+	var delta = Vector2.ZERO
+	for i in range(speed):
+		delta += Rng.rand_array_element(Math.CARDINAL_DIRECTIONS)
 	# for now returning random neighboring direction
-	return grid_position + Rng.rand_array_element(Math.CARDINAL_DIRECTIONS)
+	return grid_position + delta
 
 
-func set_debug_state(state: int) -> void:
-	debug_state = state
-	update()
-#	sprite.modulate = color_map[state]
+#func set_debug_state(state: int) -> void:
+#	debug_state = state
+#	update()
+##	sprite.modulate = color_map[state]
 
-func _draw():
-	var color_map = {
-		PawnDebugStates.MOVING: Color.green,
-		PawnDebugStates.IDLE: Color.yellow,
-		PawnDebugStates.STUCK: Color.red
-	}
-	draw_circle(Vector2(4, -4), 1, color_map[debug_state])
+#func _draw():
+#	var color_map = {
+#		PawnDebugStates.MOVING: Color.green,
+#		PawnDebugStates.IDLE: Color.yellow,
+#		PawnDebugStates.STUCK: Color.red
+#	}
+#	draw_circle(Vector2(4, -4), 1, color_map[debug_state])
 
 #func get_attribute(key):
 #	if not _data.has(key):

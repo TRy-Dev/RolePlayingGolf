@@ -4,6 +4,11 @@ var nav_points := []
 
 export(Resource) var font_resource
 
+var disabled = true
+
+func _ready():
+	set_disabled(true)
+
 func _draw():
 	for c in get_children():
 		c.free()
@@ -14,17 +19,25 @@ func _draw():
 			for neigh_pos in point.neighbors:
 				draw_line(point.position, neigh_pos, Color.blue)
 
-func _draw_label(text: String, pos: Vector2):
-	var label = Label.new()
-	label.rect_position = pos + Vector2(0, -4)
-	label.grow_vertical = Control.GROW_DIRECTION_BOTH
-	label.grow_horizontal = Control.GROW_DIRECTION_BOTH
-	label.rect_size = Vector2.ZERO
-	label.add_font_override("Kenney Small", font_resource)
-	label.text = text
-	add_child(label)
+func set_disabled(value: bool) -> void:
+	disabled = value
+	visible = not value
 
-func _on_nav_grid_updated(a_star):
+func _process(delta):
+	if Input.is_action_just_pressed("toggle_debug"):
+		set_disabled(not disabled)
+
+#func _draw_label(text: String, pos: Vector2):
+#	var label = Label.new()
+#	label.rect_position = pos + Vector2(0, -4)
+#	label.grow_vertical = Control.GROW_DIRECTION_BOTH
+#	label.grow_horizontal = Control.GROW_DIRECTION_BOTH
+#	label.rect_size = Vector2.ZERO
+#	label.add_font_override("Kenney Small", font_resource)
+#	label.text = text
+#	add_child(label)
+
+func _update_nav(a_star):
 	nav_points = []
 	var tile_size = GlobalConstants.TILE_SIZE
 	for p_id in a_star.get_points():
@@ -45,4 +58,9 @@ func _on_nav_grid_updated(a_star):
 		
 		nav_points.append(point)
 	update()
+
+func _on_nav_grid_updated(a_star):
+	if disabled:
+		return
+	_update_nav(a_star)
 

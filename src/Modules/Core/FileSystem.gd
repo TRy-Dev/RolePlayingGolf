@@ -2,6 +2,8 @@ extends Node
 
 const PATH_DELIMITER = "/"
 
+const ASSETS = "res://assets"
+
 func concat_path(paths: Array) -> String:
 	var out = ""
 	for p in paths:

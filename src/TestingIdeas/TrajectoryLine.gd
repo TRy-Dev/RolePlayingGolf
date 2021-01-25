@@ -1,16 +1,23 @@
 extends Node2D
 
-export(int, 0, 500) var line_length := 50
+#export(int, 0, 500) var line_length := 50
 export(int, 0, 100) var start_dist := 0
 
-onready var line = $Line2D
+
 
 var shadow_prefab = preload("res://src/Debug/DebugPlayerShadow.tscn")
 var marker_prefab = preload("res://src/Debug/DebugMarker.tscn")
+onready var line = $Line2D
 onready var shadow_parent = $ShadowParent
 onready var marker_parent = $CollMarkerParent
 
+var line_length = 0
+var max_line_length = 0
+var min_line_length = 0
+
 var shape_params = Physics2DShapeQueryParameters.new()
+
+const MAX_BOUCES = 4
 
 func _ready():
 	shape_params.collision_layer = 0b10
@@ -18,9 +25,17 @@ func _ready():
 func set_shape(s) -> void: 
 	shape_params.exclude = [owner.get_rid()]
 	shape_params.set_shape(s)
-	
 
+func set_line_length(min_len: float, max_len: float) -> void:
+	min_line_length = min_len
+	max_line_length = max_len
+
+func update_line_length(val: float) -> void:
+	line_length = lerp(min_line_length, max_line_length, val)
+	
 func set_direction(dir: Vector2) -> void:
+	if line_length < Math.EPSILON:
+		return
 	dir = dir.normalized()
 	if dir.length() - 1.0 > Math.EPSILON:
 		push_error("Wrong direction for trajectory line: %s" %dir)
@@ -30,7 +45,8 @@ func set_direction(dir: Vector2) -> void:
 	var points_info = PhysicsPrediction.get_shape_trajectory(shape_params)
 	var points = PoolVector2Array()
 	points.append(dir * start_dist)
-	for pi in points_info:
+	for i in range(0, min(MAX_BOUCES, len(points_info))):
+		var pi = points_info[i]
 		points.append(pi["position"] - global_position)
 	refresh_shadows(points)
 	refresh_coll_markers(points_info)

@@ -7,6 +7,8 @@ signal pawn_moved(index, pos_from, pos_to)
 # Dict Vector2 -> Pawn
 var _pawns := {}
 
+var pawn_prefab = preload("res://src/Modules/Grid/Pawn.tscn")
+
 func initialize(walkable: TileMap) -> void:
 	var pawns_grid_positions = get_used_cells()
 	var outside_ground_count = 0
@@ -24,18 +26,42 @@ func initialize(walkable: TileMap) -> void:
 
 func validate_tilemap_and_pawns_equal():
 	var grid_positions = get_used_cells()
-	assert(len(grid_positions) == len(_pawns.keys())
-			and len(grid_positions) == get_child_count())
-	for pos in grid_positions:
-		assert(_pawns.has(pos))
-		assert(_pawns[pos].grid_position == pos)
-#		yield(get_tree().create_timer(GlobalConstants.MOVE_TIME), "timeout")
-#		assert(world_to_map(_pawns[pos].global_position) == pos)
+	if not len(grid_positions) == get_child_count():
+		# Check for duplicate Pawn positions
+		var pawn_positions = []
+		for pawn in get_children():
+			if pawn.grid_position in pawn_positions:
+				print("Duplicate position! %s" %pawn.grid_position)
+				pawn.modulate = Rng.rand_rgb()
+			else:
+				pawn_positions.append(pawn.grid_position)
+		
+		if get_child_count() > len(grid_positions):
+			for c in get_children():
+				if not c.grid_position in grid_positions:
+					print("Pawn %s is not on tilemap!" %c.name)
+		else:
+			pawn_positions = []
+			for c in get_children():
+				pawn_positions.append(c.grid_position)
+			for pos in grid_positions:
+				if not pos in pawn_positions:
+					print("Pawn does not exist on position %s" %pos)
+					
+#	var child_count = get_child_count()
+#	# THIS SHOULD ALWAYS BE TRUE!
+#	assert(len(grid_positions) == len(_pawns.keys())
+#			and len(grid_positions) == get_child_count())
+#	for pos in grid_positions:
+#		assert(_pawns.has(pos))
+#		assert(_pawns[pos].grid_position == pos)
 
 func create_pawn(index: int, pos: Vector2) -> void:
-	var new_pawn = GameData.get_pawn_instance_by_id(index, pos, self)
+	var new_pawn = pawn_prefab.instance()
+	add_child(new_pawn)
 	_pawns[pos] = new_pawn
 	set_cellv(pos, index)
+	new_pawn.initialize(pos, index, DataLoader.get_pawn_data(index))
 	emit_signal("pawn_created", index, pos)
 
 func get_pawn_id_at(pos) -> int:
@@ -58,13 +84,16 @@ func replace_pawn(index: int, pos: Vector2) -> void:
 	create_pawn(index, pos)
 
 func move_pawn(pos_from :Vector2, pos_to :Vector2) -> void:
-	var dir = pos_to - pos_from
-	var pawn = _pawns[pos_from]
+	var dir := pos_to - pos_from
+	var pawn :Pawn = _pawns[pos_from]
 	var index = pawn.tile_index
-	if abs(dir.length_squared() - 1) > Math.EPSILON:
-		print("HEY! Illegal move length(%s) for pawn %s" %[dir.length(), pawn.name])
-		print("From: %s. To: %s" %[pos_from, pos_to])
+	if get_pawn_id_at(pos_to) > -1:
+		print("Pawn trying to move to occupied position %s" %pos_to)
 		return
+#	if abs(dir.length_squared() - 1) > Math.EPSILON:
+#		print("HEY! Illegal move length(%s) for pawn %s" %[dir.length(), pawn.name])
+#		print("From: %s. To: %s" %[pos_from, pos_to])
+#		return
 	# Validate tilemap
 	assert(get_pawn_id_at(pos_from) == pawn.tile_index, 
 			"Could not find tile %s at position %s" % [index, pos_from]
@@ -94,17 +123,11 @@ func update_all(nav: GridNavigation) -> void:
 			var path = nav.get_nav_path(pawn.grid_position, target_pos)
 			nav.set_node_at_disabled(pawn.grid_position, true)
 			if len(path) > 1:
-				move_pawn(pawn.grid_position, path[1])
+				move_pawn(pawn.grid_position, path[min(pawn.speed, len(path) - 1)])
 				not_moved_pawns.remove(i)
 				pawn_moved = true
-				pawn.set_debug_state(pawn.PawnDebugStates.MOVING)
-			elif len(path) == 1:
-				pawn.set_debug_state(pawn.PawnDebugStates.IDLE)
-			else:
-				pawn.set_debug_state(pawn.PawnDebugStates.STUCK)
 		if not pawn_moved:
 			return
-#		return
 
 func set_debug_mode(value) -> void:
 	if value:

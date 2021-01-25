@@ -4,8 +4,10 @@ onready var _pawns = $PawnController
 onready var _environment = $Environment
 onready var _navigation :GridNavigation = $GridNavigation
 
+var player_last_grid_pos = null
+
 func _ready():
-	_environment.initialize()
+#	_environment.initialize()
 	_navigation.initialize(_environment.get_walkable_tilemap())
 	_pawns.connect("pawn_created", _navigation, "_on_pawn_created")
 	_pawns.connect("pawn_destroyed", _navigation, "_on_pawn_destroyed")
@@ -27,6 +29,14 @@ func _on_pawn_selected(previous: Pawn, current: Pawn) -> void:
 
 func update_pawns() -> void:
 	_pawns.update_all(_navigation)
+
+func update_player_position(pos: Vector2) -> void:
+	var grid_pos = _pawns.world_to_map(pos)
+	if grid_pos != player_last_grid_pos:
+		if player_last_grid_pos != null:
+			_navigation.set_node_at_disabled(player_last_grid_pos, false)
+		_navigation.set_node_at_disabled(grid_pos, true)
+		player_last_grid_pos = grid_pos
 
 #func save_state(save_game: Resource):
 #	_env.save_state(save_game)

@@ -3,11 +3,11 @@ extends Camera2D
 onready var tween_zoom = $ZoomTween
 onready var tween_rotate = $RotateTween
 
-const TRANS_TYPE = Tween.TRANS_QUAD
+const TRANS_TYPE = Tween.TRANS_SINE
 const EASE_TYPE = Tween.EASE_IN_OUT
 
-const ZOOM_MIN = 2.0
-const ZOOM_MAX = 0.5
+const ZOOM_MIN = 0.25
+const ZOOM_MAX = 2.0
 const ZOOM_DURATION = 1.0
 
 const ROT_MIN = -180

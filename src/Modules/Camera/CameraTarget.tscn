@@ -1,16 +1,18 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://src/Modules/Camera/CameraTarget.gd" type="Script" id=1]
-[ext_resource path="res://assets/art/single_tiles/crosshair1.png" type="Texture" id=2]
+[ext_resource path="res://assets/images/rect16.png" type="Texture" id=2]
 
 [node name="CameraTarget" type="KinematicBody2D"]
+collision_layer = 0
+collision_mask = 0
 script = ExtResource( 1 )
 friction_coeff = 0.15
 bounciness = 0.0
+max_speed = 1000.0
 max_force = 2500.0
 slow_radius = 200.0
 
-[node name="DebugSprite" type="Sprite" parent="."]
+[node name="Sprite" type="Sprite" parent="."]
 visible = false
-modulate = Color( 1, 1, 0.329412, 0.172549 )
 texture = ExtResource( 2 )

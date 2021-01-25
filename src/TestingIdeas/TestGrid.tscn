@@ -27,7 +27,6 @@ drag_margin_right = 0.1
 drag_margin_bottom = 0.1
 
 [node name="TurnTimer" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.5
 one_shot = true
-autostart = true
 [connection signal="timeout" from="TurnTimer" to="." method="_on_TurnTimer_timeout"]

@@ -40,6 +40,7 @@ func get_nav_path(pos_from: Vector2, pos_to: Vector2) -> Array:
 func set_node_at_disabled(pos: Vector2, value: bool) -> void:
 	var pt = _get_point_at(pos, true)
 	a_star.set_point_disabled(pt, value)
+	emit_signal("nav_grid_updated", a_star)
 
 func _get_point_at(pos: Vector2, include_disabled: bool) -> int:
 #	# Here we assume that pos exists, because pawns will move only on nav points

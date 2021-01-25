@@ -21,10 +21,11 @@ const MIN_VELOCITY_SQ = pow(2.0, 2.0)
 var previous_velocity := Vector2()
 
 func apply_force(force: Vector2) -> void:
+	force *= Engine.iterations_per_second
 	acceleration += force.clamped(max_force) / mass
 
 func _vel_to_force(vel: Vector2) -> Vector2:
-	return vel * mass / get_physics_process_delta_time()
+	return vel * mass #/ pow(get_physics_process_delta_time(), 2.0)
 
 func update() -> void:
 	previous_velocity = velocity
