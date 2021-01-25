@@ -1,9 +1,7 @@
 extends Node2D
 
 #export(int, 0, 500) var line_length := 50
-export(int, 0, 100) var start_dist := 0
-
-
+export(int, 0, 16) var start_dist := 0
 
 var shadow_prefab = preload("res://src/Debug/DebugPlayerShadow.tscn")
 var marker_prefab = preload("res://src/Debug/DebugMarker.tscn")
@@ -17,7 +15,7 @@ var min_line_length = 0
 
 var shape_params = Physics2DShapeQueryParameters.new()
 
-const MAX_BOUCES = 4
+const MAX_BOUCES = 2
 
 func _ready():
 	shape_params.collision_layer = 0b10
@@ -42,12 +40,14 @@ func set_direction(dir: Vector2) -> void:
 		return
 	shape_params.transform.origin = global_position
 	shape_params.motion = dir * line_length
-	var points_info = PhysicsPrediction.get_shape_trajectory(shape_params)
+	var points_info = PhysicsPrediction.get_shape_trajectory(shape_params, MAX_BOUCES)
+	
 	var points = PoolVector2Array()
 	points.append(dir * start_dist)
-	for i in range(0, min(MAX_BOUCES, len(points_info))):
+	for i in range(len(points_info)):
 		var pi = points_info[i]
 		points.append(pi["position"] - global_position)
+		
 	refresh_shadows(points)
 	refresh_coll_markers(points_info)
 	line.points = points

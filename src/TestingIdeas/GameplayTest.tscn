@@ -30,5 +30,4 @@ wait_time = 0.001
 
 [node name="Fog" parent="." instance=ExtResource( 6 )]
 position = Vector2( 651.402, 312.353 )
-scale = Vector2( 131.425, 89.0441 )
 [connection signal="timeout" from="TurnTimer" to="." method="_on_TurnTimer_timeout"]

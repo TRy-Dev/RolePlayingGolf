@@ -18,7 +18,7 @@ extends Node2D
 # Function will check for any collisions on the way and if detected, will bounce off and recursively continue until total distance (shape_params.motion.length) is traversed
 # Output list of points with data about safe (non-colliding) position,
 # 		collision normal and collision position
-func get_shape_trajectory(shape_params: Physics2DShapeQueryParameters) -> Array:
+func get_shape_trajectory(shape_params: Physics2DShapeQueryParameters, remaining_bouces: int) -> Array:
 	var space_state = get_world_2d().direct_space_state
 	
 	if shape_params.motion == Vector2():
@@ -34,45 +34,51 @@ func get_shape_trajectory(shape_params: Physics2DShapeQueryParameters) -> Array:
 		shape_params =  _bounce_direction_off_wall(shape_params)
 		motion_result = space_state.cast_motion(shape_params)
 	
-	if motion_result[0] < 1 and motion_result[0] > 0:
-		var motion_direction = shape_params.motion.normalized()
-		var motion_distance = shape_params.motion.length()
-		var safe_distance = motion_distance * motion_result[0]
-		var unsafe_distance = motion_distance * motion_result[1]
-		var remaining_distance = motion_distance - safe_distance
-		var safe_position = shape_params.transform.origin + safe_distance * motion_direction
-		var unsafe_position = shape_params.transform.origin + unsafe_distance * motion_direction
-		
-		shape_params.transform.origin = unsafe_position
-		# Add slight motion to ensure rest collision occures
-		shape_params.motion = motion_direction
-		var rest_info = space_state.get_rest_info(shape_params)
-		if not rest_info:
-			return [{
+	if not remaining_bouces or motion_result[0] >= 1 or motion_result[0] <= 0:
+		return [{
 				"position": shape_params.transform.origin + shape_params.motion,
 				"collided": false,
 			}]
+	
+#	if remaining_bouces and motion_result[0] < 1 and motion_result[0] > 0:
+	var motion_direction = shape_params.motion.normalized()
+	var motion_distance = shape_params.motion.length()
+	var safe_distance = motion_distance * motion_result[0]
+	var unsafe_distance = motion_distance * motion_result[1]
+	var remaining_distance = motion_distance - safe_distance
+	var safe_position = shape_params.transform.origin + safe_distance * motion_direction
+	var unsafe_position = shape_params.transform.origin + unsafe_distance * motion_direction
+	
+	shape_params.transform.origin = unsafe_position
+	# Add slight motion to ensure rest collision occures
+	shape_params.motion = motion_direction
+	var rest_info = space_state.get_rest_info(shape_params)
+	if not rest_info:
+		return [{
+			"position": shape_params.transform.origin + shape_params.motion,
+			"collided": false,
+		}]
 #			push_error("Shape did not collide, but should")
 #			return []
 #		if rest_info.linear_velocity != Vector2.ZERO:
 #			print("HEY! Linear velocity is not zero, but should be for KinematicBody2D!")
-		var collision_position = rest_info.point
-		var normal = rest_info.normal
-		var new_motion_direction = motion_direction.bounce(normal).normalized()
-		
-		shape_params.transform.origin = safe_position
-		shape_params.motion = new_motion_direction * remaining_distance
-		return [{
-			"position": safe_position,
-			"collided": true,
-			"collision_position": collision_position,
-			"normal": normal
-		}] + get_shape_trajectory(shape_params)
-	else:
-		return [{
-				"position": shape_params.transform.origin + shape_params.motion,
-				"collided": false,
-			}]
+	var collision_position = rest_info.point
+	var normal = rest_info.normal
+	var new_motion_direction = motion_direction.bounce(normal).normalized()
+	
+	shape_params.transform.origin = safe_position
+	shape_params.motion = new_motion_direction * remaining_distance
+	return [{
+		"position": safe_position,
+		"collided": true,
+		"collision_position": collision_position,
+		"normal": normal
+	}] + get_shape_trajectory(shape_params, remaining_bouces - 1)
+#	else:
+#		return [{
+#				"position": shape_params.transform.origin + shape_params.motion,
+#				"collided": false,
+#			}]
 
 func _bounce_direction_off_wall(shape_params: Physics2DShapeQueryParameters) -> Physics2DShapeQueryParameters:
 	var start_motion = shape_params.motion

@@ -112,6 +112,10 @@ Colors="*res://src/autoload/Colors.gd"
 Database="*res://assets/database.cdb"
 DataLoader="*res://src/TestingIdeas/DataLoader.gd"
 
+[debug]
+
+settings/fps/force_fps=240
+
 [display]
 
 window/size/width=1366
