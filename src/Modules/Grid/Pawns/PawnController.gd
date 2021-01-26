@@ -7,8 +7,6 @@ signal pawn_moved(index, pos_from, pos_to)
 # Dict Vector2 -> Pawn
 var _pawns := {}
 
-var pawn_prefab = preload("res://src/Modules/Grid/Pawn.tscn")
-
 func initialize(walkable: TileMap) -> void:
 	var pawns_grid_positions = get_used_cells()
 	var outside_ground_count = 0
@@ -48,20 +46,19 @@ func validate_tilemap_and_pawns_equal():
 				if not pos in pawn_positions:
 					print("Pawn does not exist on position %s" %pos)
 					
-#	var child_count = get_child_count()
-#	# THIS SHOULD ALWAYS BE TRUE!
-#	assert(len(grid_positions) == len(_pawns.keys())
-#			and len(grid_positions) == get_child_count())
-#	for pos in grid_positions:
-#		assert(_pawns.has(pos))
-#		assert(_pawns[pos].grid_position == pos)
+	var child_count = get_child_count()
+	# THIS SHOULD ALWAYS BE TRUE!
+	assert(len(grid_positions) == len(_pawns.keys())
+			and len(grid_positions) == get_child_count())
+	for pos in grid_positions:
+		assert(_pawns.has(pos))
+		assert(_pawns[pos].grid_position == pos)
 
 func create_pawn(index: int, pos: Vector2) -> void:
-	var new_pawn = pawn_prefab.instance()
-	add_child(new_pawn)
+	var new_pawn = DataLoader.create_pawn(index, pos, self)# pawn_prefab.instance()
+#	add_child(new_pawn)
 	_pawns[pos] = new_pawn
 	set_cellv(pos, index)
-	new_pawn.initialize(pos, index, DataLoader.get_pawn_data(index))
 	emit_signal("pawn_created", index, pos)
 
 func get_pawn_id_at(pos) -> int:
@@ -126,12 +123,8 @@ func update_all(nav: GridNavigation) -> void:
 			return
 
 func set_debug_mode(value) -> void:
-	if value:
-		self_modulate.a = 1.0
-		for c in get_children():
-			c.modulate.a = 0.0
-	else:
-		self_modulate.a = 0.0
-		for c in get_children():
-			c.modulate.a = 1.0
+	self_modulate.a = 1.0 if value else 0.0
+	var pawn_modulate = 0.0 if value else 1.0
+	for c in get_children():
+		c.modulate.a = pawn_modulate
 	print("Debug mode %s" % value)

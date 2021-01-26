@@ -7,21 +7,15 @@ onready var _navigation :GridNavigation = $GridNavigation
 var player_last_grid_pos = null
 
 func _ready():
-#	_environment.initialize()
 	_navigation.initialize(_environment.get_walkable_tilemap())
 	_pawns.connect("pawn_created", _navigation, "_on_pawn_created")
 	_pawns.connect("pawn_destroyed", _navigation, "_on_pawn_destroyed")
 	_pawns.connect("pawn_moved", _navigation, "_on_pawn_moved")
-	_pawns.initialize(_environment.get_walkable_tilemap())
 	_pawns.set_debug_mode(false)
+	_pawns.initialize(_environment.get_walkable_tilemap())
 
 func get_nav_path(pos_from: Vector2, pos_to: Vector2) -> Array:
-#	pos_from = world_to_grid(pos_from)
-#	pos_to = world_to_grid(pos_to)
 	var grid_points = _navigation.get_nav_path(pos_from, pos_to)
-#	var world_points = []
-#	for p in grid_points:
-#		world_points.append(_walkable_tilemap.map_to_world(p))
 	return grid_points
 
 func _on_pawn_selected(previous: Pawn, current: Pawn) -> void:

@@ -2,6 +2,8 @@ extends Node
 
 # https://github.com/GDQuest/godot-demos/tree/master/2018/04-24-finite-state-machine
 
+class_name StateMachine
+
 signal state_changed(previous, current)
 
 # Public, as sometimes other FSM might need to check current state

@@ -22,7 +22,7 @@ _global_script_classes=[ {
 "base": "KinematicBody2D",
 "class": "DynamicCollider",
 "language": "GDScript",
-"path": "res://src/TestingIdeas/DynamicCollider.gd"
+"path": "res://src/Modules/Grid/Pawns/Colliders/DynamicCollider.gd"
 }, {
 "base": "Boid",
 "class": "Flocker",
@@ -74,6 +74,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/Modules/StateMachine/States/State.gd"
 }, {
+"base": "Node",
+"class": "StateMachine",
+"language": "GDScript",
+"path": "res://src/Modules/StateMachine/StateMachine.gd"
+}, {
 "base": "PhysicalObject2D",
 "class": "TopDownCharacter",
 "language": "GDScript",
@@ -93,6 +98,7 @@ _global_script_class_icons={
 "Player": "",
 "SaveGame": "",
 "State": "",
+"StateMachine": "",
 "TopDownCharacter": ""
 }
 
@@ -119,8 +125,7 @@ DebugOverlay="*res://src/Modules/Core/DebugOverlay.tscn"
 PhysicsPrediction="*res://src/Modules/Physics/PhysicsPrediction.gd"
 GlobalConstants="*res://src/TestingIdeas/GlobalConstants.gd"
 Colors="*res://src/autoload/Colors.gd"
-Database="*res://assets/database.cdb"
-DataLoader="*res://src/autoload/DataLoader.gd"
+DataLoader="*res://src/Autoload/DataLoader.gd"
 
 [debug]
 

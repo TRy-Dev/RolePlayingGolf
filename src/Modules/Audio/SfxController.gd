@@ -5,7 +5,7 @@ onready var _sources_2d = $Sources2D
 
 var _clips := {}
 
-const MAX_AUDIO_SOURCES := 4
+const MAX_AUDIO_SOURCES := 16
 const MIN_PITCH := 0.8
 const MAX_PITCH := 1.2
 const SFX_PATH := "res://assets/audio/sfx"

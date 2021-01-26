@@ -3,28 +3,24 @@ extends Node2D
 class_name Pawn
 
 onready var sprite :Sprite = $Sprite
+onready var fsm :StateMachine = $StateMachine
 #onready var anim_player :AnimationPlayer = $AnimationPlayer
+
+export (int, 0, 4) var speed := 0
 
 var grid_position: Vector2
 var tile_index: int
-var speed := 0
+#var speed := 0
 
-## GOLF ?
-
-var next_turn_movement := []
-
-
-func initialize(grid_pos: Vector2, idx: int, data) -> void:
+func initialize(grid_pos: Vector2, idx: int) -> void:
 	grid_position = grid_pos
 	tile_index = idx
-	speed = data.speed
-	global_position = (grid_pos + 0.5 * Vector2.ONE) * GlobalConstants.TILE_SIZE
-	sprite.texture = load(FileSystem.concat_path([FileSystem.ASSETS, data.texture]))
-
+	global_position = (grid_pos + 0.5 * Vector2.ONE) * GlobalConstants.TILE_SIZE + Vector2(-1, 0)
+	fsm.initialize()
 
 func set_position(grid_pos: Vector2) -> void:
 	grid_position = grid_pos
-	var target_position = (grid_pos + 0.5 * Vector2.ONE) * GlobalConstants.TILE_SIZE
+	var target_position = (grid_pos + 0.5 * Vector2.ONE) * GlobalConstants.TILE_SIZE + Vector2(-1, 0)
 	$Tween.stop_all()
 	$Tween.interpolate_property(self, "global_position", 
 			global_position, target_position, GlobalConstants.MOVE_TIME, 

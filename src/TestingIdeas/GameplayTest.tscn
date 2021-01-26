@@ -14,7 +14,7 @@ script = ExtResource( 3 )
 [node name="GridWorld" parent="." instance=ExtResource( 2 )]
 
 [node name="Player" parent="." instance=ExtResource( 4 )]
-position = Vector2( 206.388, 64.4087 )
+position = Vector2( 771.34, 396.128 )
 
 [node name="CameraTarget" parent="Player" instance=ExtResource( 5 )]
 
