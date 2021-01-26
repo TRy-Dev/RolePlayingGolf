@@ -15,7 +15,7 @@ var min_line_length = 0
 
 var shape_params = Physics2DShapeQueryParameters.new()
 
-const MAX_BOUCES = 2
+const MAX_BOUCES = 1
 
 func _ready():
 	shape_params.collision_layer = 0b10

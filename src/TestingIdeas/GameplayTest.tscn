@@ -8,12 +8,13 @@
 [ext_resource path="res://src/TestingIdeas/Fog.tscn" type="PackedScene" id=6]
 
 [node name="GameplayTest" type="Node2D"]
+position = Vector2( -1, 0 )
 script = ExtResource( 3 )
 
 [node name="GridWorld" parent="." instance=ExtResource( 2 )]
 
 [node name="Player" parent="." instance=ExtResource( 4 )]
-position = Vector2( 456.208, 374.593 )
+position = Vector2( 416.64, 386.914 )
 
 [node name="CameraTarget" parent="Player" instance=ExtResource( 5 )]
 

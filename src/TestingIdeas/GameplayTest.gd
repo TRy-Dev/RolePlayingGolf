@@ -42,8 +42,6 @@ func update_hit_strength() -> void:
 	var change_direction = int(Input.is_action_just_released("scroll_up")) - int(Input.is_action_just_released("scroll_down"))
 	player.update_hit_strength(change_direction)
 
-
-
 func simulate_random_turn() -> void:
 	var angle_rad = Rng.randf(0.0, 2 * PI)
 	var dir = Vector2(cos(angle_rad), sin(angle_rad))
@@ -51,7 +49,6 @@ func simulate_random_turn() -> void:
 	camera_target.set_offset(dir, 1.0)
 	camera_target.update()
 	player.direction = dir
-#	yield(get_tree(), "idle_frame")
 	player.shoot()
 	yield(get_tree().create_timer(PLAYER_MOVE_TIME), "timeout")
 	world.update_pawns()

@@ -1,10 +1,11 @@
 [gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://src/autoload/Courtain.gd" type="Script" id=1]
-[ext_resource path="res://assets/textures/heart_on.png" type="Texture" id=2]
+[ext_resource path="res://icon.png" type="Texture" id=2]
 [ext_resource path="res://assets/fonts/kenney_mini.tres" type="DynamicFont" id=3]
 [ext_resource path="res://assets/fonts/kenney_title.tres" type="DynamicFont" id=4]
 [ext_resource path="res://assets/fonts/kenney_pixel.tres" type="DynamicFont" id=5]
+
 
 [sub_resource type="Animation" id=1]
 resource_name = "anim"

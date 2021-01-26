@@ -1,19 +1,29 @@
 extends KinematicBody2D
 
-export(float, 0.0, 50.0) var push_force = 5.0
+# Base class for collision interaction and/or detection with other objects
+# Create inherited scene with inheriting script to create custom behaviour
+# Area uses the same physics layers as kinematic body (set in _ready)
 
-var target = null
+class_name DynamicCollider
 
-func _physics_process(delta):
-	if target:
-		var push_dir = (target.global_position - global_position).normalized()
-		target.apply_force(push_dir * push_force)
+export(bool) var collide := true
+export(bool) var detect_collisions := true
+
+onready var physics_collider = $CollisionShape2D
+onready var area = $Area2D
+
+func _ready():
+	# Get rid of unused colliders
+	if detect_collisions:
+		area.collision_layer = collision_layer
+	else:
+		area.queue_free()
+	if not collide:
+		physics_collider.queue_free()
+	
 
 func _on_body_entered(body):
-	if body is Player:
-		AudioController.sfx.play("wall_hit")
-		target = body
+	pass
 
 func _on_body_exited(body):
-	if body is Player:
-		target = null
+	pass

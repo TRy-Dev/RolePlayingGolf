@@ -2,7 +2,7 @@
 
 [ext_resource path="res://src/Modules/Grid/Pawn.gd" type="Script" id=1]
 [ext_resource path="res://assets/images/peasant.png" type="Texture" id=2]
-[ext_resource path="res://src/TestingIdeas/DynamicCollider.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/TestingIdeas/PushCollider.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/images/rect16.png" type="Texture" id=4]
 
 [sub_resource type="Animation" id=1]
@@ -65,4 +65,4 @@ anims/_reset = SubResource( 1 )
 anims/appear = SubResource( 2 )
 anims/hide = SubResource( 3 )
 
-[node name="DynamicCollider" parent="." instance=ExtResource( 3 )]
+[node name="PushCollider" parent="." instance=ExtResource( 3 )]

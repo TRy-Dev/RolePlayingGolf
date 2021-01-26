@@ -3,10 +3,10 @@
 [ext_resource path="res://src/TestingIdeas/DynamicCollider.gd" type="Script" id=1]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 6, 6 )
+extents = Vector2( 5.8, 5.8 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 6.5, 6.5 )
+extents = Vector2( 6, 6 )
 
 [node name="DynamicCollider" type="KinematicBody2D"]
 collision_layer = 2
