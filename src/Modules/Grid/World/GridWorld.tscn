@@ -1,10 +1,12 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://src/Modules/Grid/GridWorld.gd" type="Script" id=1]
-[ext_resource path="res://src/Modules/Grid/PawnController.tscn" type="PackedScene" id=2]
-[ext_resource path="res://src/Modules/Grid/Environment.tscn" type="PackedScene" id=3]
-[ext_resource path="res://src/Modules/Grid/GridNavigation.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/Modules/Grid/World/GridWorld.gd" type="Script" id=1]
+[ext_resource path="res://src/Modules/Grid/Pawns/PawnController.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/Modules/Grid/World/Environment.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/Modules/Grid/World/GridNavigation.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/pawns_tileset.tres" type="TileSet" id=5]
+
+
 
 [node name="GridWorld" type="Node2D" groups=[
 "save",

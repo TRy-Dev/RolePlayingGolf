@@ -47,7 +47,7 @@ func update_hit_strength(dir: int):
 func _handle_collision(collision):
 	# push slightly away from collider
 #	velocity += collision.normal * COLLIDER_PUSH_SPEED
-	AudioController.sfx.play("wall_hit")
+	AudioController.sfx.play_at("wall_hit", collision.position)
 	._handle_collision(collision)
 
 func apply_velocity(vel):

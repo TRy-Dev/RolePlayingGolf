@@ -37,7 +37,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "GridNavigation",
 "language": "GDScript",
-"path": "res://src/Modules/Grid/GridNavigation.gd"
+"path": "res://src/Modules/Grid/World/GridNavigation.gd"
 }, {
 "base": "PlatformerState",
 "class": "OnGround",
@@ -47,7 +47,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Pawn",
 "language": "GDScript",
-"path": "res://src/Modules/Grid/Pawn.gd"
+"path": "res://src/Modules/Grid/Pawns/Pawn.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "PhysicalObject2D",
@@ -101,6 +101,10 @@ _global_script_class_icons={
 config/name="Role Playing Golf"
 run/main_scene="res://src/TestingIdeas/GameplayTest.tscn"
 config/icon="res://icon.png"
+
+[audio]
+
+default_bus_layout="res://src/Modules/Audio/bus.tres"
 
 [autoload]
 

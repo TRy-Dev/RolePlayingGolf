@@ -4,6 +4,8 @@ onready var _env = $EnvironmentTest
 
 var debug_tile_prefab = preload("res://src/TestingIdeas/DebugTile.tscn")
 
+var extents = Rect2(-1)
+
 func _ready():
 	_env.initialize()
 	var tilemap = _env.get_walkable_tilemap()

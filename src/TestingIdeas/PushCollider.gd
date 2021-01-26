@@ -11,7 +11,7 @@ func _physics_process(delta):
 
 func _on_body_entered(body):
 	if body is Player:
-		AudioController.sfx.play("wall_hit")
+		AudioController.sfx.play_at("wall_hit", global_position)
 		target = body
 
 func _on_body_exited(body):

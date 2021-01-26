@@ -14,7 +14,6 @@ func _draw():
 		c.free()
 	for point in nav_points:
 		draw_circle(point.position, 1.0, Color.red if point.disabled else Color.green)
-#		_draw_label("%s:%s" % [point.grid_pos.x, point.grid_pos.y], point.position)
 		if not point.disabled:
 			for neigh_pos in point.neighbors:
 				draw_line(point.position, neigh_pos, Color.blue)
@@ -26,16 +25,6 @@ func set_disabled(value: bool) -> void:
 func _process(delta):
 	if Input.is_action_just_pressed("toggle_debug"):
 		set_disabled(not disabled)
-
-#func _draw_label(text: String, pos: Vector2):
-#	var label = Label.new()
-#	label.rect_position = pos + Vector2(0, -4)
-#	label.grow_vertical = Control.GROW_DIRECTION_BOTH
-#	label.grow_horizontal = Control.GROW_DIRECTION_BOTH
-#	label.rect_size = Vector2.ZERO
-#	label.add_font_override("Kenney Small", font_resource)
-#	label.text = text
-#	add_child(label)
 
 func _update_nav(a_star):
 	nav_points = []

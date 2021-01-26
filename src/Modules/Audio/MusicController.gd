@@ -6,6 +6,9 @@ var _songs = {}
 
 const SONGS_PATH = "res://assets/audio/music"
 
+func _init():
+	self.load()
+
 func play(name :String = "") -> void:
 	if name in _songs:
 		_audio_player.stream = _songs[name]

@@ -3,10 +3,6 @@ extends Node
 onready var music = $MusicController
 onready var sfx = $SfxController
 
-func _ready():
-	music.load()
-	sfx.load()
-
 func set_bus_volume(name :String , volume :int):
 	var bus_idx = AudioServer.get_bus_index(name)
 	if bus_idx > -1:

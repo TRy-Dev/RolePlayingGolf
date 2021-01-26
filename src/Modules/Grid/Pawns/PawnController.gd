@@ -90,10 +90,6 @@ func move_pawn(pos_from :Vector2, pos_to :Vector2) -> void:
 	if get_pawn_id_at(pos_to) > -1:
 		print("Pawn trying to move to occupied position %s" %pos_to)
 		return
-#	if abs(dir.length_squared() - 1) > Math.EPSILON:
-#		print("HEY! Illegal move length(%s) for pawn %s" %[dir.length(), pawn.name])
-#		print("From: %s. To: %s" %[pos_from, pos_to])
-#		return
 	# Validate tilemap
 	assert(get_pawn_id_at(pos_from) == pawn.tile_index, 
 			"Could not find tile %s at position %s" % [index, pos_from]
