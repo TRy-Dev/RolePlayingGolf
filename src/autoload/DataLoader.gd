@@ -3,7 +3,7 @@ extends Node
 # Array of pawns -> prefab scene
 var _prefabs_map = {
 	0: preload("res://src/Pawns/Peasant.tscn"),
-	1: preload("res://src/TestingIdeas/MoleHunt/Mole.tscn"),
+	1: preload("res://src/TestingIdeas/RatHunt/DirtRat.tscn"),
 }
 
 #var pawn_prefab = preload("res://src/Modules/Grid/Pawns/Pawn.tscn")

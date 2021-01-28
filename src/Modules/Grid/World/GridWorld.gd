@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name GridWorld
+
 onready var _pawns = $PawnController
 onready var _environment = $Environment
 onready var _navigation :GridNavigation = $GridNavigation
@@ -15,14 +17,14 @@ func _ready():
 	_pawns.initialize(_environment.get_walkable_tilemap())
 
 func get_nav_path(pos_from: Vector2, pos_to: Vector2) -> Array:
+	_navigation.set_node_at_disabled(pos_from, false)
 	var grid_points = _navigation.get_nav_path(pos_from, pos_to)
+	_navigation.set_node_at_disabled(pos_from, true)
 	return grid_points
 
-func _on_pawn_selected(previous: Pawn, current: Pawn) -> void:
-	_navigation._on_pawn_selected(previous, current)
-
 func update_pawns() -> void:
-	_pawns.update_all(_navigation)
+	var input = {"world": self}
+	_pawns.update_all(input)
 
 func update_player_position(pos: Vector2) -> void:
 	var grid_pos = _pawns.world_to_map(pos)
@@ -31,6 +33,15 @@ func update_player_position(pos: Vector2) -> void:
 			_navigation.set_node_at_disabled(player_last_grid_pos, false)
 		_navigation.set_node_at_disabled(grid_pos, true)
 		player_last_grid_pos = grid_pos
+
+# TEMPORARY
+
+func create_rat_hole(pos: Vector2):
+	var hole_prefab = load("res://src/TestingIdeas/RatHunt/RatHole.tscn")
+	var new_hole = hole_prefab.instance()
+	$RatHoleContainer.add_child(new_hole)
+	new_hole.initialize(pos)
+	return new_hole
 
 #func save_state(save_game: Resource):
 #	_env.save_state(save_game)

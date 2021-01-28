@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/Modules/Grid/Pawns/Colliders/PushCollider.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Modules/Grid/Pawns/Pawn.gd" type="Script" id=2]
 [ext_resource path="res://assets/images/rect16.png" type="Texture" id=3]
 [ext_resource path="res://src/Modules/StateMachine/StateMachine.gd" type="Script" id=4]
+[ext_resource path="res://assets/fonts/kenney_mini_small.tres" type="DynamicFont" id=5]
+[ext_resource path="res://src/Modules/StateMachine/StateNameDisplay.tscn" type="PackedScene" id=6]
 
 [sub_resource type="Animation" id=1]
 resource_name = "_reset"
@@ -68,3 +70,12 @@ anims/hide = SubResource( 3 )
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 4 )
+
+[node name="StateNameDisplay" parent="." instance=ExtResource( 6 )]
+visible = false
+modulate = Color( 0.811765, 0.776471, 0.721569, 1 )
+margin_left = -11.279
+margin_top = -17.6136
+margin_right = 11.721
+margin_bottom = -7.61357
+custom_fonts/font = ExtResource( 5 )

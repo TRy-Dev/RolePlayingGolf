@@ -18,7 +18,7 @@ const MAX_STACK_SIZE = 2
 func initialize() -> void:
 	_states_map = {}
 	if not get_child_count():
-		print("HEY! FSM %s of %s has 0 states." % [name, owner.name])
+		push_error("HEY! FSM %s of %s has 0 states." % [name, owner.name])
 		return
 	for c in get_children():
 		_states_map[c.name] = c

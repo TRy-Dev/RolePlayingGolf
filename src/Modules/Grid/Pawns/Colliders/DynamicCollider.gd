@@ -11,6 +11,7 @@ export(bool) var detect_collisions := true
 
 onready var physics_collider = $CollisionShape2D
 onready var area = $Area2D
+onready var area_collider = $Area2D/CollisionShape2D
 
 func _ready():
 	# Get rid of unused colliders
@@ -20,7 +21,12 @@ func _ready():
 		area.queue_free()
 	if not collide:
 		physics_collider.queue_free()
-	
+
+func set_disabled(collision_disabled: bool, area_disabled: bool) -> void:
+	if collide:
+		physics_collider.disabled = collision_disabled
+	if detect_collisions:
+		area_collider.disabled = area_disabled
 
 func _on_body_entered(body):
 	pass

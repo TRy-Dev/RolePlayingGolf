@@ -20,6 +20,7 @@ func initialize(walkable: TileMap) -> void:
 	print("%s Pawns generated" %_pawns.size())
 	if outside_ground_count:
 		print("Removed %s pawns outside of walkable tilemap" % outside_ground_count)
+#	__tilemap_self_modulate_bug_dirty_fix()
 	validate_tilemap_and_pawns_equal()
 
 func validate_tilemap_and_pawns_equal():
@@ -105,26 +106,25 @@ func move_pawn(pos_from :Vector2, pos_to :Vector2) -> void:
 	emit_signal("pawn_moved", index, pos_from, pos_to)
 	validate_tilemap_and_pawns_equal()
 
-func update_all(nav: GridNavigation) -> void:
-	var not_moved_pawns = _pawns.values()
-	while true:
-		var pawn_moved = false
-		for i in range(len(not_moved_pawns) - 1, -1, -1):
-			var pawn = not_moved_pawns[i]
-			var target_pos = pawn.get_desired_position()
-			nav.set_node_at_disabled(pawn.grid_position, false)
-			var path = nav.get_nav_path(pawn.grid_position, target_pos)
-			nav.set_node_at_disabled(pawn.grid_position, true)
-			if len(path) > 1:
-				move_pawn(pawn.grid_position, path[min(pawn.speed, len(path) - 1)])
-				not_moved_pawns.remove(i)
-				pawn_moved = true
-		if not pawn_moved:
-			return
+func update_all(input: Dictionary) -> void:
+	input["pawn_controller"] = self
+	for pawn in _pawns.values():
+		pawn.update_state_machine(input)
 
 func set_debug_mode(value) -> void:
 	self_modulate.a = 1.0 if value else 0.0
 	var pawn_modulate = 0.0 if value else 1.0
 	for c in get_children():
 		c.modulate.a = pawn_modulate
+	__tilemap_self_modulate_bug_dirty_fix()
 	print("Debug mode %s" % value)
+
+# https://github.com/godotengine/godot/issues/31413
+
+func __tilemap_self_modulate_bug_dirty_fix():
+	var _temp_tiles = {}
+	for pos in get_used_cells():
+		_temp_tiles[pos] = get_cellv(pos)
+	clear()
+	for pos in _temp_tiles.keys():
+		set_cellv(pos, _temp_tiles[pos])

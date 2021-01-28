@@ -4,23 +4,25 @@ class_name Pawn
 
 onready var sprite :Sprite = $Sprite
 onready var fsm :StateMachine = $StateMachine
-#onready var anim_player :AnimationPlayer = $AnimationPlayer
+onready var anim_player :AnimationPlayer = $AnimationPlayer
+onready var collider = $PushCollider
 
 export (int, 0, 4) var speed := 0
 
 var grid_position: Vector2
 var tile_index: int
-#var speed := 0
 
 func initialize(grid_pos: Vector2, idx: int) -> void:
 	grid_position = grid_pos
 	tile_index = idx
-	global_position = (grid_pos + 0.5 * Vector2.ONE) * GlobalConstants.TILE_SIZE + Vector2(-1, 0)
+	global_position = GlobalConstants.grid_to_world(grid_pos)
+	
+	fsm.connect("state_changed", $StateNameDisplay, "_on_state_changed")
 	fsm.initialize()
 
 func set_position(grid_pos: Vector2) -> void:
 	grid_position = grid_pos
-	var target_position = (grid_pos + 0.5 * Vector2.ONE) * GlobalConstants.TILE_SIZE + Vector2(-1, 0)
+	var target_position =  GlobalConstants.grid_to_world(grid_pos)
 	$Tween.stop_all()
 	$Tween.interpolate_property(self, "global_position", 
 			global_position, target_position, GlobalConstants.MOVE_TIME, 
@@ -33,26 +35,10 @@ func destroy() -> void:
 ## GOLF
 
 
-func get_desired_position() -> Vector2:
-	var delta = Vector2.ZERO
-	for i in range(speed):
-		delta += Rng.rand_array_element(Math.CARDINAL_DIRECTIONS)
-	# for now returning random neighboring direction
-	return grid_position + delta
+func update_state_machine(input: Dictionary) -> void:
+#	input["pawn"] = self
+	fsm.update(input)
 
-
-#func set_debug_state(state: int) -> void:
-#	debug_state = state
-#	update()
-##	sprite.modulate = color_map[state]
-
-#func _draw():
-#	var color_map = {
-#		PawnDebugStates.MOVING: Color.green,
-#		PawnDebugStates.IDLE: Color.yellow,
-#		PawnDebugStates.STUCK: Color.red
-#	}
-#	draw_circle(Vector2(4, -4), 1, color_map[debug_state])
 
 #func get_attribute(key):
 #	if not _data.has(key):

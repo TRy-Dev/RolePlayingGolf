@@ -8,13 +8,15 @@
 [ext_resource path="res://src/TestingIdeas/Fog.tscn" type="PackedScene" id=6]
 
 [node name="GameplayTest" type="Node2D"]
-position = Vector2( -1, 0 )
 script = ExtResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="GridWorld" parent="." instance=ExtResource( 2 )]
 
 [node name="Player" parent="." instance=ExtResource( 4 )]
-position = Vector2( 771.34, 396.128 )
+position = Vector2( 786.489, 380.96 )
 
 [node name="CameraTarget" parent="Player" instance=ExtResource( 5 )]
 
