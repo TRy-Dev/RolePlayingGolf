@@ -36,6 +36,16 @@ func update_player_position(pos: Vector2) -> void:
 
 # TEMPORARY
 
+func is_position_free(pos: Vector2) -> bool:
+	var is_pos_walkable = _environment.is_position_walkable(pos)
+	var is_pawn_on_pos = _pawns.get_pawn_id_at(pos) > -1
+	var is_player_on_pos = pos == player_last_grid_pos
+	for c in $RatHoleContainer.get_children():
+		if c.grid_position == pos:
+			return false
+	return is_pos_walkable and not is_pawn_on_pos and not is_player_on_pos
+	
+
 func create_rat_hole(pos: Vector2):
 	var hole_prefab = load("res://src/TestingIdeas/RatHunt/RatHole.tscn")
 	var new_hole = hole_prefab.instance()

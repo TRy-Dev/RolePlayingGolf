@@ -6,4 +6,12 @@ func burrow() -> void:
 
 func unburrow() -> void:
 	collider.set_disabled(false, false)
-	AnimationController.play(anim_player, "appear")
+	AnimationController.play(anim_player, "appear", false)
+
+func on_player_entered(player: Player) -> void:
+	collider.set_disabled(true, true)
+	die()
+#	AudioController.sfx.play_at("wall_hit", global_position)
+
+func on_player_exited(player: Player) -> void:
+	pass

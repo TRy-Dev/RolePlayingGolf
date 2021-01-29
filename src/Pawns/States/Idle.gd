@@ -7,8 +7,8 @@ func initialize() -> void:
 	anchor_position = pawn.grid_position
 
 func update(input: Dictionary) -> void:
-	# Input: world, pawn_controller, pawn
-#	var pawn = input["pawn"]
+	if pawn.speed < 1:
+		return
 	var world = input["world"]
 	var pawn_controller = input["pawn_controller"]
 	

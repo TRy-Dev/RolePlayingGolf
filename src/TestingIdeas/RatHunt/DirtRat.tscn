@@ -16,6 +16,9 @@ visible = false
 [node name="Sprite" parent="." index="1"]
 texture = ExtResource( 2 )
 
+[node name="DynamicCollider" parent="." index="4"]
+collide = false
+
 [node name="Burrowed" parent="StateMachine" index="0" instance=ExtResource( 4 )]
 
 [node name="Unburrowed" parent="StateMachine" index="1" instance=ExtResource( 5 )]

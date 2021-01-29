@@ -54,3 +54,6 @@ func initialize() -> void:
 
 func get_walkable_tilemap() -> TileMap:
 	return _ground
+
+func is_position_walkable(pos: Vector2) -> bool:
+	return _ground.get_cellv(pos) > -1

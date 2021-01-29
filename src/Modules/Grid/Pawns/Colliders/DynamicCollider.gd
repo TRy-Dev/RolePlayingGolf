@@ -1,7 +1,5 @@
 extends KinematicBody2D
 
-# Base class for collision interaction and/or detection with other objects
-# Create inherited scene with inheriting script to create custom behaviour
 # Area uses the same physics layers as kinematic body (set in _ready)
 
 class_name DynamicCollider
@@ -29,7 +27,9 @@ func set_disabled(collision_disabled: bool, area_disabled: bool) -> void:
 		area_collider.disabled = area_disabled
 
 func _on_body_entered(body):
-	pass
+	if body is Player:
+		owner.on_player_entered(body)
 
 func _on_body_exited(body):
-	pass
+	if body is Player and owner:
+		owner.on_player_exited(body)

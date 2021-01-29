@@ -2,7 +2,7 @@ extends PawnState
 
 var holes = []
 
-const MAX_HOLES = 4
+const MAX_HOLES = 1
 
 # Reset the state. E.g. change the animation.
 func enter(previous: State) -> void:
@@ -20,7 +20,7 @@ func update(input: Dictionary) -> void:
 	else:
 		var hole_pos = pawn.grid_position #+ Vector2(Rng.randi(0, pawn.speed), Rng.randi(0, pawn.speed))
 		var i = 0
-		while pawn_controller.get_pawn_id_at(hole_pos) > -1:
+		while not world.is_position_free(hole_pos):
 			var hole_offset = Vector2(Rng.randi(0, pawn.speed), Rng.randi(0, pawn.speed))
 			hole_pos = pawn.grid_position + hole_offset
 			i += 1

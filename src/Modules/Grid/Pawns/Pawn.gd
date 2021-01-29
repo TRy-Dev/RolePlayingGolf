@@ -2,15 +2,19 @@ extends Node2D
 
 class_name Pawn
 
+signal pawn_died(pawn)
+
 onready var sprite :Sprite = $Sprite
 onready var fsm :StateMachine = $StateMachine
 onready var anim_player :AnimationPlayer = $AnimationPlayer
-onready var collider = $PushCollider
+onready var collider = $DynamicCollider
 
 export (int, 0, 4) var speed := 0
 
 var grid_position: Vector2
 var tile_index: int
+
+var is_dead = false
 
 func initialize(grid_pos: Vector2, idx: int) -> void:
 	grid_position = grid_pos
@@ -29,15 +33,28 @@ func set_position(grid_pos: Vector2) -> void:
 			Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$Tween.start()
 
+# Destroy is called by PawnController, die is called when pawn collides with player (if applicable)
 func destroy() -> void:
+	if not is_dead:
+		die()
+func die() -> void:
+	if is_dead:
+		return
+	is_dead = true
+	emit_signal("pawn_died", self)
 	queue_free()
 
 ## GOLF
 
-
 func update_state_machine(input: Dictionary) -> void:
 #	input["pawn"] = self
 	fsm.update(input)
+
+func on_player_entered(player: Player) -> void:
+	pass
+
+func on_player_exited(player: Player) -> void:
+	pass
 
 
 #func get_attribute(key):

@@ -20,7 +20,6 @@ func initialize(walkable: TileMap) -> void:
 	print("%s Pawns generated" %_pawns.size())
 	if outside_ground_count:
 		print("Removed %s pawns outside of walkable tilemap" % outside_ground_count)
-#	__tilemap_self_modulate_bug_dirty_fix()
 	validate_tilemap_and_pawns_equal()
 
 func validate_tilemap_and_pawns_equal():
@@ -46,9 +45,8 @@ func validate_tilemap_and_pawns_equal():
 			for pos in grid_positions:
 				if not pos in pawn_positions:
 					print("Pawn does not exist on position %s" %pos)
-					
 	var child_count = get_child_count()
-	# THIS SHOULD ALWAYS BE TRUE!
+	# BELOW SHOULD ALWAYS BE TRUE!
 	assert(len(grid_positions) == len(_pawns.keys())
 			and len(grid_positions) == get_child_count())
 	for pos in grid_positions:
@@ -56,8 +54,8 @@ func validate_tilemap_and_pawns_equal():
 		assert(_pawns[pos].grid_position == pos)
 
 func create_pawn(index: int, pos: Vector2) -> void:
-	var new_pawn = DataLoader.create_pawn(index, pos, self)# pawn_prefab.instance()
-#	add_child(new_pawn)
+	var new_pawn = DataLoader.create_pawn(index, pos, self)
+	new_pawn.connect("pawn_died", self, "_on_pawn_destroyed")
 	_pawns[pos] = new_pawn
 	set_cellv(pos, index)
 	emit_signal("pawn_created", index, pos)
@@ -70,10 +68,12 @@ func get_pawn_at(pos) -> Pawn:
 
 func destroy_pawn(pos: Vector2) -> void:
 	var index = get_cellv(pos)
+	if index == -1:
+		return
 	set_cellv(pos, -1)
 	var pawn = _pawns[pos]
 	pawn.destroy()
-	remove_child(pawn)
+#	remove_child(pawn)
 	_pawns.erase(pos)
 	emit_signal("pawn_destroyed", index, pos)
 
@@ -83,6 +83,8 @@ func replace_pawn(index: int, pos: Vector2) -> void:
 
 func move_pawn(pos_from :Vector2, pos_to :Vector2) -> void:
 	var dir := pos_to - pos_from
+	if dir == Vector2.ZERO:
+		return
 	var pawn :Pawn = _pawns[pos_from]
 	var index = pawn.tile_index
 	if get_pawn_id_at(pos_to) > -1:
@@ -119,9 +121,11 @@ func set_debug_mode(value) -> void:
 	__tilemap_self_modulate_bug_dirty_fix()
 	print("Debug mode %s" % value)
 
-# https://github.com/godotengine/godot/issues/31413
+func _on_pawn_destroyed(pawn) -> void:
+	destroy_pawn(pawn.grid_position)
 
 func __tilemap_self_modulate_bug_dirty_fix():
+	# https://github.com/godotengine/godot/issues/31413
 	var _temp_tiles = {}
 	for pos in get_used_cells():
 		_temp_tiles[pos] = get_cellv(pos)
