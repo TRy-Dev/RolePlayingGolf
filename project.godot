@@ -64,11 +64,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/Player/Player.gd"
 }, {
-"base": "Resource",
-"class": "SaveGame",
-"language": "GDScript",
-"path": "res://src/Modules/DataPersistence/SaveGame.gd"
-}, {
 "base": "Node",
 "class": "State",
 "language": "GDScript",
@@ -111,7 +106,6 @@ _global_script_class_icons={
 "PhysicalObject2D": "",
 "PlatformerState": "",
 "Player": "",
-"SaveGame": "",
 "State": "",
 "StateMachine": "",
 "Tile": "",
@@ -136,6 +130,8 @@ FileSystem="*res://src/Modules/Core/FileSystem.gd"
 Rng="*res://src/Modules/Core/RNG.gd"
 Math="*res://src/Modules/Core/Math.gd"
 AnimationController="*res://src/Modules/Core/AnimationController.gd"
+GameSaver="*res://src/Modules/DataPersistence/GameSaver.gd"
+DataLoader="*res://src/Autoload/DataLoader.gd"
 AudioController="*res://src/Modules/Audio/AudioController.tscn"
 Courtain="*res://src/Modules/Rendering/Courtain.tscn"
 SceneController="*res://src/Modules/Core/SceneController.gd"
@@ -143,7 +139,6 @@ DebugOverlay="*res://src/Modules/Core/DebugOverlay.tscn"
 PhysicsPrediction="*res://src/Modules/Physics/PhysicsPrediction.gd"
 GlobalConstants="*res://src/TestingIdeas/GlobalConstants.gd"
 Colors="*res://src/autoload/Colors.gd"
-DataLoader="*res://src/Autoload/DataLoader.gd"
 
 [debug]
 

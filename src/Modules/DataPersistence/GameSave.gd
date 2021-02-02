@@ -2,8 +2,8 @@
 # Each node is responsible for finding itself in the save_game
 # dict so saves don't rely on the nodes' path or their source file
 extends Resource
+#
+#class_name SaveGame
 
-class_name SaveGame
-
-export var game_version: String = ''
+#export var game_version: String = '' # Can't get game version from settings, see GameSaver
 export var data: Dictionary = {}

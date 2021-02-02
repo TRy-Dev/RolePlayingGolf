@@ -2,6 +2,9 @@ extends TileController
 
 signal pawn_moved(index, pos_from, pos_to)
 
+func _init():
+	save_key = "pawns"
+
 func move_pawn(pos_from :Vector2, pos_to :Vector2) -> void:
 	var dir := pos_to - pos_from
 	if dir == Vector2.ZERO:

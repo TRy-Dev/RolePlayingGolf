@@ -7,9 +7,7 @@
 [ext_resource path="res://assets/pawns_tileset.tres" type="TileSet" id=5]
 [ext_resource path="res://src/Modules/Grid/World/TileController.tscn" type="PackedScene" id=6]
 
-[node name="GridWorld" type="Node2D" groups=[
-"save",
-]]
+[node name="GridWorld" type="Node2D"]
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_lock_": true
@@ -20,9 +18,10 @@ __meta__ = {
 [node name="RatHoleContainer" type="Node2D" parent="."]
 
 [node name="TileController" parent="." instance=ExtResource( 6 )]
+tile_data = PoolIntArray( 458755, 0, 0, 458756, 0, 0, 524291, 0, 0, 524292, 0, 0 )
 
 [node name="PawnController" parent="." instance=ExtResource( 2 )]
 tile_set = ExtResource( 5 )
-tile_data = PoolIntArray( 589837, 1, 0, 720902, 0, 0, 720907, 1, 0 )
+tile_data = PoolIntArray( 196614, 1, 0, 720907, 1, 0, 786439, 0, 0 )
 
 [node name="GridNavigation" parent="." instance=ExtResource( 4 )]

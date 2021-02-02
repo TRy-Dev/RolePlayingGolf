@@ -24,11 +24,11 @@ func update(input: Dictionary) -> void:
 		var hole_pos = pawn.grid_position #+ Vector2(Rng.randi(0, pawn.speed), Rng.randi(0, pawn.speed))
 		var i = 0
 		while not world.is_position_unoccupied(hole_pos):
-			var hole_offset = Vector2(Rng.randi(0, pawn.speed), Rng.randi(0, pawn.speed))
+			var hole_offset = Vector2(Rng.randi(-pawn.speed, pawn.speed), Rng.randi(-pawn.speed, pawn.speed))
 			hole_pos = pawn.grid_position + hole_offset
 			i += 1
 			if i > 8:
-				print("HEY! Rat could not find unoccupied position for hole!")
+				print("HEY! %s could not find unoccupied position for hole!" %pawn.name)
 				return
 		var new_hole = tile_controller.create_tile(HOLE_ID, hole_pos)
 		new_hole.connect("tile_destroyed", self, "_on_hole_destroyed")

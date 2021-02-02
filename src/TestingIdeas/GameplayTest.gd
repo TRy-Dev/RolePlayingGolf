@@ -6,6 +6,7 @@ onready var camera = $CameraController
 onready var camera_target = $Player/CameraTarget
 
 const PLAYER_MOVE_TIME = 1.5
+const GAME_SAVE_ID = 1
 
 func _ready():
 	camera.set_target_instant(camera_target)
@@ -19,16 +20,16 @@ func _process(delta):
 	if Input.is_action_just_pressed("click"):
 		player.shoot()
 		yield(get_tree().create_timer(PLAYER_MOVE_TIME), "timeout")
-		world.update_pawns()
+		world.update_tiles()
 	update_direction()
 	update_hit_strength()
 	if Input.is_action_just_pressed("debug_restart"):
 		SceneController.reload_current()
 		DebugOverlay.clear_stats()
 	if Input.is_action_just_pressed("save_game_state"):
-		_save_game()
+		GameSaver.save_game(GAME_SAVE_ID)
 	if Input.is_action_just_pressed("load_game_state"):
-		_load_game()
+		GameSaver.load_game(GAME_SAVE_ID)
 	
 	world.update_player_position(player.global_position)
 
@@ -61,8 +62,14 @@ func simulate_random_turn() -> void:
 func _on_TurnTimer_timeout():
 	simulate_random_turn()
 
-func _save_game():
-	print("save")
+func save_state(save: Resource):
+	player.save_state(save)
+	world.save_state(save)
 	
-func _load_game():
-	print("load")
+func load_state(save: Resource):
+	player.disable_collisions(true)
+	world.load_state(save)
+	player.load_state(save)
+	# Wait for collision disabling to kick-in, otherwise tiles under player old position will collide with them
+	yield(get_tree().create_timer(0.2), "timeout")
+	player.disable_collisions(false)

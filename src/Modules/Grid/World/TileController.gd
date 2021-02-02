@@ -8,11 +8,19 @@ signal tile_destroyed(idx, pos)
 ## Dict Vector2 -> Pawn
 var _tiles := {}
 
+var save_key = ""
+
+func _init():
+	save_key = "tiles"
+
 func initialize(walkable: TileMap) -> void:
+	for tile in _tiles.values():
+		tile.free()
+	_tiles = {}
 	var outside_walkable_count = 0
 	for pos in get_used_cells():
 		var idx = get_tile_id_at(pos)
-		if walkable.get_cellv(pos) == -1:
+		if walkable and walkable.get_cellv(pos) == -1:
 			set_cellv(pos, -1)
 			outside_walkable_count += 1
 		else:
@@ -108,3 +116,17 @@ func __tilemap_self_modulate_bug_dirty_fix():
 	clear()
 	for pos in _temp_tiles.keys():
 		set_cellv(pos, _temp_tiles[pos])
+
+func save_state(save: Resource) -> void:
+	save.data[save_key] = {}
+	for pos in get_used_cells():
+		var idx = get_cellv(pos)
+		save.data[save_key][pos] = idx
+
+func load_state(save: Resource) -> void:
+	clear()
+	for pos in save.data[save_key].keys():
+		var idx = save.data[save_key][pos]
+		set_cellv(pos, idx)
+	# We assume we have not saved pawns on illegal positions, so walkable tilemap is not needed
+	initialize(null)

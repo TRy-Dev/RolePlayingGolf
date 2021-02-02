@@ -16,7 +16,6 @@ var current_hit_strength = STRENGTH_STEP * START_STEPS
 
 var direction = Vector2.RIGHT
 
-
 func _ready():
 	trajectory.set_shape($CollisionShape2D.shape)
 	# Calculation works somehow, but if properties are changed it might to be improved
@@ -55,3 +54,15 @@ func apply_velocity(vel):
 
 func multiply_velocity(mult):
 	velocity *= mult
+
+func save_state(save):
+	save.data["player"] = {}
+	save.data["player"]["position"] = global_position
+	save.data["player"]["velocity"] = velocity
+
+func load_state(save):
+	global_position = save.data["player"]["position"]
+	velocity = save.data["player"]["velocity"]
+
+func disable_collisions(value: bool) -> void:
+	$CollisionShape2D.set_deferred("disabled", value)

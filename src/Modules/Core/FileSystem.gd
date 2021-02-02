@@ -1,14 +1,9 @@
 extends Node
 
-const PATH_DELIMITER = "/"
-
-const ASSETS = "res://assets"
-
 func concat_path(paths: Array) -> String:
-	var out = ""
-	for p in paths:
-		out += p + PATH_DELIMITER
-	out.rstrip(PATH_DELIMITER)
+	var out := ""
+	for i in range(len(paths)):
+		out = out.plus_file(paths[i])
 	return out
 
 func get_contents(path) -> Dictionary:
