@@ -24,7 +24,7 @@ func set_disabled(collision_disabled: bool, area_disabled: bool) -> void:
 	if collide:
 		physics_collider.disabled = collision_disabled
 	if detect_collisions:
-		area_collider.disabled = area_disabled
+		area_collider.set_deferred("disabled", area_disabled)
 
 func _on_body_entered(body):
 	if body is Player:

@@ -25,6 +25,11 @@ func _process(delta):
 	if Input.is_action_just_pressed("debug_restart"):
 		SceneController.reload_current()
 		DebugOverlay.clear_stats()
+	if Input.is_action_just_pressed("save_game_state"):
+		_save_game()
+	if Input.is_action_just_pressed("load_game_state"):
+		_load_game()
+	
 	world.update_player_position(player.global_position)
 
 func _physics_process(delta) -> void:
@@ -55,3 +60,9 @@ func simulate_random_turn() -> void:
 
 func _on_TurnTimer_timeout():
 	simulate_random_turn()
+
+func _save_game():
+	print("save")
+	
+func _load_game():
+	print("load")

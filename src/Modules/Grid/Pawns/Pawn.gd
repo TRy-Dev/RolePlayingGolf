@@ -33,7 +33,8 @@ func set_position(grid_pos: Vector2) -> void:
 			Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$Tween.start()
 
-# Destroy is called by PawnController, die is called when pawn collides with player (if applicable)
+# Destroy is called by PawnController, 
+# die is called when pawn collides with player (if applicable)
 func destroy() -> void:
 	if not is_dead:
 		die()

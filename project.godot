@@ -19,6 +19,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/Modules/Grid/Pawns/Colliders/DynamicCollider.gd"
 }, {
+"base": "TileMap",
+"class": "DynamicEnvironment",
+"language": "GDScript",
+"path": "res://src/TestingIdeas/DynamicEnvironment.gd"
+}, {
 "base": "Boid",
 "class": "Flocker",
 "language": "GDScript",
@@ -92,6 +97,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Boid": "",
 "DynamicCollider": "",
+"DynamicEnvironment": "",
 "Flocker": "",
 "FlowField": "",
 "GridNavigation": "",
@@ -231,6 +237,16 @@ scroll_down={
 toggle_debug={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":72,"unicode":0,"echo":false,"script":null)
+ ]
+}
+save_game_state={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":75,"unicode":0,"echo":false,"script":null)
+ ]
+}
+load_game_state={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":76,"unicode":0,"echo":false,"script":null)
  ]
 }
 

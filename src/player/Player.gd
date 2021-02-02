@@ -52,3 +52,6 @@ func _handle_collision(collision):
 
 func apply_velocity(vel):
 	apply_force(_vel_to_force(vel))
+
+func multiply_velocity(mult):
+	velocity *= mult

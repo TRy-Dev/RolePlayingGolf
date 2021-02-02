@@ -22,37 +22,6 @@ func initialize(walkable: TileMap) -> void:
 		print("Removed %s pawns outside of walkable tilemap" % outside_ground_count)
 	validate_tilemap_and_pawns_equal()
 
-func validate_tilemap_and_pawns_equal():
-	var grid_positions = get_used_cells()
-	if not len(grid_positions) == get_child_count():
-		# Check for duplicate Pawn positions
-		var pawn_positions = []
-		for pawn in get_children():
-			if pawn.grid_position in pawn_positions:
-				print("Duplicate position! %s" %pawn.grid_position)
-				pawn.modulate = Rng.rand_rgb()
-			else:
-				pawn_positions.append(pawn.grid_position)
-		
-		if get_child_count() > len(grid_positions):
-			for c in get_children():
-				if not c.grid_position in grid_positions:
-					print("Pawn %s is not on tilemap!" %c.name)
-		else:
-			pawn_positions = []
-			for c in get_children():
-				pawn_positions.append(c.grid_position)
-			for pos in grid_positions:
-				if not pos in pawn_positions:
-					print("Pawn does not exist on position %s" %pos)
-	var child_count = get_child_count()
-	# BELOW SHOULD ALWAYS BE TRUE!
-	assert(len(grid_positions) == len(_pawns.keys())
-			and len(grid_positions) == get_child_count())
-	for pos in grid_positions:
-		assert(_pawns.has(pos))
-		assert(_pawns[pos].grid_position == pos)
-
 func create_pawn(index: int, pos: Vector2) -> void:
 	var new_pawn = DataLoader.create_pawn(index, pos, self)
 	new_pawn.connect("pawn_died", self, "_on_pawn_destroyed")
@@ -67,8 +36,9 @@ func get_pawn_at(pos) -> Pawn:
 	return _pawns.get(pos)
 
 func destroy_pawn(pos: Vector2) -> void:
-	var index = get_cellv(pos)
+	var index = get_pawn_id_at(pos)
 	if index == -1:
+		print("HEY! Trying to destoy non existent pawn on position %s" %pos)
 		return
 	set_cellv(pos, -1)
 	var pawn = _pawns[pos]
@@ -88,7 +58,7 @@ func move_pawn(pos_from :Vector2, pos_to :Vector2) -> void:
 	var pawn :Pawn = _pawns[pos_from]
 	var index = pawn.tile_index
 	if get_pawn_id_at(pos_to) > -1:
-		print("Pawn trying to move to occupied position %s" %pos_to)
+		print("HEY! Pawn trying to move to occupied position %s" %pos_to)
 		return
 	# Validate tilemap
 	assert(get_pawn_id_at(pos_from) == pawn.tile_index, 
@@ -123,6 +93,36 @@ func set_debug_mode(value) -> void:
 
 func _on_pawn_destroyed(pawn) -> void:
 	destroy_pawn(pawn.grid_position)
+
+func validate_tilemap_and_pawns_equal():
+	var grid_positions = get_used_cells()
+	if not len(grid_positions) == get_child_count():
+		# Check for duplicate Pawn positions
+		var pawn_positions = []
+		for pawn in get_children():
+			if pawn.grid_position in pawn_positions:
+				print("Duplicate position! %s" %pawn.grid_position)
+				pawn.modulate = Rng.rand_rgb()
+			else:
+				pawn_positions.append(pawn.grid_position)
+		if get_child_count() > len(grid_positions):
+			for c in get_children():
+				if not c.grid_position in grid_positions:
+					print("Pawn %s is not on tilemap!" %c.name)
+		else:
+			pawn_positions = []
+			for c in get_children():
+				pawn_positions.append(c.grid_position)
+			for pos in grid_positions:
+				if not pos in pawn_positions:
+					print("Pawn does not exist on position %s" %pos)
+	var child_count = get_child_count()
+	# BELOW SHOULD ALWAYS BE TRUE!
+	assert(len(grid_positions) == len(_pawns.keys())
+			and len(grid_positions) == get_child_count())
+	for pos in grid_positions:
+		assert(_pawns.has(pos))
+		assert(_pawns[pos].grid_position == pos)
 
 func __tilemap_self_modulate_bug_dirty_fix():
 	# https://github.com/godotengine/godot/issues/31413
