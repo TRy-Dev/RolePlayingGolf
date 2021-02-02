@@ -1,4 +1,4 @@
-extends PawnState
+extends TileState
 
 var anchor_position = null
 

@@ -2,20 +2,22 @@ extends Node2D
 
 class_name GridWorld
 
-onready var _pawns = $PawnController
+onready var _pawn_controller = $PawnController
 onready var _environment = $Environment
-onready var _dynamic_environment :DynamicEnvironment = $DynamicEnvironment
+onready var _tile_controller :TileController = $TileController
 onready var _navigation :GridNavigation = $GridNavigation
 
 var player_last_grid_pos = null
 
 func _ready():
-	_navigation.initialize(_environment.get_walkable_tilemap())
-	_pawns.connect("pawn_created", _navigation, "_on_pawn_created")
-	_pawns.connect("pawn_destroyed", _navigation, "_on_pawn_destroyed")
-	_pawns.connect("pawn_moved", _navigation, "_on_pawn_moved")
-	_pawns.set_debug_mode(false)
-	_pawns.initialize(_environment.get_walkable_tilemap())
+	var walkable_tilemap = _environment.get_walkable_tilemap()
+	_navigation.initialize(walkable_tilemap)
+	_pawn_controller.connect("tile_created", _navigation, "_on_pawn_created")
+	_pawn_controller.connect("tile_destroyed", _navigation, "_on_pawn_destroyed")
+	_pawn_controller.connect("pawn_moved", _navigation, "_on_pawn_moved")
+	_pawn_controller.set_debug_mode(false)
+	_pawn_controller.initialize(walkable_tilemap)
+	_tile_controller.initialize(walkable_tilemap)
 
 func get_nav_path(pos_from: Vector2, pos_to: Vector2) -> Array:
 	_navigation.set_node_at_disabled(pos_from, false)
@@ -26,12 +28,14 @@ func get_nav_path(pos_from: Vector2, pos_to: Vector2) -> Array:
 func update_pawns() -> void:
 	var input = {
 		"world": self,
-		"dynamic_environment": _dynamic_environment
+		"tile_controller": _tile_controller,
+		"pawn_controller": _pawn_controller,
 	}
-	_pawns.update_all(input)
+	_pawn_controller.update_all(input)
+	_tile_controller.update_all(input)
 
 func update_player_position(pos: Vector2) -> void:
-	var grid_pos = _pawns.world_to_map(pos)
+	var grid_pos = _pawn_controller.world_to_map(pos)
 	if grid_pos != player_last_grid_pos:
 		if player_last_grid_pos != null:
 			_navigation.set_node_at_disabled(player_last_grid_pos, false)
@@ -43,13 +47,12 @@ func update_player_position(pos: Vector2) -> void:
 func is_position_unoccupied(pos: Vector2) -> bool:
 	if not _environment.is_position_walkable(pos):
 		return false
-	if _pawns.get_pawn_id_at(pos) > -1:
-		return false
 	if player_last_grid_pos == pos:
 		return false
-	for c in $RatHoleContainer.get_children():
-		if c.grid_position == pos:
-			return false
+	if _pawn_controller.get_tile_at(pos):
+		return false
+	if _tile_controller.get_tile_at(pos):
+		return false
 	return true
 
 #func save_state(save_game: Resource):

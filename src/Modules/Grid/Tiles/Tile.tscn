@@ -1,11 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://src/Modules/Grid/Pawns/Colliders/DynamicCollider.tscn" type="PackedScene" id=1]
-[ext_resource path="res://src/Modules/Grid/Pawns/Pawn.gd" type="Script" id=2]
-[ext_resource path="res://assets/images/rect16.png" type="Texture" id=3]
+[ext_resource path="res://src/Modules/StateMachine/StateNameDisplay.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/Modules/Grid/Tiles/DynamicCollider.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/fonts/kenney_mini_small.tres" type="DynamicFont" id=3]
 [ext_resource path="res://src/Modules/StateMachine/StateMachine.gd" type="Script" id=4]
-[ext_resource path="res://assets/fonts/kenney_mini_small.tres" type="DynamicFont" id=5]
-[ext_resource path="res://src/Modules/StateMachine/StateNameDisplay.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/Modules/Grid/Tiles/Tile.gd" type="Script" id=5]
 
 [sub_resource type="Animation" id=1]
 resource_name = "_reset"
@@ -47,14 +46,8 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.3 )
 }
 
-[node name="Pawn" type="Node2D"]
-script = ExtResource( 2 )
-
-[node name="Shadow" type="Sprite" parent="."]
-modulate = Color( 0.478431, 0.266667, 0.290196, 0.196078 )
-position = Vector2( 0, 7 )
-scale = Vector2( 0.5, 0.1 )
-texture = ExtResource( 3 )
+[node name="Tile" type="Node2D"]
+script = ExtResource( 5 )
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 0.811765, 0.776471, 0.721569, 1 )
@@ -66,16 +59,17 @@ anims/_reset = SubResource( 1 )
 anims/appear = SubResource( 2 )
 anims/hide = SubResource( 3 )
 
-[node name="DynamicCollider" parent="." instance=ExtResource( 1 )]
+[node name="DynamicCollider" parent="." instance=ExtResource( 2 )]
+collision_layer = 4
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 4 )
 
-[node name="StateNameDisplay" parent="." instance=ExtResource( 6 )]
+[node name="StateNameDisplay" parent="." instance=ExtResource( 1 )]
 visible = false
 modulate = Color( 0.811765, 0.776471, 0.721569, 1 )
 margin_left = -11.279
 margin_top = -17.6136
 margin_right = 11.721
 margin_bottom = -7.61357
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 3 )

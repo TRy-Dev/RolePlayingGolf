@@ -17,12 +17,7 @@ _global_script_classes=[ {
 "base": "KinematicBody2D",
 "class": "DynamicCollider",
 "language": "GDScript",
-"path": "res://src/Modules/Grid/Pawns/Colliders/DynamicCollider.gd"
-}, {
-"base": "TileMap",
-"class": "DynamicEnvironment",
-"language": "GDScript",
-"path": "res://src/TestingIdeas/DynamicEnvironment.gd"
+"path": "res://src/Modules/Grid/Tiles/DynamicCollider.gd"
 }, {
 "base": "Boid",
 "class": "Flocker",
@@ -49,15 +44,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/Modules/Characters/Platformer/States/OnGround.gd"
 }, {
-"base": "Node2D",
+"base": "Tile",
 "class": "Pawn",
 "language": "GDScript",
-"path": "res://src/Modules/Grid/Pawns/Pawn.gd"
-}, {
-"base": "State",
-"class": "PawnState",
-"language": "GDScript",
-"path": "res://src/Pawns/States/PawnState.gd"
+"path": "res://src/Modules/Grid/Tiles/Pawn.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "PhysicalObject2D",
@@ -89,6 +79,21 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/Modules/StateMachine/StateMachine.gd"
 }, {
+"base": "Node2D",
+"class": "Tile",
+"language": "GDScript",
+"path": "res://src/Modules/Grid/Tiles/Tile.gd"
+}, {
+"base": "TileMap",
+"class": "TileController",
+"language": "GDScript",
+"path": "res://src/Modules/Grid/World/TileController.gd"
+}, {
+"base": "State",
+"class": "TileState",
+"language": "GDScript",
+"path": "res://src/Modules/Grid/Tiles/TileState.gd"
+}, {
 "base": "PhysicalObject2D",
 "class": "TopDownCharacter",
 "language": "GDScript",
@@ -97,20 +102,21 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Boid": "",
 "DynamicCollider": "",
-"DynamicEnvironment": "",
 "Flocker": "",
 "FlowField": "",
 "GridNavigation": "",
 "GridWorld": "",
 "OnGround": "",
 "Pawn": "",
-"PawnState": "",
 "PhysicalObject2D": "",
 "PlatformerState": "",
 "Player": "",
 "SaveGame": "",
 "State": "",
 "StateMachine": "",
+"Tile": "",
+"TileController": "",
+"TileState": "",
 "TopDownCharacter": ""
 }
 
@@ -253,7 +259,8 @@ load_game_state={
 [layer_names]
 
 2d_physics/layer_1="player"
-2d_physics/layer_2="wall"
+2d_physics/layer_2="environment"
+2d_physics/layer_3="tile"
 
 [physics]
 

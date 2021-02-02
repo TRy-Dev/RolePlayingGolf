@@ -1,6 +1,6 @@
 extends State
 
-class_name PawnState
+class_name TileState
 
 var pawn = null
 

@@ -6,18 +6,18 @@ var _pawns = {
 	1: preload("res://src/TestingIdeas/RatHunt/DirtRat.tscn"),
 }
 
-var _dynamic_environment_tiles = {
-	0: preload("res://src/TestingIdeas/RatHunt/RatHole.tscn"),
+var _tiles = {
+	0: preload("res://src/TestingIdeas/RatHunt/Hole.tscn"),
 }
 
-func create_pawn(pawn_id: int, pos: Vector2, parent) -> Pawn:
-	var pawn = _pawns[pawn_id].instance()
+func create_pawn(idx: int, pos: Vector2, parent) -> Pawn:
+	var pawn = _pawns[idx].instance()
 	parent.add_child(pawn)
-	pawn.initialize(pos, pawn_id)
+	pawn.initialize(pos, idx)
 	return pawn
 
-func create_dynamic_env_tile(tile_id: int, pos: Vector2, parent):
-	var tile = _dynamic_environment_tiles[tile_id].instance()
+func create_tile(idx: int, pos: Vector2, parent):
+	var tile = _tiles[idx].instance()
 	parent.add_child(tile)
-	tile.initialize(pos)
+	tile.initialize(pos, idx)
 	return tile

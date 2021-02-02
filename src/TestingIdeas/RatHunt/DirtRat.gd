@@ -10,7 +10,7 @@ func unburrow() -> void:
 
 func on_player_entered(player: Player) -> void:
 	collider.set_disabled(true, true)
-	die()
+	destroy()
 #	AudioController.sfx.play_at("wall_hit", global_position)
 
 func on_player_exited(player: Player) -> void:

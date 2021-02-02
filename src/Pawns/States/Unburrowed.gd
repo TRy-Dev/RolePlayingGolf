@@ -1,4 +1,4 @@
-extends PawnState
+extends TileState
 
 
 func enter(previous: State) -> void:

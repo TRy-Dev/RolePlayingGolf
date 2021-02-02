@@ -18,7 +18,7 @@ __meta__ = {
 [node name="Player" parent="." groups=[
 "save",
 ] instance=ExtResource( 4 )]
-position = Vector2( 767.78, 375.615 )
+position = Vector2( 90.0176, 140.164 )
 
 [node name="CameraTarget" parent="Player" instance=ExtResource( 5 )]
 

@@ -1,4 +1,4 @@
-extends PawnState
+extends TileState
 
 var holes = []
 
@@ -12,7 +12,7 @@ func enter(previous: State) -> void:
 func update(input: Dictionary) -> void:
 	var world = input["world"]
 	var pawn_controller = input["pawn_controller"]
-	var dynamic_environment = input["dynamic_environment"]
+	var tile_controller = input["tile_controller"]
 	
 	var unburrow_chance = float(len(holes)) / MAX_HOLES
 	if Rng.randf() < unburrow_chance:
@@ -30,8 +30,8 @@ func update(input: Dictionary) -> void:
 			if i > 8:
 				print("HEY! Rat could not find unoccupied position for hole!")
 				return
-		var new_hole = dynamic_environment.create_dynamic_tile(HOLE_ID, hole_pos)
-		new_hole.connect("destroyed", self, "_on_hole_destroyed")
+		var new_hole = tile_controller.create_tile(HOLE_ID, hole_pos)
+		new_hole.connect("tile_destroyed", self, "_on_hole_destroyed")
 		holes.append(new_hole)
 
 func _on_hole_destroyed(hole):
