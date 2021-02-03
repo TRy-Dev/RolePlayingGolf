@@ -16,7 +16,7 @@ var velocity := Vector2()
 var acceleration := Vector2()
 
 const FLOOR_NORMAL = Vector2.UP
-const MIN_VELOCITY_SQ = pow(2.0, 2.0)
+const MIN_VELOCITY_SQ = 0 #pow(2.0, 2.0)
 
 var previous_velocity := Vector2()
 

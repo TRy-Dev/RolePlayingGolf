@@ -12,13 +12,15 @@ margin_left = 20.0
 margin_top = 20.0
 margin_right = 365.0
 margin_bottom = -20.0
+alignment = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Turn" type="Label" parent="VBoxContainer"]
+margin_top = 636.0
 margin_right = 345.0
-margin_bottom = 28.0
+margin_bottom = 664.0
 custom_fonts/font = ExtResource( 2 )
 text = "turn"
 __meta__ = {
@@ -26,19 +28,21 @@ __meta__ = {
 }
 
 [node name="Stamina" type="Label" parent="VBoxContainer"]
-margin_top = 32.0
+margin_top = 668.0
 margin_right = 345.0
-margin_bottom = 60.0
+margin_bottom = 696.0
 custom_fonts/font = ExtResource( 2 )
+text = "Stamina"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Health" type="Label" parent="VBoxContainer"]
-margin_top = 64.0
+margin_top = 700.0
 margin_right = 345.0
-margin_bottom = 92.0
+margin_bottom = 728.0
 custom_fonts/font = ExtResource( 2 )
+text = "Health"
 __meta__ = {
 "_edit_use_anchors_": false
 }

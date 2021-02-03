@@ -7,6 +7,7 @@ signal health_changed(health)
 signal stamina_changed(stamina)
 
 onready var trajectory = $TrajectoryLine
+onready var interaction_controller = $InteractionController
 
 export(float, 10.0, 1000.0) var hit_min_force = 20.0
 export(float, 10.0, 1000.0) var hit_max_force = 390.0
@@ -43,6 +44,9 @@ func shoot() -> void:
 	var force = direction * lerp(hit_min_force, hit_max_force, current_hit_strength)
 	apply_force(force)
 	emit_signal("moved")
+
+func interact() -> Interaction:
+	return interaction_controller.interact()
 
 func look_at(dir: Vector2) -> void:
 	direction = dir.normalized()

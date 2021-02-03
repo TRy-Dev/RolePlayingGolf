@@ -16,6 +16,10 @@ func save_state() -> void:
 func load_state() -> void:
 	GameSaver.load_game(GAME_SAVE_ID)
 
+func reset() -> void:
+	turn = 0
+	emit_signal("turn_changed", turn)
+
 func save_global_state(save: Resource) -> void:
 	save.data["global"] = {}
 	save.data["global"]["turn"] = turn

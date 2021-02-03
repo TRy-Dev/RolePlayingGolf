@@ -8,6 +8,7 @@ onready var gui = $GUI
 
 const PLAYER_MOVE_TIME = 1.5
 
+# Create FSM for holding current game state
 
 func _ready():
 	GlobalState.initialize(player, world)
@@ -20,6 +21,10 @@ func _ready():
 	AudioController.music.play("world")
 
 func _process(delta):
+	if Input.is_action_just_pressed("interact"):
+		var interaction = player.interact()
+		if interaction:
+			print("State should be: Interacting, until interaction_finished signal recieved")
 	if Input.is_action_just_pressed("click"):
 		player.shoot()
 		yield(get_tree().create_timer(PLAYER_MOVE_TIME), "timeout")
@@ -29,6 +34,7 @@ func _process(delta):
 	if Input.is_action_just_pressed("debug_restart"):
 		SceneController.reload_current()
 		DebugOverlay.clear_stats()
+		GlobalState.reset()
 	world.update_player_position(player.global_position)
 	
 	if Input.is_action_just_pressed("load_game_state"):
