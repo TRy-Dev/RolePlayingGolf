@@ -18,7 +18,8 @@ __meta__ = {
 [node name="RatHoleContainer" type="Node2D" parent="."]
 
 [node name="TileController" parent="." instance=ExtResource( 6 )]
-tile_data = PoolIntArray( 458755, 0, 0, 458756, 0, 0, 524291, 0, 0, 524292, 0, 0 )
+self_modulate = Color( 0.584314, 0.427451, 0.784314, 1 )
+tile_data = PoolIntArray( 196618, 1, 0, 458755, 0, 0, 458756, 0, 0, 524291, 0, 0, 524292, 0, 0 )
 
 [node name="PawnController" parent="." instance=ExtResource( 2 )]
 tile_set = ExtResource( 5 )

@@ -2,12 +2,13 @@ extends Node
 
 # Array of pawns -> prefab scene
 var _pawns = {
-	0: preload("res://src/Pawns/Peasant.tscn"),
-	1: preload("res://src/TestingIdeas/RatHunt/DirtRat.tscn"),
+	0: preload("res://src/Tiles/Pawns/Peasant.tscn"),
+	1: preload("res://src/Tiles/Pawns/DirtRat.tscn"),
 }
 
 var _tiles = {
-	0: preload("res://src/TestingIdeas/RatHunt/Hole.tscn"),
+	0: preload("res://src/Tiles/Hole.tscn"),
+	1: preload("res://src/Tiles/Checkpoint.tscn"),
 }
 
 func create_pawn(idx: int, pos: Vector2, parent) -> Pawn:

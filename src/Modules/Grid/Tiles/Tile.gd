@@ -25,13 +25,15 @@ func destroy() -> void:
 	emit_signal("tile_destroyed", self)
 	queue_free()
 
-## GOLF
-
 func update_state_machine(input: Dictionary) -> void:
 	fsm.update(input)
 
+## GOLF
+
 func on_player_entered(player: Player) -> void:
+#	print("Player entered %s" %name)
 	pass
 
 func on_player_exited(player: Player) -> void:
+#	print("Player exited %s" %name)
 	pass

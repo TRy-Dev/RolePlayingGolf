@@ -117,7 +117,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Role Playing Golf"
-run/main_scene="res://src/TestingIdeas/GameplayTest.tscn"
+run/main_scene="res://src/TestingIdeas/Main.tscn"
 config/icon="res://icon.png"
 
 [audio]
@@ -137,7 +137,8 @@ Courtain="*res://src/Modules/Rendering/Courtain.tscn"
 SceneController="*res://src/Modules/Core/SceneController.gd"
 DebugOverlay="*res://src/Modules/Core/DebugOverlay.tscn"
 PhysicsPrediction="*res://src/Modules/Physics/PhysicsPrediction.gd"
-GlobalConstants="*res://src/TestingIdeas/GlobalConstants.gd"
+GlobalConstants="*res://src/Autoload/GlobalConstants.gd"
+GlobalState="*res://src/Autoload/GlobalState.gd"
 Colors="*res://src/autoload/Colors.gd"
 
 [debug]
