@@ -75,6 +75,7 @@ func multiply_velocity(mult):
 func damage(amount: int) -> void:
 	health -= amount
 	if health <= 0:
+		health = 0
 		print("Health=0. Player should die!")
 	emit_signal("health_changed", health)
 

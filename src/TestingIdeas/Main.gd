@@ -5,6 +5,7 @@ onready var player = $Player
 onready var camera = $CameraController
 onready var camera_target = $Player/CameraTarget
 onready var gui = $GUI
+onready var fsm = $GameStateMachine
 
 const PLAYER_MOVE_TIME = 1.5
 
@@ -12,12 +13,11 @@ const PLAYER_MOVE_TIME = 1.5
 
 func _ready():
 	GlobalState.initialize(player, world)
+	fsm.initialize()
 	gui.initialize(player, world)
 	camera.set_target_instant(camera_target)
 	camera.set_zoom(0.3, false)
 	camera.set_zoom(0.25)
-	$TurnTimer.wait_time = PLAYER_MOVE_TIME + GlobalConstants.MOVE_TIME
-#	$TurnTimer.start()
 	AudioController.music.play("world")
 
 func _process(delta):
@@ -71,16 +71,16 @@ func load_state(save: Resource):
 	player.disable_collisions(false)
 
 ### Testing
-func simulate_random_turn() -> void:
-	var angle_rad = Rng.randf(0.0, 2 * PI)
-	var dir = Vector2(cos(angle_rad), sin(angle_rad))
-	player.update_trajectory_direction(dir)
-	camera_target.set_offset(dir, 1.0)
-	camera_target.update()
-	player.direction = dir
-	player.shoot()
-	yield(get_tree().create_timer(PLAYER_MOVE_TIME), "timeout")
-	world.update_pawns()
+#func simulate_random_turn() -> void:
+#	var angle_rad = Rng.randf(0.0, 2 * PI)
+#	var dir = Vector2(cos(angle_rad), sin(angle_rad))
+#	player.update_trajectory_direction(dir)
+#	camera_target.set_offset(dir, 1.0)
+#	camera_target.update()
+#	player.direction = dir
+#	player.shoot()
+#	yield(get_tree().create_timer(PLAYER_MOVE_TIME), "timeout")
+#	world.update_pawns()
 
-func _on_TurnTimer_timeout():
-	simulate_random_turn()
+#func _on_TurnTimer_timeout():
+#	simulate_random_turn()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://src/TestingIdeas/Main.gd" type="Script" id=1]
 [ext_resource path="res://src/Modules/Grid/World/GridWorld.tscn" type="PackedScene" id=2]
@@ -7,6 +7,12 @@
 [ext_resource path="res://src/TestingIdeas/Fog.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/Modules/Camera/CameraController.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/TestingIdeas/GUI.tscn" type="PackedScene" id=7]
+[ext_resource path="res://src/Modules/StateMachine/StateMachine.gd" type="Script" id=8]
+[ext_resource path="res://src/GameStates/WaitingForPlayerInput.tscn" type="PackedScene" id=9]
+[ext_resource path="res://src/GameStates/GridWorldMoving.tscn" type="PackedScene" id=10]
+[ext_resource path="res://src/GameStates/PlayerMoving.tscn" type="PackedScene" id=11]
+[ext_resource path="res://src/GameStates/GamePaused.tscn" type="PackedScene" id=12]
+[ext_resource path="res://src/GameStates/PlayerInteracting.tscn" type="PackedScene" id=13]
 
 [node name="Main" type="Node2D" groups=[
 "save",
@@ -31,11 +37,20 @@ drag_margin_top = 0.02
 drag_margin_right = 0.02
 drag_margin_bottom = 0.02
 
-[node name="TurnTimer" type="Timer" parent="."]
-wait_time = 0.001
-
 [node name="Fog" parent="." instance=ExtResource( 5 )]
 position = Vector2( 651.402, 312.353 )
 
 [node name="GUI" parent="." instance=ExtResource( 7 )]
-[connection signal="timeout" from="TurnTimer" to="." method="_on_TurnTimer_timeout"]
+
+[node name="GameStateMachine" type="Node" parent="."]
+script = ExtResource( 8 )
+
+[node name="WaitingForPlayerInput" parent="GameStateMachine" instance=ExtResource( 9 )]
+
+[node name="PlayerMoving" parent="GameStateMachine" instance=ExtResource( 11 )]
+
+[node name="GridWorldMoving" parent="GameStateMachine" instance=ExtResource( 10 )]
+
+[node name="GamePaused" parent="GameStateMachine" instance=ExtResource( 12 )]
+
+[node name="PlayerInteracting" parent="GameStateMachine" instance=ExtResource( 13 )]
