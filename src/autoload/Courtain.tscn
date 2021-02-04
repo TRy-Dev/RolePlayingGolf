@@ -6,7 +6,6 @@
 [ext_resource path="res://assets/fonts/kenney_title.tres" type="DynamicFont" id=4]
 [ext_resource path="res://assets/fonts/kenney_pixel.tres" type="DynamicFont" id=5]
 
-
 [sub_resource type="Animation" id=1]
 resource_name = "anim"
 length = 0.5
@@ -50,7 +49,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=4]
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=5]
 resource_name = "anim"
 length = 1.5
 tracks/0/type = "bezier"
@@ -64,7 +63,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5, 1, 1.5 )
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
 length = 0.5
 tracks/0/type = "bezier"
 tracks/0/path = NodePath("CanvasLayer/ColorRect:color:a")
@@ -77,7 +76,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5 )
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 length = 0.5
 tracks/0/type = "bezier"
 tracks/0/path = NodePath("CanvasLayer/ColorRect:color:a")
@@ -225,7 +224,7 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/PerfBattle"]
-anims/anim = SubResource( 7 )
+anims/anim = SubResource( 5 )
 
 [node name="Label" type="Label" parent="CanvasLayer/PerfBattle"]
 modulate = Color( 0.811765, 0.776471, 0.721569, 1 )
@@ -239,5 +238,5 @@ custom_fonts/font = ExtResource( 4 )
 text = "Perfect Battle!"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/hide = SubResource( 5 )
-anims/show = SubResource( 6 )
+anims/hide = SubResource( 6 )
+anims/show = SubResource( 7 )

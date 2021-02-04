@@ -1,10 +1,22 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/Modules/Rendering/Courtain.gd" type="Script" id=1]
 
 [sub_resource type="Animation" id=1]
 resource_name = "_reset"
 length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer/Dim:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ) ]
+}
 
 [sub_resource type="Animation" id=2]
 length = 4.0
@@ -44,7 +56,39 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.2, 0.4 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Color( 0.784314, 0.196078, 0.156863, 0 ), Color( 0.784314, 0.196078, 0.156863, 0.196078 ), Color( 0.784314, 0.196078, 0.156863, 0 ) ]
+"values": [ Color( 0.784314, 0.196078, 0.156863, 0 ), Color( 0.901961, 0.282353, 0.180392, 0.0627451 ), Color( 0.784314, 0.196078, 0.156863, 0 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "hide_dim"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer/Dim:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0.588235 ), Color( 0, 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "show_dim"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer/Dim:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 0.588235 ) ]
 }
 
 [node name="Courtain" type="Control"]
@@ -73,8 +117,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Dim" type="ColorRect" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.196078 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/_reset = SubResource( 1 )
 anims/fade_in = SubResource( 2 )
 anims/fade_out = SubResource( 3 )
 anims/flash = SubResource( 4 )
+anims/hide_dim = SubResource( 5 )
+anims/show_dim = SubResource( 6 )

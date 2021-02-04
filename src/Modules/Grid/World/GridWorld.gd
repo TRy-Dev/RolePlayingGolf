@@ -9,6 +9,8 @@ onready var _navigation :GridNavigation = $GridNavigation
 
 var player_last_grid_pos = null
 
+var is_updating_tiles = false
+
 func _ready():
 	var walkable_tilemap = _environment.get_walkable_tilemap()
 	_navigation.initialize(walkable_tilemap)
@@ -26,6 +28,7 @@ func get_nav_path(pos_from: Vector2, pos_to: Vector2) -> Array:
 	return grid_points
 
 func update_tiles() -> void:
+	is_updating_tiles = true
 	var input = {
 		"world": self,
 		"tile_controller": _tile_controller,
@@ -33,6 +36,8 @@ func update_tiles() -> void:
 	}
 	_pawn_controller.update_all(input)
 	_tile_controller.update_all(input)
+	yield(get_tree().create_timer(GlobalConstants.MOVE_TIME), "timeout")
+	is_updating_tiles = false
 
 func is_position_unoccupied(pos: Vector2) -> bool:
 	if not _environment.is_position_walkable(pos):

@@ -1,9 +1,9 @@
 extends GameState
 
 func update(input: Dictionary) -> void:
-	# Update player moving
-	
-	# if player stopped moving (speed == 0)
-	# emit_signal("finished", "GridWorldMoving")
-	pass
+	var player = input["player"]
+	player.update()
+	if player.get_speed_sq() < Math.EPSILON:
+		emit_signal("finished", "GridWorldMoving")
+		return
 	.update(input)

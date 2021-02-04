@@ -5,6 +5,7 @@ class_name Player
 signal moved()
 signal health_changed(health)
 signal stamina_changed(stamina)
+signal died()
 
 onready var trajectory = $TrajectoryLine
 onready var interaction_controller = $InteractionController
@@ -32,7 +33,7 @@ func _ready():
 	var max_distance = pow((1.0 - 4 * friction_coeff), 2.0) * hit_max_force / mass * 0.5 
 	var min_distance = pow((1.0 - 4 * friction_coeff), 2.0) * hit_min_force / mass * 0.5
 	trajectory.set_line_length(min_distance, max_distance)
-	update_hit_strength(0)
+	trajectory.update_line_length(current_hit_strength)
 
 func shoot() -> void:
 	stamina -= 1
@@ -51,23 +52,23 @@ func interact() -> Interaction:
 func look_at(dir: Vector2) -> void:
 	direction = dir.normalized()
 
-func update_trajectory_direction(dir: Vector2) -> void:
+func update_trajectory_direction() -> void:
 	trajectory.set_direction(direction)
 
-func update_hit_strength(dir: int):
-	if not dir in [-1, 1, 0]:
-		push_error("Incorrect player force change direction: %s" % dir)
-		return
-	current_hit_strength += dir * STRENGTH_STEP
-	current_hit_strength = clamp(current_hit_strength, 0.0, 1.0)
-	trajectory.update_line_length(current_hit_strength)
+#func update_hit_strength(dir: int):
+#	if not dir in [-1, 1, 0]:
+#		push_error("Incorrect player force change direction: %s" % dir)
+#		return
+#	current_hit_strength += dir * STRENGTH_STEP
+#	current_hit_strength = clamp(current_hit_strength, 0.0, 1.0)
+#	trajectory.update_line_length(current_hit_strength)
 
 func _handle_collision(collision):
 	AudioController.sfx.play_at("wall_hit", collision.position)
 	._handle_collision(collision)
 
-func apply_velocity(vel):
-	apply_force(_vel_to_force(vel))
+#func apply_velocity(vel):
+#	apply_force(_vel_to_force(vel))
 
 func multiply_velocity(mult):
 	velocity *= mult
@@ -76,8 +77,13 @@ func damage(amount: int) -> void:
 	health -= amount
 	if health <= 0:
 		health = 0
-		print("Health=0. Player should die!")
+		_die()
 	emit_signal("health_changed", health)
+
+func _die() -> void:
+	print("Player died!")
+	Courtain.play("flash")
+	emit_signal("died")
 
 func save_state(save):
 	# Reset moves on save
@@ -100,3 +106,6 @@ func load_state(save):
 
 func disable_collisions(value: bool) -> void:
 	$CollisionShape2D.set_deferred("disabled", value)
+
+func set_trajectory_visible(value: bool) -> void:
+	trajectory.visible = value

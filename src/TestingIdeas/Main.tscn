@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://src/TestingIdeas/Main.gd" type="Script" id=1]
 [ext_resource path="res://src/Modules/Grid/World/GridWorld.tscn" type="PackedScene" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://src/GameStates/PlayerMoving.tscn" type="PackedScene" id=11]
 [ext_resource path="res://src/GameStates/GamePaused.tscn" type="PackedScene" id=12]
 [ext_resource path="res://src/GameStates/PlayerInteracting.tscn" type="PackedScene" id=13]
+[ext_resource path="res://src/Modules/StateMachine/StateNameDisplay.tscn" type="PackedScene" id=14]
 
 [node name="Main" type="Node2D" groups=[
 "save",
@@ -25,7 +26,7 @@ __meta__ = {
 [node name="GridWorld" parent="." instance=ExtResource( 2 )]
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
-position = Vector2( 90.0176, 140.164 )
+position = Vector2( 117.977, 185.572 )
 
 [node name="CameraTarget" parent="Player" instance=ExtResource( 4 )]
 
@@ -54,3 +55,13 @@ script = ExtResource( 8 )
 [node name="GamePaused" parent="GameStateMachine" instance=ExtResource( 12 )]
 
 [node name="PlayerInteracting" parent="GameStateMachine" instance=ExtResource( 13 )]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="StateNameDisplay" parent="CanvasLayer" instance=ExtResource( 14 )]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -37.0
+margin_top = 20.0
+margin_right = -200.0
+margin_bottom = 14.0

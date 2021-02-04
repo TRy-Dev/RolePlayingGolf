@@ -16,3 +16,12 @@ func set_offset(dir: Vector2, length: float) -> void:
 func update() -> void:
 	apply_force(arrive(base_transform.global_position + _offset))
 	.update()
+
+# Temporary
+
+func force_reset_offset() -> void:
+	set_offset(Vector2.ZERO, 0.0)
+	while position.length_squared() > Math.EPSILON:
+		update()
+		yield(get_tree(), "idle_frame")
+	position = Vector2.ZERO
