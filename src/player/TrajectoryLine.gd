@@ -9,9 +9,10 @@ onready var line = $Line2D
 onready var shadow_parent = $ShadowParent
 onready var marker_parent = $CollMarkerParent
 
-var line_length = 0
-var max_line_length = 0
-var min_line_length = 0
+
+#var max_line_length = 64.0
+#var min_line_length = max_line_length
+var line_length = 64.0 #max_line_length
 
 var shape_params = Physics2DShapeQueryParameters.new()
 
@@ -25,12 +26,12 @@ func set_shape(s) -> void:
 	shape_params.exclude = [owner.get_rid()]
 	shape_params.set_shape(s)
 
-func set_line_length(min_len: float, max_len: float) -> void:
-	min_line_length = min_len
-	max_line_length = max_len
+#func set_line_length(min_len: float, max_len: float) -> void:
+#	min_line_length = min_len
+#	max_line_length = max_len
 
-func update_line_length(val: float) -> void:
-	line_length = lerp(min_line_length, max_line_length, val)
+#func update_line_length(val: float) -> void:
+#	line_length = lerp(min_line_length, max_line_length, val)
 	
 func set_direction(dir: Vector2) -> void:
 	if line_length < Math.EPSILON:

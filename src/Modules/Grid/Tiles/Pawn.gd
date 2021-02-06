@@ -10,3 +10,9 @@ func move_to(grid_pos: Vector2) -> void:
 			global_position, target_position, GlobalConstants.MOVE_TIME, 
 			Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$Tween.start()
+
+func get_name() -> String:
+	var s_ref = get_script()
+	var path = s_ref.resource_path.split("/")
+	var name = path[len(path) - 1].split(".")[0]
+	return name.to_lower()

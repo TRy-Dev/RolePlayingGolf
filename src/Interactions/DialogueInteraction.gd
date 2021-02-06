@@ -1,17 +1,34 @@
 extends Interaction
 
-onready var anim_player = $AnimationPlayer
-onready var label = $Background/Label
+onready var dialogue_ui = $DialogueUI
 
-var dialogue_text = ["Hello.\nThis text is too long"]
-
-const CHARS_PER_SECOND := 8.0
+var active = false
 
 func _ready():
-	AnimationController.reset(anim_player)
-	label.text = dialogue_text[0]
+	dialogue_ui.set_visible(false)
+	dialogue_ui.connect("option_selected", self, "_on_dialogue_option_selected")
 
 func start() -> void:
-	anim_player.playback_speed = CHARS_PER_SECOND / len(label.text)
-	AnimationController.play(anim_player, "show_text")
+	var npc_name = owner.get_name()
+	var dialogue = DialogueController.start_dialogue(npc_name)
+	dialogue_ui.set_dialogue(dialogue)
+	active = true
+	dialogue_ui.set_visible(true)
 	emit_signal("started")
+
+func _on_dialogue_option_selected(idx) -> void:
+	if idx < 0:
+		active = false
+		dialogue_ui.set_visible(false)
+		emit_signal("finished")
+		return
+	var dialogue = DialogueController.select_option(idx)
+	dialogue_ui.set_dialogue(dialogue)
+
+func _process(delta):
+	if not active:
+		return
+	if Input.is_action_just_pressed("ui_down"):
+		dialogue_ui.change_option(1)
+	if Input.is_action_just_pressed("ui_up"):
+		dialogue_ui.change_option(-1)

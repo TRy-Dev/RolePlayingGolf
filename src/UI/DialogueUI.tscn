@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/UI/DialogueUI.gd" type="Script" id=1]
+[ext_resource path="res://src/UI/dialogue_ui.tres" type="Theme" id=2]
+
+[node name="DialogueUI" type="Control"]
+modulate = Color( 1, 1, 1, 0.705882 )
+rect_scale = Vector2( 0.5, 0.5 )
+mouse_filter = 2
+theme = ExtResource( 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="PanelContainer" parent="."]
+margin_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+rect_min_size = Vector2( 150, 120 )
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Container" type="VBoxContainer" parent="Background"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 143.0
+margin_bottom = 113.0
+mouse_filter = 2
+theme = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Text" type="RichTextLabel" parent="Background/Container"]
+margin_right = 136.0
+margin_bottom = 66.0
+mouse_filter = 2
+text = "Those annoying creatures living under ground...
+They keep digging holes on my field.
+Get rid of them and you shall be rewarded!"
+fit_content_height = true

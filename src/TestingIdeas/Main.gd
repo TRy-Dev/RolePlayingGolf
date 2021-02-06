@@ -44,6 +44,7 @@ func _physics_process(delta):
 		"camera": camera,
 		"camera_target": camera_target,
 		"gui": gui,
+		"interaction": player.get_interaction(),
 	}
 	fsm.update(input)
 	
@@ -86,13 +87,25 @@ func _on_player_died():
 #	simulate_random_turn()
 
 ##### TEMPORARY
-func set_player_trajectory_visible(val: bool) -> void:
-	player.set_trajectory_visible(val)
+#func set_player_trajectory_visible(val: bool) -> void:
+#	player.set_trajectory_visible(val)
 
 func set_pause_game(val: bool) -> void:
 	for node in pausable_nodes:
 		node.pause_mode = Node.PAUSE_MODE_INHERIT if val else Node.PAUSE_MODE_STOP
 	emit_signal("game_paused", val)
 
-func reset_camera_target() -> void:
-	camera_target.force_reset_offset()
+#func reset_camera_target() -> void:
+#
+
+func get_current_interaction() -> Interaction:
+	return player.get_interaction()
+
+func get_global_objects() -> Dictionary:
+	return {
+		"world": world,
+		"player": player,
+		"camera": camera,
+		"camera_target": camera_target,
+		"gui": gui,
+	}

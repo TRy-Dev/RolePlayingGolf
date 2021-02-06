@@ -12,6 +12,7 @@ radius = 4.5
 radius = 24.0
 
 [node name="Player" type="KinematicBody2D"]
+z_index = 10
 collision_layer = 2147483649
 collision_mask = 6
 collision/safe_margin = 0.03
