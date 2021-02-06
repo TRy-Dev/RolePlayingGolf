@@ -1,13 +1,32 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/UI/DialogueUI.gd" type="Script" id=1]
-[ext_resource path="res://src/UI/dialogue_ui.tres" type="Theme" id=2]
+[ext_resource path="res://src/UI/theme.tres" type="Theme" id=3]
+
+[sub_resource type="Animation" id=1]
+resource_name = "_reset"
+length = 0.001
+
+[sub_resource type="Animation" id=2]
+resource_name = "show_text"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Background/Container/Text:percent_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
 
 [node name="DialogueUI" type="Control"]
-modulate = Color( 1, 1, 1, 0.705882 )
+modulate = Color( 1, 1, 1, 0.901961 )
 rect_scale = Vector2( 0.5, 0.5 )
 mouse_filter = 2
-theme = ExtResource( 2 )
+theme = ExtResource( 3 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -17,28 +36,34 @@ __meta__ = {
 margin_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 0
-rect_min_size = Vector2( 150, 120 )
+rect_min_size = Vector2( 150, 0 )
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Container" type="VBoxContainer" parent="Background"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 143.0
-margin_bottom = 113.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 142.0
+margin_bottom = 100.0
 mouse_filter = 2
-theme = ExtResource( 2 )
+custom_constants/separation = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Text" type="RichTextLabel" parent="Background/Container"]
-margin_right = 136.0
+margin_right = 134.0
 margin_bottom = 66.0
 mouse_filter = 2
 text = "Those annoying creatures living under ground...
 They keep digging holes on my field.
 Get rid of them and you shall be rewarded!"
 fit_content_height = true
+scroll_following = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/_reset = SubResource( 1 )
+anims/show_text = SubResource( 2 )
+[connection signal="sort_children" from="Background" to="." method="_on_Background_sort_children"]

@@ -11,6 +11,10 @@ func _ready():
 func start() -> void:
 	var npc_name = owner.get_name()
 	var dialogue = DialogueController.start_dialogue(npc_name)
+	if not dialogue["lines"] and not dialogue["options"]:
+		print("Empty dialogue returned for npc %s" %npc_name)
+		emit_signal("finished")
+		return
 	dialogue_ui.set_dialogue(dialogue)
 	active = true
 	dialogue_ui.set_visible(true)

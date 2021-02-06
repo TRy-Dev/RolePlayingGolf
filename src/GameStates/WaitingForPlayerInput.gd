@@ -8,7 +8,6 @@ const SHOT_CHARGE_SPEED = 1.5
 
 func initialize() -> void:
 	.initialize()
-	
 
 # Replace with calls to GlobalObjects inherited from GameState
 func enter(previous: State) -> void:
@@ -16,12 +15,13 @@ func enter(previous: State) -> void:
 	shot_charge = 0.0
 	player.set_trajectory_visible(true)
 	gui.set_hit_bar_visible(true)
+	player.set_hit_strength(0.3)
 	
 func exit(next: State) -> void:
 	player.set_trajectory_visible(false)
 	gui.set_hit_bar_visible(false)
 	camera_target.force_reset_offset()
-	player.set_hit_strength(0.0)
+#	player.set_hit_strength(0.3)
 
 func update(input: Dictionary) -> void:
 #	var player = input["player"]
@@ -31,7 +31,6 @@ func update(input: Dictionary) -> void:
 	
 	if charging_shot:
 		if input["controls"]["shoot_released"]:
-			player.set_hit_strength(shot_charge)
 			player.shoot()
 			emit_signal("finished", "PlayerMoving")
 			return
@@ -54,5 +53,6 @@ func update(input: Dictionary) -> void:
 		emit_signal("finished", "PlayerInteracting")
 		return
 	elif input["controls"]["shoot_pressed"]:
+		player.set_hit_strength(0.0)
 		charging_shot = true
 	.update(input)

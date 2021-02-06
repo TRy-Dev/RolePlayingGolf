@@ -2,12 +2,16 @@ extends Control
 
 signal option_selected(index)
 
+onready var anim_player = $AnimationPlayer
 onready var text = $Background/Container/Text
 onready var container = $Background/Container
+onready var panel = $Background
 
 var buttons = []
 
 var current_btn_idx = -1
+
+const CHARS_PER_SECOND = 60.0
 
 func set_dialogue(dialogue: Dictionary) -> void:
 	_update_ui(dialogue)
@@ -23,11 +27,11 @@ func _update_ui(data: Dictionary) -> void:
 		var opt = data["options"][i]
 		_add_button(opt.text, i)
 	_add_button("END", -1)
+	anim_player.playback_speed = CHARS_PER_SECOND / len(text.text)
+	AnimationController.play(anim_player, "show_text")
 	current_btn_idx = 0
 	buttons[current_btn_idx].grab_focus()
-#	if not len(data["options"]):
-#		text.text += "\n Dialogue has ended!"
-#
+
 func _option_selected(idx) -> void:
 	buttons[current_btn_idx].release_focus()
 	emit_signal("option_selected", idx)
@@ -46,3 +50,10 @@ func change_option(delta: int):
 	elif current_btn_idx >= len(buttons):
 		current_btn_idx = 0
 	buttons[current_btn_idx].grab_focus()
+
+func _on_Background_sort_children():
+	panel.rect_size.y = 0.0
+	panel.margin_left = 0.0
+	panel.margin_right = 0.0
+	panel.margin_top = 0.0
+	panel.margin_bottom = -20.0

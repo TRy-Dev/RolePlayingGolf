@@ -9,7 +9,6 @@
 [node name="Peasant" instance=ExtResource( 3 )]
 z_index = 11
 script = ExtResource( 4 )
-speed = 2
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 1 )

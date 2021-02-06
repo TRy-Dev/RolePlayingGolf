@@ -10,13 +10,15 @@ onready var shadow_parent = $ShadowParent
 onready var marker_parent = $CollMarkerParent
 
 
-#var max_line_length = 64.0
-#var min_line_length = max_line_length
-var line_length = 64.0 #max_line_length
+var max_line_length = 0.0 
+var min_line_length = 0.0
+var line_length = 0.0 ##64.0
 
 var shape_params = Physics2DShapeQueryParameters.new()
 
 const MAX_BOUCES = 1
+
+var _direction = Vector2.RIGHT
 
 func _ready():
 	# collide with environment and tiles
@@ -26,14 +28,16 @@ func set_shape(s) -> void:
 	shape_params.exclude = [owner.get_rid()]
 	shape_params.set_shape(s)
 
-#func set_line_length(min_len: float, max_len: float) -> void:
-#	min_line_length = min_len
-#	max_line_length = max_len
+func set_line_length(min_len: float, max_len: float) -> void:
+	min_line_length = min_len
+	max_line_length = max_len
 
-#func update_line_length(val: float) -> void:
-#	line_length = lerp(min_line_length, max_line_length, val)
+func update_line_length(val: float) -> void:
+	line_length = lerp(min_line_length, max_line_length, val)
+	set_direction(_direction)
 	
 func set_direction(dir: Vector2) -> void:
+	_direction = dir
 	if line_length < Math.EPSILON:
 		return
 	dir = dir.normalized()

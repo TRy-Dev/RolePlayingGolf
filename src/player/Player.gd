@@ -11,10 +11,10 @@ signal hit_strength_changed(value)
 onready var trajectory = $TrajectoryLine
 onready var interaction_controller = $InteractionController
 
-export(float, 10.0, 1000.0) var hit_min_force = 0.0
+export(float, 10.0, 1000.0) var hit_min_force = 20.0
 export(float, 10.0, 1000.0) var hit_max_force = 390.0
 
-const START_STAMINA = 4
+const START_STAMINA = 5
 const START_HEALTH = 3
 
 var stamina := START_STAMINA
@@ -31,10 +31,11 @@ var direction = Vector2.RIGHT
 func _ready():
 	trajectory.set_shape($CollisionShape2D.shape)
 	# Calculation works somehow, but if properties are changed it might to be improved
-#	var max_distance = pow((1.0 - 4 * friction_coeff), 2.0) * hit_max_force / mass * 0.5 
-#	var min_distance = pow((1.0 - 4 * friction_coeff), 2.0) * hit_min_force / mass * 0.5
-#	trajectory.set_line_length(min_distance, max_distance)
+	var max_distance = pow((1.0 - 4 * friction_coeff), 2.0) * hit_max_force / mass * 0.5 
+	var min_distance = pow((1.0 - 4 * friction_coeff), 2.0) * hit_min_force / mass * 0.5
+	trajectory.set_line_length(min_distance, max_distance)
 #	trajectory.update_line_length(current_hit_strength)
+	connect("hit_strength_changed", trajectory, "update_line_length")
 
 func shoot() -> void:
 	stamina -= 1
