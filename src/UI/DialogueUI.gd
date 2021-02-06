@@ -2,16 +2,20 @@ extends Control
 
 signal option_selected(index)
 
-onready var anim_player = $AnimationPlayer
+#onready var anim_player = $AnimationPlayer
 onready var text = $Background/Container/Text
 onready var container = $Background/Container
 onready var panel = $Background
+onready var text_tween = $TextTween
 
 var buttons = []
 
 var current_btn_idx = -1
 
 const CHARS_PER_SECOND = 60.0
+
+func _ready():
+	visible = false
 
 func set_dialogue(dialogue: Dictionary) -> void:
 	_update_ui(dialogue)
@@ -27,8 +31,9 @@ func _update_ui(data: Dictionary) -> void:
 		var opt = data["options"][i]
 		_add_button(opt.text, i)
 	_add_button("END", -1)
-	anim_player.playback_speed = CHARS_PER_SECOND / len(text.text)
-	AnimationController.play(anim_player, "show_text")
+	text_tween.stop_all()
+	text_tween.interpolate_property(text, "percent_visible", 0.0, 1.0, len(text.text) / CHARS_PER_SECOND, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	text_tween.start()
 	current_btn_idx = 0
 	buttons[current_btn_idx].grab_focus()
 
@@ -50,6 +55,12 @@ func change_option(delta: int):
 	elif current_btn_idx >= len(buttons):
 		current_btn_idx = 0
 	buttons[current_btn_idx].grab_focus()
+
+func _on_dialogue_started():
+	visible = true
+
+func _on_dialogue_finished():
+	visible = false
 
 func _on_Background_sort_children():
 	panel.rect_size.y = 0.0
