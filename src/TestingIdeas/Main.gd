@@ -18,6 +18,8 @@ func _ready():
 		world, player, camera, camera_target,
 	]
 	GlobalState.initialize(player, world)
+	connect("game_paused", gui, "_on_game_paused")
+	fsm.connect("state_changed", gui, "_on_game_state_changed")
 	fsm.connect("state_changed", $CanvasLayer/StateNameDisplay, "_on_state_changed")
 	fsm.initialize()
 	gui.initialize(player, world)
@@ -25,7 +27,7 @@ func _ready():
 	camera.set_zoom_level("far", false)
 	camera.set_zoom_level("medium")
 	player.connect("died", self, "_on_player_died")
-#	AudioController.music.play("world")
+	AudioController.music.play("world")
 	world.initialize()
 
 func _physics_process(delta):
@@ -37,6 +39,7 @@ func _physics_process(delta):
 			"look_strength": look_strength,
 			"shoot_pressed": Input.is_action_just_pressed("click"),
 			"shoot_released": Input.is_action_just_released("click"),
+			"shoot_held": Input.is_action_pressed("click"),
 			"interact": Input.is_action_just_pressed("interact"),
 			"pause": Input.is_action_just_pressed("pause")
 		},

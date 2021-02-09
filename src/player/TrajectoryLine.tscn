@@ -17,9 +17,6 @@ width = 1.0
 width_curve = SubResource( 1 )
 gradient = SubResource( 2 )
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
-collision_mask = 2
-
 [node name="ShadowParent" type="Node2D" parent="."]
 
 [node name="CollMarkerParent" type="Node2D" parent="."]

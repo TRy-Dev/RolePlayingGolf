@@ -11,8 +11,8 @@ signal hit_strength_changed(value)
 onready var trajectory = $TrajectoryLine
 onready var interaction_controller = $InteractionController
 
-export(float, 10.0, 1000.0) var hit_min_force = 20.0
-export(float, 10.0, 1000.0) var hit_max_force = 500.0
+export(float, 10.0, 1000.0) var hit_min_force = 30.0
+export(float, 10.0, 1000.0) var hit_max_force = 550.0
 
 const START_STAMINA = 5
 const START_HEALTH = 3

@@ -19,7 +19,7 @@ const BACKGROUND_PADDING = 32
 
 func _ready():
 	initialize()
-	_ground.modulate = Colors.get_color("black")
+	_ground.modulate = Color8(71, 45, 60) #Colors.get_color("black")
 
 func initialize() -> void:
 	var ground_cells = _ground.get_used_cells()

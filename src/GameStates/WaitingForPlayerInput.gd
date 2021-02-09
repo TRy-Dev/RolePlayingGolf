@@ -46,7 +46,7 @@ func update(input: Dictionary) -> void:
 	if input["controls"]["interact"] and input["interaction"]:
 		emit_signal("finished", "PlayerInteracting")
 		return
-	elif input["controls"]["shoot_pressed"]:
+	elif input["controls"]["shoot_pressed"] or input["controls"]["shoot_held"]:
 		_start_charging()
 	.update(input)
 
