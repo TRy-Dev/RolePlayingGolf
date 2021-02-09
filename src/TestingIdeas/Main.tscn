@@ -26,7 +26,7 @@ __meta__ = {
 [node name="GridWorld" parent="." instance=ExtResource( 2 )]
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
-position = Vector2( 117.977, 185.572 )
+position = Vector2( 571.521, 713.312 )
 
 [node name="CameraTarget" parent="Player" instance=ExtResource( 4 )]
 

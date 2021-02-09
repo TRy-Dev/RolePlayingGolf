@@ -6,9 +6,12 @@ onready var _sources_2d = $Sources2D
 var _clips := {}
 
 const MAX_AUDIO_SOURCES := 16
-const MIN_PITCH := 0.8
-const MAX_PITCH := 1.2
+const MIN_PITCH := 0.9
+const MAX_PITCH := 1.1
 const SFX_PATH := "res://assets/audio/sfx"
+
+const SOURCE_2D_MAX_DISTANCE := 250.0
+const SOURCE_2D_ATTENUATION := 2.0
 
 func _init():
 	self.load()
@@ -38,6 +41,9 @@ func _get_idle_source(sources_parent, template):
 		var new_source = template.new()
 		new_source.bus = "Sfx"
 		sources_parent.add_child(new_source)
+		if template == AudioStreamPlayer2D:
+			new_source.max_distance = SOURCE_2D_MAX_DISTANCE
+			new_source.attenuation = SOURCE_2D_ATTENUATION
 		return new_source
 	else:
 		push_error("HEY! Trying to play more than %s audio clips at the same time" % MAX_AUDIO_SOURCES)

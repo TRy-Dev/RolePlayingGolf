@@ -2,10 +2,7 @@ extends Interaction
 
 onready var dialogue_ui = $DialogueUI
 
-# Move animations to DialogueUI
-#onready var anim_player = $AnimationPlayer
-
-var active = false
+var dialogue_path = ""
 
 func _ready():
 	dialogue_ui.connect("option_selected", self, "_on_dialogue_option_selected")
@@ -13,23 +10,18 @@ func _ready():
 	connect("finished", dialogue_ui, "_on_dialogue_finished")
 
 func start() -> void:
-	var npc_name = owner.get_name()
-	var dialogue = DialogueController.start_dialogue(npc_name)
-	if not dialogue["lines"] and not dialogue["options"]:
-		print("Empty dialogue returned for npc %s" %npc_name)
-#		AnimationController.play(anim_player, "hide")
-		emit_signal("finished")
+	if not dialogue_path:
+		print("HEY! No dialogue path set for %s" %get_parent().name)
 		return
+	var dialogue = DialogueController.start_dialogue(dialogue_path)
+	if not dialogue["lines"] and not dialogue["options"]:
+		print("Empty dialogue returned for npc %s" %get_parent().name)
 	dialogue_ui.set_dialogue(dialogue)
-	active = true
-#	AnimationController.play(anim_player, "show")
-	emit_signal("started")
+	.start()
 
 func _on_dialogue_option_selected(idx) -> void:
 	if idx < 0:
-		active = false
-#		AnimationController.play(anim_player, "hide")
-		emit_signal("finished")
+		finish()
 		return
 	var dialogue = DialogueController.select_option(idx)
 	dialogue_ui.set_dialogue(dialogue)

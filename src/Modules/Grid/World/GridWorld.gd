@@ -11,13 +11,14 @@ var player_last_grid_pos = null
 
 var is_updating_tiles = false
 
-func _ready():
+func initialize():
 	var walkable_tilemap = _environment.get_walkable_tilemap()
 	_navigation.initialize(walkable_tilemap)
 	_pawn_controller.connect("tile_created", _navigation, "_on_pawn_created")
 	_pawn_controller.connect("tile_destroyed", _navigation, "_on_pawn_destroyed")
 	_pawn_controller.connect("pawn_moved", _navigation, "_on_pawn_moved")
 	_pawn_controller.set_debug_mode(false)
+	_tile_controller.set_debug_mode(false)
 	_pawn_controller.initialize(walkable_tilemap)
 	_tile_controller.initialize(walkable_tilemap)
 

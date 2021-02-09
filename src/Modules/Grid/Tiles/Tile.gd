@@ -14,14 +14,22 @@ export (int, 0, 4) var speed := 0
 var grid_position: Vector2
 var tile_index: int
 
+var destroyed = false
+
 func initialize(grid_pos: Vector2, idx: int) -> void:
 	grid_position = grid_pos
 	tile_index = idx
 	global_position = GlobalConstants.grid_to_world(grid_pos)
+	AnimationController.play(anim_player, "show", false)
 	fsm.connect("state_changed", $StateNameDisplay, "_on_state_changed")
 	fsm.initialize()
 
 func destroy() -> void:
+	if destroyed:
+		return
+	AnimationController.play(anim_player, "hide")
+	destroyed = true
+	yield(anim_player, "animation_finished")
 	emit_signal("tile_destroyed", self)
 	queue_free()
 

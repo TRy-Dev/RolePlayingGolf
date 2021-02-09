@@ -11,6 +11,8 @@ func _ready():
 	call_deferred("_initialize")
 
 func start_dialogue(name: String) -> Dictionary:
+#	print("HEY! Resetting all dialogues. Temprary workaround")
+#	_load_story(story_path)
 	story.choose_path_string(name)
 	return _get_current_dialogue()
 
@@ -35,9 +37,15 @@ func _get_current_dialogue() -> Dictionary:
 		var line = story.continue()
 #		var tags = story.current_tags
 		text_lines.append(line)
+	var choices = story.current_choices
+	for c in choices:
+		if c.text == "_p_":
+#			print("_p_ removed")
+			choices.erase(c)
+			break
 	return {
 		"lines": text_lines,
-		"options": story.current_choices
+		"options": choices
 	}
 
 func save_story() -> String:

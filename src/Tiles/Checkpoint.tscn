@@ -9,6 +9,7 @@
 script = ExtResource( 3 )
 
 [node name="Sprite" parent="." index="0"]
+modulate = Color( 0.956863, 0.705882, 0.105882, 1 )
 texture = ExtResource( 2 )
 
 [node name="DynamicCollider" parent="." index="3"]

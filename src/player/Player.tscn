@@ -9,7 +9,7 @@
 radius = 4.5
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 24.0
+radius = 32.0
 
 [node name="Player" type="KinematicBody2D"]
 z_index = 10

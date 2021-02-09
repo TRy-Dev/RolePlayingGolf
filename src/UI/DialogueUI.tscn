@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/UI/DialogueUI.gd" type="Script" id=1]
 [ext_resource path="res://src/UI/theme.tres" type="Theme" id=3]
@@ -6,20 +6,42 @@
 [sub_resource type="Animation" id=1]
 resource_name = "_reset"
 length = 0.001
-
-[sub_resource type="Animation" id=2]
-resource_name = "show_text"
-tracks/0/type = "value"
-tracks/0/path = NodePath("Background/Container/Text:percent_visible")
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:modulate:a")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, 1.0 ]
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "hide"
+length = 0.3
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0.95, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3 )
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.3
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0.95, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3 )
 }
 
 [node name="DialogueUI" type="Control"]
@@ -36,7 +58,7 @@ __meta__ = {
 margin_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 0
-rect_min_size = Vector2( 150, 0 )
+rect_min_size = Vector2( 200, 0 )
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -45,8 +67,8 @@ __meta__ = {
 [node name="Container" type="VBoxContainer" parent="Background"]
 margin_left = 8.0
 margin_top = 8.0
-margin_right = 142.0
-margin_bottom = 74.0
+margin_right = 192.0
+margin_bottom = 52.0
 mouse_filter = 2
 custom_constants/separation = 1
 __meta__ = {
@@ -54,8 +76,8 @@ __meta__ = {
 }
 
 [node name="Text" type="RichTextLabel" parent="Background/Container"]
-margin_right = 134.0
-margin_bottom = 66.0
+margin_right = 184.0
+margin_bottom = 44.0
 mouse_filter = 2
 visible_characters = 0
 percent_visible = 0.0
@@ -67,7 +89,8 @@ scroll_following = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/_reset = SubResource( 1 )
-anims/show_text = SubResource( 2 )
+anims/hide = SubResource( 2 )
+anims/show = SubResource( 3 )
 
 [node name="TextTween" type="Tween" parent="."]
 [connection signal="sort_children" from="Background" to="." method="_on_Background_sort_children"]

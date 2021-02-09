@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/Modules/StateMachine/StateNameDisplay.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Modules/Grid/Tiles/DynamicCollider.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/fonts/kenney_mini_small.tres" type="DynamicFont" id=3]
 [ext_resource path="res://src/Modules/StateMachine/StateMachine.gd" type="Script" id=4]
 [ext_resource path="res://src/Modules/Grid/Tiles/Tile.gd" type="Script" id=5]
+[ext_resource path="res://src/Tiles/Pawns/States/Idle.tscn" type="PackedScene" id=6]
 
 [sub_resource type="Animation" id=1]
 resource_name = "_reset"
@@ -29,12 +30,12 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
 "times": PoolRealArray( 0, 0.3 )
 }
 
 [sub_resource type="Animation" id=3]
-length = 0.3
+length = 0.6
 tracks/0/type = "bezier"
 tracks/0/path = NodePath("Sprite:modulate:a")
 tracks/0/interp = 1
@@ -42,8 +43,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.3 )
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.6 )
 }
 
 [node name="Tile" type="Node2D"]
@@ -56,14 +57,16 @@ modulate = Color( 0.811765, 0.776471, 0.721569, 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/_reset = SubResource( 1 )
-anims/appear = SubResource( 2 )
-anims/hide = SubResource( 3 )
+anims/hide = SubResource( 2 )
+anims/show = SubResource( 3 )
 
 [node name="DynamicCollider" parent="." instance=ExtResource( 2 )]
 collision_layer = 4
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 4 )
+
+[node name="Idle" parent="StateMachine" instance=ExtResource( 6 )]
 
 [node name="StateNameDisplay" parent="." instance=ExtResource( 1 )]
 visible = false

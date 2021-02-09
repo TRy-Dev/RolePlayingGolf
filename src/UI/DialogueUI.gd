@@ -2,7 +2,7 @@ extends Control
 
 signal option_selected(index)
 
-#onready var anim_player = $AnimationPlayer
+onready var anim_player = $AnimationPlayer
 onready var text = $Background/Container/Text
 onready var container = $Background/Container
 onready var panel = $Background
@@ -12,10 +12,10 @@ var buttons = []
 
 var current_btn_idx = -1
 
-const CHARS_PER_SECOND = 60.0
+const CHARS_PER_SECOND = 30.0
 
 func _ready():
-	visible = false
+	AnimationController.reset(anim_player)
 
 func set_dialogue(dialogue: Dictionary) -> void:
 	_update_ui(dialogue)
@@ -57,10 +57,12 @@ func change_option(delta: int):
 	buttons[current_btn_idx].grab_focus()
 
 func _on_dialogue_started():
-	visible = true
+	AnimationController.play(anim_player, "show")
+#	anim_player.play("show")
 
 func _on_dialogue_finished():
-	visible = false
+	AnimationController.play(anim_player, "hide", false)
+#	anim_player.play("hide")
 
 func _on_Background_sort_children():
 	panel.rect_size.y = 0.0

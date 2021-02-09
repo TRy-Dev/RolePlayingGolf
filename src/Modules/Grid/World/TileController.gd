@@ -50,7 +50,8 @@ func destroy_tile(pos: Vector2) -> void:
 #		print("HEY! Trying to destoy non existent tile on position %s" %pos)
 		return
 	set_cellv(pos, -1)
-	_tiles[pos].destroy()
+	if not _tiles[pos].destroyed:
+		_tiles[pos].destroy()
 	_tiles.erase(pos)
 	emit_signal("tile_destroyed", idx, pos)
 

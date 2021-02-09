@@ -2,10 +2,8 @@ extends Control
 
 onready var anim_player :AnimationPlayer = $AnimationPlayer
 
-
 func _ready() -> void:
-	for effect in $CanvasLayer.get_children():
-		effect.color.a = 0.0
+	AnimationController.reset(anim_player)
 
-func play(name) -> void:
-	AnimationController.play(anim_player, name)
+func play(name :String, reset := false, direction := 1) -> void:
+	AnimationController.play(anim_player, name, reset, direction)

@@ -1,10 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/Modules/Grid/World/GridWorld.gd" type="Script" id=1]
 [ext_resource path="res://src/Modules/Grid/Tiles/PawnController.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/Modules/Grid/World/Environment.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/Modules/Grid/World/GridNavigation.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/pawns_tileset.tres" type="TileSet" id=5]
 [ext_resource path="res://src/Modules/Grid/World/TileController.tscn" type="PackedScene" id=6]
 
 [node name="GridWorld" type="Node2D"]
@@ -19,10 +18,9 @@ __meta__ = {
 
 [node name="TileController" parent="." instance=ExtResource( 6 )]
 self_modulate = Color( 0.584314, 0.427451, 0.784314, 1 )
-tile_data = PoolIntArray( 196618, 1, 0, 458755, 0, 0, 458756, 0, 0, 524291, 0, 0, 524292, 0, 0 )
+tile_data = PoolIntArray( 1048570, 0, 0, 1114101, 1, 0, 1179634, 0, 0, 1376289, 1, 0, 1441821, 0, 0, 1638394, 2, 0, 1572899, 2, 0, 1703956, 2, 0, 1835002, 0, 0, 1900568, 0, 0, 2031606, 2, 0, 2097137, 0, 0, 2031629, 0, 0, 2293751, 0, 0, 2293758, 0, 0, 2293775, 2, 0, 2490364, 0, 0, 2555936, 2, 0, 2621472, 2, 0, 2686991, 0, 0, 2752530, 2, 0 )
 
 [node name="PawnController" parent="." instance=ExtResource( 2 )]
-tile_set = ExtResource( 5 )
-tile_data = PoolIntArray( 196614, 1, 0, 720907, 1, 0, 786439, 0, 0 )
+tile_data = PoolIntArray( 1310715, 1, 0, 1441777, 1, 0, 1703967, 3, 0, 1966062, 1, 0, 1966076, 1, 0, 2228228, 0, 0, 2555893, 1, 0, 2490402, 2, 0 )
 
 [node name="GridNavigation" parent="." instance=ExtResource( 4 )]

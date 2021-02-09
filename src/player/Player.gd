@@ -12,7 +12,7 @@ onready var trajectory = $TrajectoryLine
 onready var interaction_controller = $InteractionController
 
 export(float, 10.0, 1000.0) var hit_min_force = 20.0
-export(float, 10.0, 1000.0) var hit_max_force = 390.0
+export(float, 10.0, 1000.0) var hit_max_force = 500.0
 
 const START_STAMINA = 5
 const START_HEALTH = 3
@@ -38,10 +38,10 @@ func _ready():
 	connect("hit_strength_changed", trajectory, "update_line_length")
 
 func shoot() -> void:
-	stamina -= 1
-	if stamina < 0:
-		stamina = 0
-		damage(1)
+#	stamina -= 1
+#	if stamina < 0:
+#		stamina = 0
+#		damage(1)
 	emit_signal("stamina_changed", stamina)
 	AudioController.sfx.play("hit")
 	var force = direction * lerp(hit_min_force, hit_max_force, current_hit_strength)
@@ -81,6 +81,7 @@ func multiply_velocity(mult):
 
 func damage(amount: int) -> void:
 	health -= amount
+	Courtain.play("flash")
 	if health <= 0:
 		health = 0
 		_die()
@@ -88,7 +89,6 @@ func damage(amount: int) -> void:
 
 func _die() -> void:
 	print("Player died!")
-	Courtain.play("flash")
 	emit_signal("died")
 
 func save_state(save):

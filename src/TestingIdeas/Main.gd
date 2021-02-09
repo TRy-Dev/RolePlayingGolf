@@ -22,10 +22,11 @@ func _ready():
 	fsm.initialize()
 	gui.initialize(player, world)
 	camera.set_target_instant(camera_target)
-	camera.set_zoom(0.3, false)
-	camera.set_zoom(0.25)
+	camera.set_zoom_level("far", false)
+	camera.set_zoom_level("medium")
 	player.connect("died", self, "_on_player_died")
 #	AudioController.music.play("world")
+	world.initialize()
 
 func _physics_process(delta):
 	var mouse_player_vector = get_global_mouse_position() - player.global_position
@@ -71,32 +72,12 @@ func load_state(save: Resource):
 func _on_player_died():
 	print("Player died, should load last save state")
 
-### Testing
-#func simulate_random_turn() -> void:
-#	var angle_rad = Rng.randf(0.0, 2 * PI)
-#	var dir = Vector2(cos(angle_rad), sin(angle_rad))
-#	player.update_trajectory_direction(dir)
-#	camera_target.set_offset(dir, 1.0)
-#	camera_target.update()
-#	player.direction = dir
-#	player.shoot()
-#	yield(get_tree().create_timer(PLAYER_MOVE_TIME), "timeout")
-#	world.update_pawns()
-
-#func _on_TurnTimer_timeout():
-#	simulate_random_turn()
-
 ##### TEMPORARY
-#func set_player_trajectory_visible(val: bool) -> void:
-#	player.set_trajectory_visible(val)
 
 func set_pause_game(val: bool) -> void:
 	for node in pausable_nodes:
 		node.pause_mode = Node.PAUSE_MODE_INHERIT if val else Node.PAUSE_MODE_STOP
 	emit_signal("game_paused", val)
-
-#func reset_camera_target() -> void:
-#
 
 func get_current_interaction() -> Interaction:
 	return player.get_interaction()

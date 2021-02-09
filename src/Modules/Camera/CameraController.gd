@@ -6,8 +6,8 @@ onready var tween_rotate = $RotateTween
 const TRANS_TYPE = Tween.TRANS_SINE
 const EASE_TYPE = Tween.EASE_IN_OUT
 
-const ZOOM_MIN = 0.25
-const ZOOM_MAX = 2.0
+#const ZOOM_MIN = 0.25
+#const ZOOM_MAX = 2.0
 const ZOOM_DURATION = 1.0
 
 const ROT_MIN = -180
@@ -24,6 +24,12 @@ var noise_y = 0
 var noise_seed = 0
 
 var _target = null
+
+var _zoom_levels = {
+	"close": 0.2,
+	"medium": 0.25,
+	"far": 0.3,
+}
 
 func _ready():
 	randomize()
@@ -45,8 +51,14 @@ func set_target_instant(target):
 		global_position = _target.global_position
 	reset_smoothing()
 
-func set_zoom(val, smoothed := true):
-	val = clamp(val, ZOOM_MIN, ZOOM_MAX)
+func set_zoom_level(name, smoothed := true):
+	if not _zoom_levels.get(name):
+		print("HEY! Zoom level not found: %s" %name)
+		return
+	_set_zoom(_zoom_levels[name], smoothed)
+
+func _set_zoom(val, smoothed := true):
+#	val = clamp(val, ZOOM_MIN, ZOOM_MAX)
 	tween_zoom.stop_all()
 	if smoothed:
 		tween_zoom.interpolate_property(self, "zoom", zoom, Vector2.ONE * val, ZOOM_DURATION, TRANS_TYPE, EASE_TYPE)
