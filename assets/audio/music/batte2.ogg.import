@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/batte2.ogg-aa6094d0329afd4035b7a09f569a3dc6.oggstr"
+
+[deps]
+
+source_file="res://assets/audio/music/batte2.ogg"
+dest_files=[ "res://.import/batte2.ogg-aa6094d0329afd4035b7a09f569a3dc6.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
