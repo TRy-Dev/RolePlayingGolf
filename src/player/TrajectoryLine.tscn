@@ -2,7 +2,6 @@
 
 [ext_resource path="res://src/Player/TrajectoryLine.gd" type="Script" id=1]
 
-
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.492045 ), 0.0, 0.0, 0, 0 ]
 
@@ -17,9 +16,6 @@ points = PoolVector2Array( 0, 0, 10, 0, 10, 0 )
 width = 1.0
 width_curve = SubResource( 1 )
 gradient = SubResource( 2 )
-
-[node name="RayCast2D" type="RayCast2D" parent="."]
-collision_mask = 2
 
 [node name="ShadowParent" type="Node2D" parent="."]
 

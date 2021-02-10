@@ -1,14 +1,9 @@
 extends Node
 
-const PATH_DELIMITER = "/"
-
-const ASSETS = "res://assets"
-
 func concat_path(paths: Array) -> String:
-	var out = ""
-	for p in paths:
-		out += p + PATH_DELIMITER
-	out.rstrip(PATH_DELIMITER)
+	var out := ""
+	for i in range(len(paths)):
+		out = out.plus_file(paths[i])
 	return out
 
 func get_contents(path) -> Dictionary:
@@ -22,8 +17,8 @@ func get_contents(path) -> Dictionary:
 			if dir.current_is_dir():
 				directories.append(name)
 			else:
-				if not name.ends_with(".import"):
-					files.append(name)
+				if name.ends_with(".import"):
+					files.append(name.rstrip(".import"))
 			name = dir.get_next()
 	else:
 		push_error("HEY! An error occurred when trying to access the path: %s" % path)

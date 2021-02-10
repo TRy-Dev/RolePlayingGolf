@@ -5,7 +5,7 @@ shader_type canvas_item;
 
 uniform vec4 color :hint_color = vec4(0.35, 0.48, 0.95, 1.0);
 uniform int OCTAVES = 4;
-uniform float fog_scale :hint_range(1.0, 50.0) = 20.0;
+uniform float fog_scale :hint_range(1.0, 500.0) = 20.0;
 
 float rand(vec2 coord){
 	return fract(sin(dot(coord, vec2(56, 78)) * 1000.0) * 1000.0);

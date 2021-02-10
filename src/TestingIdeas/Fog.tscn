@@ -7,10 +7,13 @@
 shader = ExtResource( 1 )
 shader_param/color = Color( 0.478431, 0.266667, 0.290196, 1 )
 shader_param/OCTAVES = 4
-shader_param/fog_scale = 50.0
+shader_param/fog_scale = 200.0
 
 [node name="Fog" type="Sprite"]
-modulate = Color( 1, 1, 1, 0.156863 )
+modulate = Color( 1, 1, 1, 0.313726 )
 material = SubResource( 1 )
 scale = Vector2( 200, 200 )
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}

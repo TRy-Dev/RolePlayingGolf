@@ -1,0 +1,96 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://src/UI/DialogueUI.gd" type="Script" id=1]
+[ext_resource path="res://src/UI/theme.tres" type="Theme" id=3]
+
+[sub_resource type="Animation" id=1]
+resource_name = "_reset"
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "hide"
+length = 0.3
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0.95, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3 )
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.3
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0.95, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3 )
+}
+
+[node name="DialogueUI" type="Control"]
+modulate = Color( 1, 1, 1, 0.901961 )
+rect_scale = Vector2( 0.5, 0.5 )
+mouse_filter = 2
+theme = ExtResource( 3 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="PanelContainer" parent="."]
+margin_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+rect_min_size = Vector2( 200, 0 )
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Container" type="VBoxContainer" parent="Background"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 192.0
+margin_bottom = 52.0
+mouse_filter = 2
+custom_constants/separation = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Text" type="RichTextLabel" parent="Background/Container"]
+margin_right = 184.0
+margin_bottom = 44.0
+mouse_filter = 2
+visible_characters = 0
+percent_visible = 0.0
+text = "Those annoying creatures living under ground...
+They keep digging holes on my field.
+Get rid of them and you shall be rewarded!"
+fit_content_height = true
+scroll_following = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/_reset = SubResource( 1 )
+anims/hide = SubResource( 2 )
+anims/show = SubResource( 3 )
+
+[node name="TextTween" type="Tween" parent="."]
+[connection signal="sort_children" from="Background" to="." method="_on_Background_sort_children"]

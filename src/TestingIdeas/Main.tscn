@@ -1,0 +1,72 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://src/TestingIdeas/Main.gd" type="Script" id=1]
+[ext_resource path="res://src/Modules/Grid/World/GridWorld.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/Player/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/Modules/Camera/CameraTarget.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/TestingIdeas/Fog.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/Modules/Camera/CameraController.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/TestingIdeas/GUI.tscn" type="PackedScene" id=7]
+[ext_resource path="res://src/Modules/StateMachine/StateMachine.gd" type="Script" id=8]
+[ext_resource path="res://src/GameStates/WaitingForPlayerInput.tscn" type="PackedScene" id=9]
+[ext_resource path="res://src/GameStates/GridWorldMoving.tscn" type="PackedScene" id=10]
+[ext_resource path="res://src/GameStates/PlayerMoving.tscn" type="PackedScene" id=11]
+[ext_resource path="res://src/GameStates/GamePaused.tscn" type="PackedScene" id=12]
+[ext_resource path="res://src/GameStates/PlayerInteracting.tscn" type="PackedScene" id=13]
+[ext_resource path="res://src/Modules/StateMachine/StateNameDisplay.tscn" type="PackedScene" id=14]
+[ext_resource path="res://src/TestingIdeas/QuestTracker.tscn" type="PackedScene" id=15]
+
+[node name="Main" type="Node2D" groups=[
+"save",
+]]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="GridWorld" parent="." instance=ExtResource( 2 )]
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+position = Vector2( 562.406, 702.68 )
+
+[node name="CameraTarget" parent="Player" instance=ExtResource( 4 )]
+
+[node name="CameraController" parent="." instance=ExtResource( 6 )]
+position = Vector2( 148.332, 88.4001 )
+zoom = Vector2( 0.5, 0.5 )
+drag_margin_left = 0.02
+drag_margin_top = 0.02
+drag_margin_right = 0.02
+drag_margin_bottom = 0.02
+
+[node name="Fog" parent="." instance=ExtResource( 5 )]
+modulate = Color( 1, 1, 1, 0.309804 )
+position = Vector2( 651.402, 312.353 )
+
+[node name="GUI" parent="." instance=ExtResource( 7 )]
+
+[node name="GameStateMachine" type="Node" parent="."]
+script = ExtResource( 8 )
+
+[node name="WaitingForPlayerInput" parent="GameStateMachine" instance=ExtResource( 9 )]
+
+[node name="PlayerMoving" parent="GameStateMachine" instance=ExtResource( 11 )]
+
+[node name="GridWorldMoving" parent="GameStateMachine" instance=ExtResource( 10 )]
+
+[node name="GamePaused" parent="GameStateMachine" instance=ExtResource( 12 )]
+
+[node name="PlayerInteracting" parent="GameStateMachine" instance=ExtResource( 13 )]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="StateNameDisplay" parent="CanvasLayer" instance=ExtResource( 14 )]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -37.0
+margin_top = 20.0
+margin_right = -200.0
+margin_bottom = 14.0
+
+[node name="QuestTracker" parent="." instance=ExtResource( 15 )]

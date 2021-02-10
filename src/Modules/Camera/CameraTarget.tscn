@@ -10,9 +10,11 @@ script = ExtResource( 1 )
 friction_coeff = 0.15
 bounciness = 0.0
 max_speed = 1000.0
-max_force = 2500.0
+max_force = 10000.0
 slow_radius = 200.0
 
 [node name="Sprite" type="Sprite" parent="."]
 visible = false
+modulate = Color( 0, 1, 1, 1 )
+scale = Vector2( 0.2, 0.2 )
 texture = ExtResource( 2 )
