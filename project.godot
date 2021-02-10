@@ -135,6 +135,7 @@ config/icon="res://icon.png"
 [audio]
 
 default_bus_layout="res://src/Modules/Audio/bus.tres"
+output_latency.web=25
 
 [autoload]
 
@@ -147,12 +148,12 @@ GameSaver="*res://src/Modules/DataPersistence/GameSaver.gd"
 DataLoader="*res://src/Autoload/DataLoader.gd"
 AudioController="*res://src/Modules/Audio/AudioController.tscn"
 Courtain="*res://src/Modules/Rendering/Courtain.tscn"
+ParticleController="*res://src/Modules/Rendering/Particles/ParticleController.gd"
 SceneController="*res://src/Modules/Core/SceneController.gd"
 DebugOverlay="*res://src/Modules/Core/DebugOverlay.tscn"
 PhysicsPrediction="*res://src/Modules/Physics/PhysicsPrediction.gd"
 GlobalConstants="*res://src/Autoload/GlobalConstants.gd"
 GlobalState="*res://src/Autoload/GlobalState.gd"
-Colors="*res://src/autoload/Colors.gd"
 DialogueController="*res://src/Modules/Dialogue/DialogueController.gd"
 
 [debug]

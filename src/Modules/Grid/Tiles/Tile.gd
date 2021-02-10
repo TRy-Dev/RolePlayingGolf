@@ -2,7 +2,7 @@ extends Node2D
 
 class_name Tile
 
-signal tile_destroyed(pawn)
+signal tile_destroyed(tile)
 
 onready var sprite :Sprite = $Sprite
 onready var fsm :StateMachine = $StateMachine

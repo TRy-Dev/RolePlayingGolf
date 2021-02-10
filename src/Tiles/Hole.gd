@@ -9,9 +9,12 @@ func initialize(grid_pos: Vector2, idx: int) -> void:
 
 func on_player_entered(player: Player) -> void:
 	player.multiply_velocity(collision_velocity_multiplier)
+	destroy()
+
+func destroy():
 	ParticleController.play("dust", global_position)
 	AudioController.sfx.play_at("dirt_move", global_position)
-	destroy()
+	.destroy()
 
 #func on_player_exited(player: Player) -> void:
 #	pass

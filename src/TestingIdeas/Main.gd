@@ -27,8 +27,18 @@ func _ready():
 	camera.set_zoom_level("far", false)
 	camera.set_zoom_level("medium")
 	player.connect("died", self, "_on_player_died")
-	AudioController.music.play("world")
+	# Dirty plug in signals to quest tracker
+	world._pawn_controller.connect("tile_created", $QuestTracker, "_on_pawn_created")
+	world._pawn_controller.connect("tile_destroyed", $QuestTracker, "_on_pawn_destroyed")
+	
 	world.initialize()
+	_init_audio()
+	
+
+func _init_audio():
+	AudioController.music.play("world")
+	AudioController.lerp_music_volume(-50, 0.0)
+	AudioController.lerp_music_volume(-20, 8.0)
 
 func _physics_process(delta):
 	var mouse_player_vector = get_global_mouse_position() - player.global_position
@@ -52,10 +62,10 @@ func _physics_process(delta):
 	}
 	fsm.update(input)
 	
-	if Input.is_action_just_pressed("debug_restart"):
-		SceneController.reload_current()
-		DebugOverlay.clear_stats()
-		GlobalState.reset()
+#	if Input.is_action_just_pressed("debug_restart"):
+#		SceneController.reload_current()
+#		DebugOverlay.clear_stats()
+#		GlobalState.reset()
 
 func save_state(save: Resource):
 	GlobalState.save_global_state(save)

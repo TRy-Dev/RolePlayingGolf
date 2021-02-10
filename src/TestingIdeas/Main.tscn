@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://src/TestingIdeas/Main.gd" type="Script" id=1]
 [ext_resource path="res://src/Modules/Grid/World/GridWorld.tscn" type="PackedScene" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://src/GameStates/GamePaused.tscn" type="PackedScene" id=12]
 [ext_resource path="res://src/GameStates/PlayerInteracting.tscn" type="PackedScene" id=13]
 [ext_resource path="res://src/Modules/StateMachine/StateNameDisplay.tscn" type="PackedScene" id=14]
+[ext_resource path="res://src/TestingIdeas/QuestTracker.tscn" type="PackedScene" id=15]
 
 [node name="Main" type="Node2D" groups=[
 "save",
@@ -26,7 +27,7 @@ __meta__ = {
 [node name="GridWorld" parent="." instance=ExtResource( 2 )]
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
-position = Vector2( 571.521, 713.312 )
+position = Vector2( 562.406, 702.68 )
 
 [node name="CameraTarget" parent="Player" instance=ExtResource( 4 )]
 
@@ -39,6 +40,7 @@ drag_margin_right = 0.02
 drag_margin_bottom = 0.02
 
 [node name="Fog" parent="." instance=ExtResource( 5 )]
+modulate = Color( 1, 1, 1, 0.309804 )
 position = Vector2( 651.402, 312.353 )
 
 [node name="GUI" parent="." instance=ExtResource( 7 )]
@@ -66,3 +68,5 @@ margin_left = -37.0
 margin_top = 20.0
 margin_right = -200.0
 margin_bottom = 14.0
+
+[node name="QuestTracker" parent="." instance=ExtResource( 15 )]

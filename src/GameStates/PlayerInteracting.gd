@@ -16,7 +16,7 @@ func enter(previous: State) -> void:
 func exit(next: State) -> void:
 	camera.set_target(camera_target)
 	camera.set_zoom_level("medium")
-	Courtain.play("show_bars", false, -1)
+	Courtain.play("show_bars", false, true)
 	interaction.disconnect("finished", self, "_on_interaction_finished")
 
 func _on_interaction_finished():

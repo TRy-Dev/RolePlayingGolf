@@ -5,6 +5,7 @@ var holes = []
 const MAX_HOLES = 4
 
 const HOLE_ID = 0
+const DESTROY_OWN_HOLE_CHANCE = 0.2
 
 func enter(previous: State) -> void:
 	pawn.burrow()
@@ -13,6 +14,14 @@ func update(input: Dictionary) -> void:
 	var world = input["world"]
 	var pawn_controller = input["pawn_controller"]
 	var tile_controller = input["tile_controller"]
+	
+	if len(holes) == MAX_HOLES:
+		if Rng.randf() < DESTROY_OWN_HOLE_CHANCE:
+			# Destroy own hole
+			var hole = Rng.rand_array_element(holes)
+			hole.destroy()
+			print("hole destroyed")
+			return
 	
 	var unburrow_chance = float(len(holes)) / MAX_HOLES
 	if Rng.randf() < unburrow_chance:

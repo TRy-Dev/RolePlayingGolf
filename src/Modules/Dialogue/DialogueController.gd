@@ -20,6 +20,9 @@ func select_option(index: int) -> Dictionary:
 	story.choose_choice_index(index)
 	return _get_current_dialogue()
 
+func set_variable(variable, value) -> void:
+	story.variables_state.set(variable, value)
+
 func _initialize():
 	InkRuntime.init(get_tree().root)
 	_load_story(story_path)

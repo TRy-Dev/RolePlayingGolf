@@ -12,7 +12,7 @@ var buttons = []
 
 var current_btn_idx = -1
 
-const CHARS_PER_SECOND = 30.0
+const CHARS_PER_SECOND = 45.0
 
 func _ready():
 	AnimationController.reset(anim_player)

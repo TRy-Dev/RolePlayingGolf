@@ -53,9 +53,9 @@ func _on_player_stopped_charging_shot() -> void:
 
 func _on_game_paused(value) -> void:
 	if value:
-		Courtain.play("hide_dim")
-	else:
 		Courtain.play("show_dim")
+	else:
+		Courtain.play("hide_dim")
 	paused_text.visible = value
 	shoot_gui.visible = not value
 	
